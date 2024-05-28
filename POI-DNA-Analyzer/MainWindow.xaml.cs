@@ -59,6 +59,11 @@ namespace POI_DNA_Analyzer
 			OpenFile();
 		}
 
+		private void HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			_dinucleotidesAnalyzerWindow.SetXAxisViewRange(e.NewValue);
+		}
+
 		private void ShowGraph(object sender, RoutedEventArgs e)
 		{
 			_dinucleotidesAnalyzerWindow.UpdateFileStream(_fileStream);

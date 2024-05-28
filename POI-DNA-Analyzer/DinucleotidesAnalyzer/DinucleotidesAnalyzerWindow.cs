@@ -54,6 +54,11 @@ namespace POI_DNA_Analyzer
 			ShowGraph();
 		}
 
+		public void SetXAxisViewRange(double offset)
+		{
+			_oxyPlotProbabilityGraph.SetXAxisViewRange(offset);
+		}
+
 		private void ShowGraph()
 		{
 			if (_fileStream == null)

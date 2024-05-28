@@ -7,10 +7,13 @@ using OxyPlot.Legends;
 
 namespace POI_DNA_Analyzer
 {
-	class OxyPlotProbabilityGraph
+	class OxyPlotProbabilityGraph : IProbabilityGraph
 	{
 		private PlotView _plotView;
 		private PlotModel _model;
+		private LinearAxis _x;
+		private LinearAxis _y;
+		private double _viewSpan = 10;
 
 		public OxyPlotProbabilityGraph(PlotView plotView)
 		{
@@ -57,21 +60,23 @@ namespace POI_DNA_Analyzer
 			_model.Series.Clear();
 		}
 
+		public void SetXAxisViewRange(double offset)
+		{
+			_x.Minimum = offset;
+			_x.Maximum = offset + _viewSpan;
+			_model.InvalidatePlot(true);
+		}
+
 		private void UpdateXAxis(List<int> indexes)
 		{
-			if (_model == null)
+			if (_model == null || _x == null)
 				return;
 
-			LinearAxis? xAxis = new LinearAxis();
+			_x.MajorStep = 1;
+			_x.MinorStep = 1;
+			_x.LabelFormatter = value => FormatValue(indexes, value);
 
-			if (TryGetXAxis(out xAxis))
-			{
-				xAxis.MajorStep = 1;
-				xAxis.MinorStep = 1;
-				xAxis.LabelFormatter = value => FormatValue(indexes, value);
-
-				_plotView.InvalidatePlot();
-			}
+			_plotView.InvalidatePlot();
 		}
 
 		private string FormatValue(List<int> indexes, double value)
@@ -100,7 +105,7 @@ namespace POI_DNA_Analyzer
 
 		private void AddXAxis()
 		{
-			_model.Axes.Add(new LinearAxis()
+			_x = new LinearAxis()
 			{
 				Position = AxisPosition.Bottom,
 				Minimum = 1,
@@ -108,12 +113,14 @@ namespace POI_DNA_Analyzer
 				FractionUnit = 1,
 				MinorStep = 1,
 				MajorStep = 1,
-			});
+			};
+
+			_model.Axes.Add(_x);
 		}
 
 		private void AddYAxis()
 		{
-			_model.Axes.Add(new LinearAxis()
+			_y = new LinearAxis()
 			{
 				Position = AxisPosition.Left,
 				Minimum = 0,
@@ -124,15 +131,9 @@ namespace POI_DNA_Analyzer
 				LabelFormatter = value => $"{value}%",
 				IsPanEnabled = false,
 				IsZoomEnabled = false,
-			});
-		}
+			};
 
-		private bool TryGetXAxis(out LinearAxis? linearAxis)
-		{
-			linearAxis = _model.Axes.OfType<LinearAxis>()
-				.FirstOrDefault(axis => axis.Position == AxisPosition.Bottom);
-
-			return linearAxis != null;
+			_model.Axes.Add(_y);
 		}
 	}
 }
