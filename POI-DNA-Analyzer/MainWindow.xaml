@@ -78,7 +78,7 @@
 						Grid.Column="1"/>
 				</Grid>
 			</TabItem>
-			<TabItem x:Name="DinucleotidesAnalyzerTap">
+			<TabItem x:Name="DinucleotidesAnalyzerTab">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Margin="3">Dinucleotides Analyzer</TextBlock>
@@ -99,13 +99,15 @@
 						HorizontalAlignment="Left" 
 						Width="94"/>
 					<TextBox x:Name="ChunkSizeTextBox" 
-						Text="100" Margin="150,10,0,0" 
+						Text="100" 
+						Margin="150,10,0,0" 
 						TextWrapping="Wrap" 
 						VerticalAlignment="Top" 
 						Height="21" HorizontalAlignment="Left" 
 						Width="174"/>
 					<Button x:Name="StartButton" 
-						Content="Start" Margin="0,0,10,10" 
+						Content="Start" 
+						Margin="0,0,10,10" 
 						Click="StartDinucleotidesAnalyzerButtonClick"
 						HorizontalAlignment="Right" 
 						Width="79" 
@@ -121,25 +123,47 @@
 						HorizontalAlignment="Right" 
 						Width="79" 
 						Grid.Column="1" />
+					<CheckBox x:Name="EnableSliderCheckBox" 
+						Content="Enable similarity coefficient" 
+						IsChecked="True"
+						Height="24" 
+						FontSize="14" 
+						Margin="10,36,0,0" 
+						VerticalAlignment="Top"
+						HorizontalAlignment="Left"
+						VerticalContentAlignment="Center"/>
 					<Slider x:Name="SimilaritySlider" 
 						Maximum="100" 
 						Value="80" 
 						TickPlacement="BottomRight" 
 						TickFrequency="1" 
 						IsSnapToTickEnabled="True" 
-						Margin="150,38,0,0" 
+						Margin="150,63,0,0" 
 						VerticalAlignment="Top" 
 						HorizontalAlignment="Left"
-						Width="174"/>
+						Width="174"
+						IsEnabled="{Binding IsChecked, ElementName=EnableSliderCheckBox}">
+						<Slider.Style>
+							<Style TargetType="Slider">
+								<Style.Triggers>
+									<Trigger Property="IsEnabled" Value="False">
+										<!--<Setter Property="Foreground" Value="Gray"/>
+									<Setter Property="Background" Value="#EEE"/>
+									<Setter Property="Opacity" Value="0.5"/>-->
+									</Trigger>
+								</Style.Triggers>
+							</Style>
+						</Slider.Style>
+					</Slider>
 					<TextBox 
 						HorizontalAlignment="Left" 
-						Margin="329,37,0,0" 
+						Margin="324,62,0,0" 
 						TextWrapping="Wrap" 
 						Text="{Binding ElementName=SimilaritySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
 						VerticalAlignment="Top" 
 						Width="43"/>
 					<TextBlock 
-						Margin="10,36,0,0" 
+						Margin="10,60,0,0" 
 						TextWrapping="Wrap" 
 						Text="Similarity coefficient:" 
 						VerticalAlignment="Top" 
