@@ -1,4 +1,6 @@
-﻿namespace POI_DNA_Analyzer
+﻿using System.Text.RegularExpressions;
+
+namespace POI_DNA_Analyzer
 {
 	internal class ChunkAnalyzer
 	{
@@ -13,6 +15,7 @@
 
 		public void AnalyzeChunk(string chunk)
 		{
+			chunk = ClearChunk(chunk);
 			ClearDictionaries();
 
 			for (int i = 0; i < chunk.Length - 1; i++)
@@ -52,6 +55,11 @@
 
 			foreach (char key in new NucleotidesList().Get)
 				NucleotidesCount.Add(key, 0);
+		}
+
+		private string ClearChunk(string chunk)
+		{
+			return Regex.Replace(chunk, @"\t|\n|\r", "");
 		}
 	}
 }
