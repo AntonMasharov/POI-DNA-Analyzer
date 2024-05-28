@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 
 namespace POI_DNA_Analyzer
 {
@@ -25,7 +24,7 @@ namespace POI_DNA_Analyzer
 
 		public List<int> Indexes { get; private set; } = new List<int>();
 
-		public void Analyze(StreamReader fileStream, int chunkSize, double similarityCoefficient)
+		public void Analyze(StreamReader fileStream, int chunkSize, double similarityCoefficient, bool canSkipCheckboxState)
 		{
 			ClearDictionary();
 			Indexes.Clear();
@@ -42,7 +41,7 @@ namespace POI_DNA_Analyzer
 				_chunkAnalyzer.AnalyzeChunk(chunk);
 				_chunkMatrixBuilder.Build();
 
-				if (CanSkip(similarityCoefficient) == false)
+				if (CanSkip(similarityCoefficient, canSkipCheckboxState) == false)
 				{
 					GetDataFromMatrix(_chunkMatrixBuilder.DinucleotidesProbabilities);
 					Indexes.Add(_lastIndex);
@@ -80,8 +79,11 @@ namespace POI_DNA_Analyzer
 				DinucleotidesProbabilities[key] = new List<double>();
 		}
 
-		private bool CanSkip(double similarityCoefficient)
+		private bool CanSkip(double similarityCoefficient, bool canSkipCheckboxState)
 		{
+			if (canSkipCheckboxState == false)
+				return false;
+
 			if (_lastMatrix.Count == 0 || _lastMatrix == null)
 			{
 				_lastMatrix = new Dictionary<string, float>(_chunkMatrixBuilder.DinucleotidesProbabilities);

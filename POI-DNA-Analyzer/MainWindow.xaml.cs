@@ -17,7 +17,7 @@ namespace POI_DNA_Analyzer
 			InitializeComponent();
 
 			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List);
-			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot);
+			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot, EnableSliderCheckBox);
 		}
 
 		private void OpenFileButtonClick(object sender, RoutedEventArgs e)

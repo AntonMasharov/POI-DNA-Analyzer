@@ -9,16 +9,18 @@ namespace POI_DNA_Analyzer
 		private StreamReader _fileStream;
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
 		private OxyPlotProbabilityGraph _oxyPlotProbabilityGraph;
+		private CheckBox _checkBox;
 
 		private string _currentDinucleotide = "A";
 		private int _defaultChunkSize = 100;
 		private int _chunkSize;
 		private double _similarityCoefficient;
 
-		public DinucleotidesAnalyzerWindow(PlotView plotView)
+		public DinucleotidesAnalyzerWindow(PlotView plotView, CheckBox checkBox)
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new EuclideanDistanceMatrixComparator());
 			_oxyPlotProbabilityGraph = new OxyPlotProbabilityGraph(plotView);
+			_checkBox = checkBox;
 		}
 
 		public void UpdateFileStream(StreamReader fileStream)
@@ -57,7 +59,7 @@ namespace POI_DNA_Analyzer
 			if (_fileStream == null)
 				return;
 
-			_dinucleotidesAnalyzer.Analyze(_fileStream, _chunkSize, _similarityCoefficient);
+			_dinucleotidesAnalyzer.Analyze(_fileStream, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
 			_oxyPlotProbabilityGraph.Clear();
 
 			if (_currentDinucleotide.Length == 1)
@@ -93,6 +95,14 @@ namespace POI_DNA_Analyzer
 		private void ShowN()
 		{
 			_oxyPlotProbabilityGraph.ProvideData(_dinucleotidesAnalyzer.Indexes, _dinucleotidesAnalyzer.DinucleotidesProbabilities[_currentDinucleotide], System.Drawing.Color.Red, _currentDinucleotide);
+		}
+
+		private bool RetrieveCheckBoxInfo()
+		{
+			if (_checkBox.IsChecked == true)
+				return true;
+			else
+				return false; 
 		}
 	}
 }
