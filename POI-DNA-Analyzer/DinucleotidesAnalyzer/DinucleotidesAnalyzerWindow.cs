@@ -18,7 +18,7 @@ namespace POI_DNA_Analyzer
 
 		public DinucleotidesAnalyzerWindow(PlotView plotView, CheckBox checkBox)
 		{
-			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new EuclideanDistanceMatrixComparator());
+			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
 			_oxyPlotProbabilityGraph = new OxyPlotProbabilityGraph(plotView);
 			_checkBox = checkBox;
 		}
