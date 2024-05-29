@@ -8,6 +8,9 @@
 
 		public int GetOccurrencesCount(string source, string sequenceToFind)
 		{
+			if (sequenceToFind == null || sequenceToFind == "")
+				return 0;
+
 			SequenceIndexes.Clear();
 
 			int count = 0;

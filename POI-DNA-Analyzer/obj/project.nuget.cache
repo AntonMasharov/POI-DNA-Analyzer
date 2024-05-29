@@ -1,8 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "xrPYWn97zADi3FA/t300shc4jEfj9tUhfIqXZC1H8gO0eRuPjq26jeRPq0z1scYJJOTPymNYsvAOANqPulIr2g==",
+  "dgSpecHash": "dkO5YJ+sP93gHGUs3fa6CmUvdCyUxuZ74jfogA8EpPb1J9SR+3mrkmKFgmfKoJsgR/9BaedHLEBQvKi0PTM3Pg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Education\\POI-DNA-Analyzer\\POI-DNA-Analyzer\\POI-DNA-Analyzer\\POI-DNA-Analyzer.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "expectedPackageFiles": [
+    "C:\\Users\\Anton\\.nuget\\packages\\oxyplot.core\\2.1.2\\oxyplot.core.2.1.2.nupkg.sha512",
+    "C:\\Users\\Anton\\.nuget\\packages\\oxyplot.wpf\\2.1.2\\oxyplot.wpf.2.1.2.nupkg.sha512",
+    "C:\\Users\\Anton\\.nuget\\packages\\oxyplot.wpf.shared\\2.1.2\\oxyplot.wpf.shared.2.1.2.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\Projects\\Education\\POI-DNA-Analyzer\\POI-DNA-Analyzer\\POI-DNA-Analyzer\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

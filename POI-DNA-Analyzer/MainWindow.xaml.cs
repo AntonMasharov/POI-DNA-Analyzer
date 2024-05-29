@@ -6,25 +6,19 @@ namespace POI_DNA_Analyzer
 {
 	public partial class MainWindow : Window
 	{
+		private SequencesFinderWindow _sequencesFinderWindow;
+		private DinucleotidesAnalyzerWindow _dinucleotidesAnalyzerWindow;
 		private StreamReader _fileStream;
-		private ResultText _resultText;
-		private ListOfIndexes _listOfIndexes;
-		private SequencesFinder _sequencesFinder;
 
 		private string _filePath = "";
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			_resultText = new ResultText(ResultText);
-			_listOfIndexes = new ListOfIndexes(List);
-			_sequencesFinder = new SequencesFinder();
+
+			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List);
+			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot, EnableSliderCheckBox);
 		}
-
-		private void FindButtonClick(object sender, RoutedEventArgs e)
-		{
-
-        }
 
 		private void OpenFileButtonClick(object sender, RoutedEventArgs e)
 		{
@@ -37,32 +31,45 @@ namespace POI_DNA_Analyzer
 
 		private void SaveFileButtonClick(object sender, RoutedEventArgs e)
 		{
-			ResultSaver resultSaver = new ResultSaver();
-			resultSaver.Save(ResultText.Text, _sequencesFinder.SequenceIndexes);
+			_sequencesFinderWindow.Save(ResultText.Text);
 		}
 
 		private void EnterPromptButtonClick(object sender, RoutedEventArgs e)
 		{
-			if (_fileStream == null)
-				return;
-
-			int result = _sequencesFinder.GetOccurrencesCount(_fileStream.ReadToEnd(), PromptField.Text);
-
-			_resultText.ShowOccurrencesCount(result.ToString());
-			_listOfIndexes.ShowOccurrencesIndexes(_sequencesFinder.SequenceIndexes);
+			_sequencesFinderWindow.Find(PromptField.Text, _fileStream);
 
 			OpenFile();
 		}
 
 		private void ClearResultButtonClick(object sender, RoutedEventArgs e)
 		{
-			_resultText.Clear();
-			_listOfIndexes.Clear();
+			_sequencesFinderWindow.Clear();
 		}
 
-		private void PromptChanged(object sender, TextChangedEventArgs e)
+		private void SaveDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
 		{
+			_dinucleotidesAnalyzerWindow.Save();
+		}
 
+		private void StartDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
+		{
+			_dinucleotidesAnalyzerWindow.UpdateFileStream(_fileStream);
+			_dinucleotidesAnalyzerWindow.Analyze(ChunkSizeTextBox, SimilaritySlider.Value);
+
+			OpenFile();
+		}
+
+		private void HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			_dinucleotidesAnalyzerWindow.SetXAxisViewRange(e.NewValue);
+		}
+
+		private void ShowGraph(object sender, RoutedEventArgs e)
+		{
+			_dinucleotidesAnalyzerWindow.UpdateFileStream(_fileStream);
+			_dinucleotidesAnalyzerWindow.ShowGraph(((Button)sender).Tag.ToString());
+
+			OpenFile();
 		}
 
 		private void OpenFile()

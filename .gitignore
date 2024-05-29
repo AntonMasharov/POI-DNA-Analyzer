@@ -1,8 +1,85 @@
-# Ignore Visual Studio files
+# Compiled files
+bin/
+obj/
+
+# NuGet Packages
+*.nupkg
+*.paket
+*.dll
+*.exe
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio files
+.vscode/
 .vs/
+*/_ReSharper*/
+*.resharper*
+*.suo
+*.user
+*.vssscc
+.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.sdf
+*.opensdf
+*.scc
+*.docstates
 
-# Ignore solution files
-*.sln
+# Rider files
+.idea/
 
-# Ignore bin
-/POI-DNA-Analyzer/bin/
+# Resharper folders
+_ReSharper*/
+
+# User-specific files
+*.suo
+*.user
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio Code files
+.vscode/
+
+# Rider files
+.idea/
+*.sln.iml
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# MonoDevelop
+*.pidb
+*.userprefs
+
+# Xamarin-specific
+*.sln.ide
+*.apk
+*.ap_
+
+# Unity3D
+Library/
+Temp/
+*.stackdump
+*.tmp
