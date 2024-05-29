@@ -74,12 +74,12 @@ namespace POI_DNA_Analyzer
 
 			_x.MajorStep = 1;
 			_x.MinorStep = 1;
-			_x.LabelFormatter = value => FormatValue(indexes, value);
+			_x.LabelFormatter = value => FormatLabelValue(indexes, value);
 
 			_plotView.InvalidatePlot();
 		}
 
-		private string FormatValue(List<int> indexes, double value)
+		private string FormatLabelValue(List<int> indexes, double value)
 		{
 			if (value >= indexes.Count || value < 0)
 				return "";
@@ -110,9 +110,6 @@ namespace POI_DNA_Analyzer
 				Position = AxisPosition.Bottom,
 				Minimum = 1,
 				Maximum = 5,
-				FractionUnit = 1,
-				MinorStep = 1,
-				MajorStep = 1,
 			};
 
 			_model.Axes.Add(_x);

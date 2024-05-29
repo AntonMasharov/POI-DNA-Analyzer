@@ -20,6 +20,7 @@ namespace POI_DNA_Analyzer
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
 			_oxyPlotProbabilityGraph = new OxyPlotProbabilityGraph(plotView);
+
 			_checkBox = checkBox;
 		}
 

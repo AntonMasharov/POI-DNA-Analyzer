@@ -31,7 +31,6 @@
 			foreach (string key in inputMatrix.Keys.ToList())
 			{
 				string newKey = key[0] + "N";
-
 				result[newKey].Add(key, MathF.Round(inputMatrix[key] * 100, 2));
 			}
 
