@@ -9,11 +9,13 @@ namespace POI_DNA_Analyzer
 {
 	class OxyPlotProbabilityGraph : IProbabilityGraph
 	{
+		public event Action Updated;
+
 		private PlotView _plotView;
 		private PlotModel _model;
 		private LinearAxis _x;
 		private LinearAxis _y;
-		private double _viewSpan = 10;
+		private LineSeries _lineSeries;
 
 		public OxyPlotProbabilityGraph(PlotView plotView)
 		{
@@ -25,9 +27,24 @@ namespace POI_DNA_Analyzer
 			AddYAxis();
 		}
 
+		public PlotView View 
+		{ 
+			get { return _plotView; } 
+		}
+
+		public PlotModel Model 
+		{ 
+			get { return _model; } 
+		}
+
+		public int DataPointsCount
+		{
+			get { return _lineSeries == null ? 0 : _lineSeries.Points.Count; }
+		}
+
 		public void ProvideData(List<int> indexes, List<double> probabilities, Color color, string name)
 		{
-			LineSeries series = new LineSeries
+			_lineSeries = new LineSeries
 			{
 				MarkerType = MarkerType.Circle,
 				MarkerSize = 4,
@@ -40,19 +57,19 @@ namespace POI_DNA_Analyzer
 			for (int i = 0; i < probabilities.Count; i++)
 			{
 				DataPoint dataPoint = new DataPoint(i, probabilities[i]);
-				series.Points.Add(dataPoint);
+				_lineSeries.Points.Add(dataPoint);
 			}
 
 			UpdateXAxis(indexes);
 
-			_model.Series.Add(series);
+			_model.Series.Add(_lineSeries);
 		}
 
 		public void Show()
 		{
 			_plotView.Model = _model;
-
 			_model.InvalidatePlot(true);
+			Updated?.Invoke();
 		}
 
 		public void Clear()
@@ -60,20 +77,11 @@ namespace POI_DNA_Analyzer
 			_model.Series.Clear();
 		}
 
-		public void SetXAxisViewRange(double offset)
-		{
-			_x.Minimum = offset;
-			_x.Maximum = offset + _viewSpan;
-			_model.InvalidatePlot(true);
-		}
-
 		private void UpdateXAxis(List<int> indexes)
 		{
 			if (_model == null || _x == null)
 				return;
 
-			_x.MajorStep = 1;
-			_x.MinorStep = 1;
 			_x.LabelFormatter = value => FormatLabelValue(indexes, value);
 
 			_plotView.InvalidatePlot();
@@ -81,12 +89,17 @@ namespace POI_DNA_Analyzer
 
 		private string FormatLabelValue(List<int> indexes, double value)
 		{
-			if (value >= indexes.Count || value < 0)
+			if (value >= indexes.Count || value < 0 || IsInteger(value) == false)
 				return "";
 
 			string result = indexes[Convert.ToInt32(value)].ToString();
 
 			return result;
+		}
+
+		private bool IsInteger(double value)
+		{
+			return value == Math.Floor(value) || value == Math.Ceiling(value);
 		}
 
 		private void CreateLegend()
@@ -110,6 +123,7 @@ namespace POI_DNA_Analyzer
 				Position = AxisPosition.Bottom,
 				Minimum = 1,
 				Maximum = 5,
+				MinorTickSize = 0
 			};
 
 			_model.Axes.Add(_x);
