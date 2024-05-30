@@ -1,6 +1,7 @@
 ﻿using OxyPlot.Wpf;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace POI_DNA_Analyzer
 {
@@ -16,12 +17,13 @@ namespace POI_DNA_Analyzer
 		private int _chunkSize;
 		private double _similarityCoefficient;
 
-		public DinucleotidesAnalyzerWindow(PlotView plotView, CheckBox checkBox)
+		public DinucleotidesAnalyzerWindow(PlotView plotView, CheckBox checkBox, ScrollBar scrollBar)
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
 			_oxyPlotProbabilityGraph = new OxyPlotProbabilityGraph(plotView);
-
 			_checkBox = checkBox;
+
+			OxyPlotProbabilityGraphMediator graphMediator = new OxyPlotProbabilityGraphMediator(scrollBar, _oxyPlotProbabilityGraph);
 		}
 
 		public void UpdateFileStream(StreamReader fileStream)
@@ -53,11 +55,6 @@ namespace POI_DNA_Analyzer
 		{
 			_currentDinucleotide = tag;
 			ShowGraph();
-		}
-
-		public void SetXAxisViewRange(double offset)
-		{
-			_oxyPlotProbabilityGraph.SetXAxisViewRange(offset);
 		}
 
 		private void ShowGraph()

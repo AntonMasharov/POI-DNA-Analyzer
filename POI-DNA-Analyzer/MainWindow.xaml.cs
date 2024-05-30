@@ -17,7 +17,7 @@ namespace POI_DNA_Analyzer
 			InitializeComponent();
 
 			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List);
-			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot, EnableSliderCheckBox);
+			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar);
 		}
 
 		private void OpenFileButtonClick(object sender, RoutedEventArgs e)
@@ -61,7 +61,7 @@ namespace POI_DNA_Analyzer
 
 		private void HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			_dinucleotidesAnalyzerWindow.SetXAxisViewRange(e.NewValue);
+
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)
