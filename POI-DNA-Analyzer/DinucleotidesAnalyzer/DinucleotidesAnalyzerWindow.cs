@@ -9,7 +9,7 @@ namespace POI_DNA_Analyzer
 	{
 		private StreamReader _fileStream;
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
-		private OxyPlotProbabilityGraph _oxyPlotProbabilityGraph;
+		private IProbabilityGraph _probabilityGraph;
 		private CheckBox _checkBox;
 
 		private string _currentDinucleotide = "A";
@@ -20,10 +20,10 @@ namespace POI_DNA_Analyzer
 		public DinucleotidesAnalyzerWindow(PlotView plotView, CheckBox checkBox, ScrollBar scrollBar)
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
-			_oxyPlotProbabilityGraph = new OxyPlotProbabilityGraph(plotView);
 			_checkBox = checkBox;
 
-			OxyPlotProbabilityGraphMediator graphMediator = new OxyPlotProbabilityGraphMediator(scrollBar, _oxyPlotProbabilityGraph);
+			ProbabilityGraphFactory probabilityGraphFactory = new ProbabilityGraphFactory(plotView, scrollBar);
+			_probabilityGraph = probabilityGraphFactory.Get();
 		}
 
 		public void UpdateFileStream(StreamReader fileStream)
@@ -39,6 +39,9 @@ namespace POI_DNA_Analyzer
 			_similarityCoefficient = similarityCoefficient;
 
 			if (int.TryParse(textBox.Text, out _chunkSize) == false)
+				_chunkSize = _defaultChunkSize;
+
+			if (_chunkSize <= 0)
 				_chunkSize = _defaultChunkSize;
 
 			ShowGraph();
@@ -63,14 +66,14 @@ namespace POI_DNA_Analyzer
 				return;
 
 			_dinucleotidesAnalyzer.Analyze(_fileStream, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
-			_oxyPlotProbabilityGraph.Clear();
+			_probabilityGraph.Clear();
 
 			if (_currentDinucleotide.Length == 1)
 				ShowNN();
 			else
 				ShowN();
 
-			_oxyPlotProbabilityGraph.Show();
+			_probabilityGraph.Show();
 		}
 
 		private void ShowNN()
@@ -89,7 +92,7 @@ namespace POI_DNA_Analyzer
 			{
 				if (key[0].ToString() == _currentDinucleotide[0].ToString())
 				{
-					_oxyPlotProbabilityGraph.ProvideData(_dinucleotidesAnalyzer.Indexes, _dinucleotidesAnalyzer.DinucleotidesProbabilities[key], listOfColors[i], key);
+					_probabilityGraph.ProvideData(_dinucleotidesAnalyzer.Indexes, _dinucleotidesAnalyzer.DinucleotidesProbabilities[key], listOfColors[i], key);
 					i++;
 				}
 			}
@@ -97,7 +100,7 @@ namespace POI_DNA_Analyzer
 
 		private void ShowN()
 		{
-			_oxyPlotProbabilityGraph.ProvideData(_dinucleotidesAnalyzer.Indexes, _dinucleotidesAnalyzer.DinucleotidesProbabilities[_currentDinucleotide], System.Drawing.Color.Red, _currentDinucleotide);
+			_probabilityGraph.ProvideData(_dinucleotidesAnalyzer.Indexes, _dinucleotidesAnalyzer.DinucleotidesProbabilities[_currentDinucleotide], System.Drawing.Color.Red, _currentDinucleotide);
 		}
 
 		private bool RetrieveCheckBoxInfo()

@@ -2,21 +2,21 @@
 {
 	internal class CosineSimilarityMatrixComparator : IMatrixComparator
 	{
-		private Dictionary<string, Dictionary<string, float>> _firstMatrixProbabilities;
-		private Dictionary<string, Dictionary<string, float>> _secondMatrixProbabilities;
+		private Dictionary<string, Dictionary<string, float>> _firstMatrix;
+		private Dictionary<string, Dictionary<string, float>> _secondMatrix;
 
 		public CosineSimilarityMatrixComparator()
 		{
-			_firstMatrixProbabilities = new Dictionary<string, Dictionary<string, float>>();
-			_secondMatrixProbabilities = new Dictionary<string, Dictionary<string, float>>();
+			_firstMatrix = new Dictionary<string, Dictionary<string, float>>();
+			_secondMatrix = new Dictionary<string, Dictionary<string, float>>();
 		}
 
 		public bool IsSimilar(Dictionary<string, float> firstMatrix, Dictionary<string, float> secondMatrix, double similarityCoefficient)
 		{
-			_firstMatrixProbabilities = GetDataFromMatrix(firstMatrix);
-			_secondMatrixProbabilities = GetDataFromMatrix(secondMatrix);
+			_firstMatrix = ReorganizeMatrix(firstMatrix);
+			_secondMatrix = ReorganizeMatrix(secondMatrix);
 
-			double similarity = CalculateCosineSimilarity(_firstMatrixProbabilities, _secondMatrixProbabilities);
+			double similarity = CalculateCosineSimilarity(_firstMatrix, _secondMatrix);
 
 			if (similarity >= similarityCoefficient)
 				return true;
@@ -24,7 +24,7 @@
 				return false;
 		}
 
-		private Dictionary<string, Dictionary<string, float>> GetDataFromMatrix(Dictionary<string, float> inputMatrix)
+		private Dictionary<string, Dictionary<string, float>> ReorganizeMatrix(Dictionary<string, float> inputMatrix)
 		{
 			Dictionary<string, Dictionary<string, float>> result = new Dictionary<string, Dictionary<string, float>>(GetTemplateMatrix()) { };
 

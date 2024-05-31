@@ -118,7 +118,8 @@
 								Margin="150,10,0,0" 
 								TextWrapping="Wrap" 
 								VerticalAlignment="Top" 
-								Height="21" HorizontalAlignment="Left" 
+								Height="21" 
+								HorizontalAlignment="Left" 
 								Width="174"/>
 							<CheckBox x:Name="EnableSliderCheckBox" 
 								Content="{DynamicResource EnableSliderCheckBox}" 
