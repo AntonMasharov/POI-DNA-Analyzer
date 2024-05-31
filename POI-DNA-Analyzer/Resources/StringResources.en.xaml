@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+					xmlns:system="clr-namespace:System;assembly=System.Runtime">
+	<system:String x:Key="SequenceFinderTab">Sequence Finder</system:String>
+	<system:String x:Key="Prompt">Prompt:</system:String>
+	<system:String x:Key="FindButton">Find</system:String>
+	<system:String x:Key="ResultText">Result is gonna be here...</system:String>
+	<system:String x:Key="SaveButton">Save</system:String>
+	<system:String x:Key="ClearButton">Clear</system:String>
+	<system:String x:Key="OpenFileButton">File</system:String>
+	<system:String x:Key="DinucleotidesAnalyzerTab">Dinucleotides Analyzer</system:String>
+	<system:String x:Key="ChunkSize">Chunk size:</system:String>
+	<system:String x:Key="EnableSliderCheckBox">Enable matrix comparison</system:String>
+	<system:String x:Key="SimilarityCoefficient">Similarity coefficient:</system:String>
+	<system:String x:Key="StartButton">Start</system:String>
+	<system:String x:Key="Language">Язык</system:String>
+</ResourceDictionary>

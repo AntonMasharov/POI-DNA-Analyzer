@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=System.Runtime">
+	<system:String x:Key="SequenceFinderTab">Поиск последовательности</system:String>
+	<system:String x:Key="Prompt">Запрос:</system:String>
+	<system:String x:Key="FindButton">Найти</system:String>
+	<system:String x:Key="ResultText">Результат будет здесь...</system:String>
+	<system:String x:Key="SaveButton">Сохранить</system:String>
+	<system:String x:Key="ClearButton">Очистить</system:String>
+	<system:String x:Key="OpenFileButton">Файл</system:String>
+	<system:String x:Key="DinucleotidesAnalyzerTab">Анализ динуклеотидов</system:String>
+	<system:String x:Key="ChunkSize">Размер части:</system:String>
+	<system:String x:Key="EnableSliderCheckBox">Включить сравнение матриц</system:String>
+	<system:String x:Key="SimilarityCoefficient">Процент похожести:</system:String>
+	<system:String x:Key="StartButton">Старт</system:String>
+	<system:String x:Key="Language">Language</system:String>
+</ResourceDictionary>

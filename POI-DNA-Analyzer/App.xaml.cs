@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 
 namespace POI_DNA_Analyzer
 {
@@ -9,6 +7,6 @@ namespace POI_DNA_Analyzer
 	/// </summary>
 	public partial class App : Application
 	{
-	}
 
+	}
 }

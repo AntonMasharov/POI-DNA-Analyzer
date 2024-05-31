@@ -15,6 +15,7 @@ namespace POI_DNA_Analyzer
 		public MainWindow()
 		{
 			InitializeComponent();
+			Localize("ru");
 
 			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List);
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar);
@@ -80,6 +81,26 @@ namespace POI_DNA_Analyzer
 			FileOpener fileOpener = new FileOpener();
 
 			_fileStream = fileOpener.OpenFile(_filePath);
+		}
+
+		private void SetRULang(object sender, RoutedEventArgs e)
+		{
+			Localize("ru");
+		}
+
+		private void SetENLang(object sender, RoutedEventArgs e)
+		{
+			Localize("en");
+		}
+
+		private void Localize(string code)
+		{
+			string path = "..\\Resources\\StringResources." + code + ".xaml";
+
+			ResourceDictionary dictionary = new ResourceDictionary();
+			dictionary.Source = new Uri(path, UriKind.Relative);
+
+			this.Resources.MergedDictionaries.Add(dictionary);
 		}
 	}
 }
