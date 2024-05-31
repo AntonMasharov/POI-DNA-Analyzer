@@ -12,14 +12,6 @@ namespace POI_DNA_Analyzer
 			_textBlock = textBlock;
 		}
 
-		public void Show(StreamReader streamReader)
-		{
-			if (streamReader == null)
-				return;
-
-			_textBlock.Text = streamReader.ReadToEnd();
-		}
-
 		public void Clear()
 		{
 			_textBlock.Text = "";

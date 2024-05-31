@@ -1,5 +1,4 @@
 ﻿using OxyPlot.Wpf;
-using System.IO;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -7,11 +6,11 @@ namespace POI_DNA_Analyzer
 {
 	internal class DinucleotidesAnalyzerWindow
 	{
-		private StreamReader _fileStream;
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
 		private IProbabilityGraph _probabilityGraph;
 		private CheckBox _checkBox;
 
+		private string _fileText = "";
 		private string _currentDinucleotide = "A";
 		private int _defaultChunkSize = 100;
 		private int _chunkSize;
@@ -26,12 +25,12 @@ namespace POI_DNA_Analyzer
 			_probabilityGraph = probabilityGraphFactory.Get();
 		}
 
-		public void UpdateFileStream(StreamReader fileStream)
+		public void UpdateText(string text)
 		{
-			if (fileStream == null)
+			if (text == null || text == "") 
 				return;
 
-			_fileStream = fileStream;
+			_fileText = text;
 		}
 
 		public void Analyze(TextBox textBox, double similarityCoefficient)
@@ -62,10 +61,10 @@ namespace POI_DNA_Analyzer
 
 		private void ShowGraph()
 		{
-			if (_fileStream == null)
+			if (_fileText == null || _fileText == "")
 				return;
 
-			_dinucleotidesAnalyzer.Analyze(_fileStream, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
+			_dinucleotidesAnalyzer.Analyze(_fileText, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
 			_probabilityGraph.Clear();
 
 			if (_currentDinucleotide.Length == 1)

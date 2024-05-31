@@ -10,7 +10,7 @@ namespace POI_DNA_Analyzer
 		private DinucleotidesAnalyzerWindow _dinucleotidesAnalyzerWindow;
 		private OpenReadingFrameWindow _openReadingFrameWindow;
 		private StreamReader _fileStream;
-
+		private string _fileText = "";
 		private string _filePath = "";
 
 		public MainWindow()
@@ -30,6 +30,7 @@ namespace POI_DNA_Analyzer
 			_filePath = filePicker.PickFilePath();
 
 			OpenFile();
+			ReadTextFromFile(_fileStream);
 		}
 
 		private void SaveFileButtonClick(object sender, RoutedEventArgs e)
@@ -39,9 +40,7 @@ namespace POI_DNA_Analyzer
 
 		private void EnterPromptButtonClick(object sender, RoutedEventArgs e)
 		{
-			_sequencesFinderWindow.Find(PromptField.Text, _fileStream);
-
-			OpenFile();
+			_sequencesFinderWindow.Find(PromptField.Text, _fileText);
 		}
 
 		private void ClearResultButtonClick(object sender, RoutedEventArgs e)
@@ -56,10 +55,8 @@ namespace POI_DNA_Analyzer
 
 		private void StartDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
 		{
-			_dinucleotidesAnalyzerWindow.UpdateFileStream(_fileStream);
+			_dinucleotidesAnalyzerWindow.UpdateText(_fileText);
 			_dinucleotidesAnalyzerWindow.Analyze(ChunkSizeTextBox, SimilaritySlider.Value);
-
-			OpenFile();
 		}
 
 		private void HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -83,10 +80,8 @@ namespace POI_DNA_Analyzer
 
 		private void ShowGraph(object sender, RoutedEventArgs e)
 		{
-			_dinucleotidesAnalyzerWindow.UpdateFileStream(_fileStream);
+			_dinucleotidesAnalyzerWindow.UpdateText(_fileText);
 			_dinucleotidesAnalyzerWindow.ShowGraph(((Button)sender).Tag.ToString());
-
-			OpenFile();
 		}
 
 		private void OpenFile()
@@ -97,6 +92,12 @@ namespace POI_DNA_Analyzer
 			FileOpener fileOpener = new FileOpener();
 
 			_fileStream = fileOpener.OpenFile(_filePath);
+		}
+
+		private void ReadTextFromFile(StreamReader streamReader)
+		{
+			FilePreparator filePreparator = new FilePreparator();
+			_fileText = filePreparator.GetString(streamReader);
 		}
 
 		private void SetRULang(object sender, RoutedEventArgs e)

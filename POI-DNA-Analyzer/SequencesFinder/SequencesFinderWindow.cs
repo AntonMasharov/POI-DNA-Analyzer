@@ -16,12 +16,12 @@ namespace POI_DNA_Analyzer
 			_sequencesFinder = new SequencesFinder();
 		}
 
-		public void Find(string sequenceToFind, StreamReader fileStream)
+		public void Find(string sequenceToFind, string text)
 		{
-			if (fileStream == null)
+			if (text == null || text == "")
 				return;
 
-			int result = _sequencesFinder.GetOccurrencesCount(fileStream.ReadToEnd(), sequenceToFind);
+			int result = _sequencesFinder.GetOccurrencesCount(text, sequenceToFind);
 
 			_resultText.ShowOccurrencesCount(result.ToString());
 			_listOfIndexes.ShowOccurrencesIndexes(_sequencesFinder.SequenceIndexes);
