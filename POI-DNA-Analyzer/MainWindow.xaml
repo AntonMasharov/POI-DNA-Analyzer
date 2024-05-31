@@ -230,6 +230,37 @@
 					</Grid>
 				</Grid>
 			</TabItem>
+			<TabItem x:Name="OpenReadingFrameTab">
+				<TabItem.Header>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Margin="3" Text="{DynamicResource OpenReadingFrameTab}"></TextBlock>
+					</StackPanel>
+				</TabItem.Header>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Button x:Name="CreateComplementaryDNA" 
+						Content="{DynamicResource StartButton}" 
+						Margin="0,0,10,10" 
+						Click="CreateComplementaryDNAButtonClick"
+						HorizontalAlignment="Right" 
+						Width="79" 
+						Height="29"
+						VerticalAlignment="Bottom"
+						Grid.Column="1" />
+					<Button x:Name="SaveComplementaryDNAFile" 
+						Click="SaveComplementaryDNAFileButtonClick" 
+						Content="{DynamicResource SaveButton}" 
+						Margin="0,0,94,10" 
+						Height="29" 
+						VerticalAlignment="Bottom" 
+						HorizontalAlignment="Right" 
+						Width="79" 
+						Grid.Column="1" />
+				</Grid>
+			</TabItem>
 		</TabControl>
 		<Button x:Name="OpenFileButton" 
 			Content="{DynamicResource OpenFileButton}" 

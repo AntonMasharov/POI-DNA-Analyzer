@@ -14,4 +14,5 @@
 	<system:String x:Key="SimilarityCoefficient">Процент похожести:</system:String>
 	<system:String x:Key="StartButton">Старт</system:String>
 	<system:String x:Key="Language">Language</system:String>
+	<system:String x:Key="OpenReadingFrameTab">Открытые рамки считывания</system:String>
 </ResourceDictionary>

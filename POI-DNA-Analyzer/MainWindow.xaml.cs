@@ -8,6 +8,7 @@ namespace POI_DNA_Analyzer
 	{
 		private SequencesFinderWindow _sequencesFinderWindow;
 		private DinucleotidesAnalyzerWindow _dinucleotidesAnalyzerWindow;
+		private OpenReadingFrameWindow _openReadingFrameWindow;
 		private StreamReader _fileStream;
 
 		private string _filePath = "";
@@ -19,6 +20,7 @@ namespace POI_DNA_Analyzer
 
 			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List);
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar);
+			_openReadingFrameWindow = new OpenReadingFrameWindow();
 		}
 
 		private void OpenFileButtonClick(object sender, RoutedEventArgs e)
@@ -63,6 +65,20 @@ namespace POI_DNA_Analyzer
 		private void HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 
+		}
+
+		private void CreateComplementaryDNAButtonClick(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.Start(_fileStream);
+
+			OpenFile();
+		}
+
+		private void SaveComplementaryDNAFileButtonClick(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.Save();
+
+			OpenFile();
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)
