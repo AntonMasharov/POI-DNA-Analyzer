@@ -25,3 +25,5 @@ D:\Projects\Education\POI-DNA-Analyzer\POI-DNA-Analyzer\POI-DNA-Analyzer\obj\Deb
 D:\Projects\Education\POI-DNA-Analyzer\POI-DNA-Analyzer\POI-DNA-Analyzer\obj\Debug\net8.0-windows\POI-DNA-Analyzer.pdb
 D:\Projects\Education\POI-DNA-Analyzer\POI-DNA-Analyzer\POI-DNA-Analyzer\obj\Debug\net8.0-windows\POI-DNA-Analyzer.genruntimeconfig.cache
 D:\Projects\Education\POI-DNA-Analyzer\POI-DNA-Analyzer\POI-DNA-Analyzer\obj\Debug\net8.0-windows\ref\POI-DNA-Analyzer.dll
+D:\Projects\Education\POI-DNA-Analyzer\POI-DNA-Analyzer\POI-DNA-Analyzer\bin\Debug\net8.0-windows\codons.csv
+D:\Projects\Education\POI-DNA-Analyzer\POI-DNA-Analyzer\POI-DNA-Analyzer\obj\Debug\net8.0-windows\POI-DNA-Analyzer_Content.g.cs

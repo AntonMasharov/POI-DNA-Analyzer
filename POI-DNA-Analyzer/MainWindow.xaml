@@ -215,6 +215,10 @@
 								VerticalAlignment="Bottom" 
 								HorizontalAlignment="Right" 
 								Width="79"/>
+							<ProgressBar x:Name="DinucleotidesAnalyzerProgressBar"
+								Margin="10,0,178,10" 
+								Height="29" 
+								VerticalAlignment="Bottom"/>
 						</Grid>
 						<Grid Grid.Row="0">
 							<oxy:PlotView x:Name="OxyPlot" 

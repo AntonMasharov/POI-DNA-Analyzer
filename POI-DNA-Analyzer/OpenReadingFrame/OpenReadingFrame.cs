@@ -1,28 +1,64 @@
 ﻿using System.IO;
 
-namespace POI_DNA_Analyzer.OpenReadingFrame
+namespace POI_DNA_Analyzer
 {
 	internal class OpenReadingFrame
 	{
-		private StreamReader _streamReader;
+		private Codon _codon;
+		private int _codonSize = 3;
 
-		public void Start(StreamReader streamReader)
+		public OpenReadingFrame()
 		{
-			if (streamReader == null)
-				return;
-
-			_streamReader = streamReader;
+			_codon = new Codon();
 		}
 
-		private void Read(int indent)
+		public void Start(string text, bool isComplementary, string cultureCode)
 		{
-			if (indent < 1 || indent > 3)
-				return;
+			for (int i = 0; i < 3; i++)
+			{
+				SaveToFile(ReadCodons(text, i, cultureCode), GetFileName(i, isComplementary));
+			}
 		}
 
-		private void Codon()
+		private string ReadCodons(string text, int indent, string cultureCode)
+		{
+			if (indent < 0 || indent > 2)
+				return "";
+
+			string outputText = "";
+			int leftBorder = indent;
+
+			while (leftBorder + _codonSize < text.Length)
+			{
+				string codon = text.Substring(leftBorder, _codonSize);
+				outputText += _codon.GetCorrespondingAminoAcid(codon, cultureCode);
+				leftBorder += _codonSize;
+			}
+
+			return outputText;
+		}
+
+		private void ReadAminoAcids()
 		{
 
+		}
+
+		private void SaveToFile(string textToSave, string fileName)
+		{
+			if (textToSave == "" || fileName == "")
+				return;
+
+			string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
+			File.WriteAllText(filePath, textToSave);
+		}
+
+		private string GetFileName(int indent, bool isComplementary)
+		{
+			if (isComplementary == true)
+				return "standard-animoacids-indent" + indent.ToString() + ".txt";
+			else
+				return "complementary-animoacids-indent" + indent.ToString() + ".txt";
 		}
 	}
 }

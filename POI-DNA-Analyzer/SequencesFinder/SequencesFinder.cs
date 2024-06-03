@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace POI_DNA_Analyzer
+﻿namespace POI_DNA_Analyzer
 {
 	internal class SequencesFinder
 	{
@@ -14,8 +12,6 @@ namespace POI_DNA_Analyzer
 				return 0;
 
 			SequenceIndexes.Clear();
-			source = Regex.Replace(source, @"\t|\n|\r", "");
-
 			int count = 0;
 			int index = 0;
 

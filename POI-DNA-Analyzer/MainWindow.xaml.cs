@@ -19,7 +19,7 @@ namespace POI_DNA_Analyzer
 			Localize("ru");
 
 			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List);
-			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar);
+			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(DinucleotidesAnalyzerProgressBar, OxyPlot, EnableSliderCheckBox, HorizontalScrollBar);
 			_openReadingFrameWindow = new OpenReadingFrameWindow();
 		}
 
@@ -66,16 +66,12 @@ namespace POI_DNA_Analyzer
 
 		private void CreateComplementaryDNAButtonClick(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.Start(_fileStream);
-
-			OpenFile();
+			//_openReadingFrameWindow.Start(_fileText);
 		}
 
 		private void SaveComplementaryDNAFileButtonClick(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.Save();
-
-			OpenFile();
+			//_openReadingFrameWindow.Save();
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)

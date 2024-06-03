@@ -1,30 +1,52 @@
-﻿using System.IO;
+﻿using static System.Net.Mime.MediaTypeNames;
 
 namespace POI_DNA_Analyzer
 {
 	internal class OpenReadingFrameWindow
 	{
+		private StartAminoAcidFile _startAminoAcidFile;
+		private DNACodonTableFile _DNAcodonTableFile;
+		private StartAminoAcidTableFileReader _startAminoAcidTableFileReader;
+		private DNACodonTableFileReader _DNAcodonTableFileReader;
 		private ComplementaryDNACreator _complementaryDNACreator;
-		private string _result = "";
+		private OpenReadingFrame _openReadingFrame;
 
 		public OpenReadingFrameWindow()
 		{
+			_startAminoAcidFile = new StartAminoAcidFile();
+			_DNAcodonTableFile = new DNACodonTableFile();
+			_startAminoAcidTableFileReader = new StartAminoAcidTableFileReader(_startAminoAcidFile);
+			_DNAcodonTableFileReader = new DNACodonTableFileReader(_DNAcodonTableFile);
 			_complementaryDNACreator = new ComplementaryDNACreator();
+			_openReadingFrame = new OpenReadingFrame();
+
+			_startAminoAcidTableFileReader.ReadTable();
+			_DNAcodonTableFileReader.ReadTable();
 		}
 
-		public void Start(StreamReader fileStream)
+		public void Start(string text, string cultureCode)
 		{
-			if (fileStream == null)
+			if (text == null || text == "")
 				return;
 
-			_result = _complementaryDNACreator.Create(fileStream);
+			ReadStandardSequence(text, cultureCode);
+			ReadComplementarySequence(text, cultureCode);
 		}
 
 		public void Save()
 		{
-			ComplementaryDNAFileSaver complementaryDNAFileSaver = new ComplementaryDNAFileSaver();
 
-			complementaryDNAFileSaver.Save(_result);
+		}
+
+		private void ReadStandardSequence(string text, string cultureCode)
+		{
+			_openReadingFrame.Start(text, false, cultureCode);
+		}
+
+		private void ReadComplementarySequence(string text, string cultureCode)
+		{
+			string complementarySequence = _complementaryDNACreator.Create(text);
+			_openReadingFrame.Start(complementarySequence, true, cultureCode);
 		}
 	}
 }

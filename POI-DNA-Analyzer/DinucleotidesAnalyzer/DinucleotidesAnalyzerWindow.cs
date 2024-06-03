@@ -6,6 +6,7 @@ namespace POI_DNA_Analyzer
 {
 	internal class DinucleotidesAnalyzerWindow
 	{
+		private DinucleotidesAnalyzerProgressBar _dinucleotidesAnalyzerProgressBar;
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
 		private IProbabilityGraph _probabilityGraph;
 		private CheckBox _checkBox;
@@ -16,13 +17,23 @@ namespace POI_DNA_Analyzer
 		private int _chunkSize;
 		private double _similarityCoefficient;
 
-		public DinucleotidesAnalyzerWindow(PlotView plotView, CheckBox checkBox, ScrollBar scrollBar)
+		public DinucleotidesAnalyzerWindow(ProgressBar progressBar, PlotView plotView, CheckBox checkBox, ScrollBar scrollBar)
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
 			_checkBox = checkBox;
 
 			ProbabilityGraphFactory probabilityGraphFactory = new ProbabilityGraphFactory(plotView, scrollBar);
 			_probabilityGraph = probabilityGraphFactory.Get();
+
+			_dinucleotidesAnalyzerProgressBar = new DinucleotidesAnalyzerProgressBar(progressBar);
+			_dinucleotidesAnalyzer.Executing += _dinucleotidesAnalyzerProgressBar.Update;
+			_dinucleotidesAnalyzer.Started += _dinucleotidesAnalyzerProgressBar.Show;
+		}
+
+		~DinucleotidesAnalyzerWindow()
+		{
+			_dinucleotidesAnalyzer.Executing -= _dinucleotidesAnalyzerProgressBar.Update;
+			_dinucleotidesAnalyzer.Started -= _dinucleotidesAnalyzerProgressBar.Show;
 		}
 
 		public void UpdateText(string text)
