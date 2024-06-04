@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 
 namespace POI_DNA_Analyzer
 {
@@ -11,12 +9,8 @@ namespace POI_DNA_Analyzer
 			if (countInfo == "")
 				return;
 
-			SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-			if (saveFileDialog.ShowDialog() == true)
-			{
-				File.WriteAllText(saveFileDialog.FileName, BuildWholeString(countInfo, indexes));
-			}
+			NoExtentionFileSaver fileSaver = new NoExtentionFileSaver();
+			fileSaver.Save(BuildWholeString(countInfo, indexes));
 		}
 
 		private string BuildIndexes(LinkedList<int> indexes)

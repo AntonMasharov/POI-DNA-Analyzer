@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 
 namespace POI_DNA_Analyzer
 {
@@ -18,14 +16,8 @@ namespace POI_DNA_Analyzer
 			if (_dinucleotidesAnalyzer.DinucleotidesProbabilities == null || IsDictionaryEmpty())
 				return;
 
-			SaveFileDialog saveFileDialog = new SaveFileDialog();
-			saveFileDialog.Filter = "CSV Files (*.csv)|*.csv";
-			saveFileDialog.DefaultExt = "csv";
-
-			if (saveFileDialog.ShowDialog() == true)
-			{
-				File.WriteAllText(saveFileDialog.FileName, CreateFile());
-			}
+			CSVFileSaver fileSaver = new CSVFileSaver();
+			fileSaver.Save(CreateFile());
 		}
 
 		private string CreateFile()
