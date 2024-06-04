@@ -11,9 +11,9 @@
 			_codonsEN = new Dictionary<string, string>();
 		}
 
-		public string GetCorrespondingAminoAcid(string nucleotides, string cultureCode)
+		public string GetCorrespondingAminoAcid(string nucleotides, Languages language)
 		{
-			if (cultureCode == "ru-RU")
+			if (language == Languages.Russian)
 			{
 				return _codonsRU[nucleotides];
 			}

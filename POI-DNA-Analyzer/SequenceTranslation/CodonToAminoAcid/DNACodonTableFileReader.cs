@@ -6,14 +6,14 @@
 		private Codon _codon;
 		private Dictionary<string, int> _header;
 
-		public DNACodonTableFileReader(DNACodonTableFile file)
+		public DNACodonTableFileReader(Codon codon, DNACodonTableFile file)
 		{
 			_codonsFile = file;
-			_codon = new Codon();
+			_codon = codon;
 			_header = new Dictionary<string, int>();
 		}
 
-		public void ReadTable()
+		public void Read()
 		{
 			SetDefaultState();
 

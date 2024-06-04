@@ -1,83 +1,52 @@
-﻿using System.IO;
-
-namespace POI_DNA_Analyzer
+﻿namespace POI_DNA_Analyzer
 {
 	internal class OpenReadingFrame
 	{
-		private ResultAminoAcidsFileReader _resultAminoAcidsFileReader;
-		private Codon _codon;
 		private AminoAcid _aminoAcid;
-		private int _codonSize = 3;
-		private List<string> _resultFilesNames = new List<string>();
+		private StartAminoAcidFile _startAminoAcidFile;
+		private StartAminoAcidTableFileReader _startAminoAcidTableFileReader;
+		private ResultAminoAcidsFileReader _resultFilesReader;
 
 		public OpenReadingFrame()
 		{
-			_resultAminoAcidsFileReader = new ResultAminoAcidsFileReader();
-			_codon = new Codon();
+			_aminoAcid = new AminoAcid();
+			_startAminoAcidFile = new StartAminoAcidFile();
+			_startAminoAcidTableFileReader = new StartAminoAcidTableFileReader(_aminoAcid, _startAminoAcidFile);
+			_startAminoAcidTableFileReader.Read();
+			_resultFilesReader = new ResultAminoAcidsFileReader();
+
+			OpenReadingFrameSequences = new Dictionary<int, string>();
 		}
 
-		public void Start(string text, bool isComplementary, string cultureCode)
-		{
-			_resultFilesNames.Clear();
+		public Dictionary<int, string> OpenReadingFrameSequences { get; private set; } //<index, sequence>
 
-			for (int i = 0; i < 3; i++)
+		public void HandleSequence(string sequence)
+		{
+			OpenReadingFrameSequences.Clear();
+			string[] aminoAcids = sequence.Split(',');
+
+			for (int i = 0; i < aminoAcids.Length; i++)
 			{
-				SaveToFile(ReadCodons(text, i, cultureCode), GetFileName(i, isComplementary));
+				if (_aminoAcid.IsStart(aminoAcids[i]) == false)
+					continue;
+
+				int startIndex = i;
+				bool isStopEncoutered = false;
+				OpenReadingFrameSequences.Add(startIndex, "");
+
+				for (int j = i; j < aminoAcids.Length; j++)
+				{
+					i = j;
+
+					if (_aminoAcid.IsStop(aminoAcids[j]) == true)
+						isStopEncoutered = true;
+
+					if (_aminoAcid.IsStop(aminoAcids[j]) == false && isStopEncoutered == true)
+						break;
+
+					OpenReadingFrameSequences[startIndex] += aminoAcids[j];
+				}
 			}
-		}
-
-		private string ReadCodons(string text, int indent, string cultureCode)
-		{
-			if (indent < 0 || indent > 2)
-				return "";
-
-			string outputText = "";
-			int leftBorder = indent;
-
-			while (leftBorder + _codonSize < text.Length)
-			{
-				string codon = text.Substring(leftBorder, _codonSize);
-				outputText += _codon.GetCorrespondingAminoAcid(codon, cultureCode) + ",";
-				leftBorder += _codonSize;
-			}
-
-			return outputText;
-		}
-
-		private void ReadAminoAcids()
-		{
-			foreach (string name in _resultFilesNames)
-			{
-				Algorithm(_resultAminoAcidsFileReader.GetString(name));
-			}
-		}
-
-		private void Algorithm(string text)
-		{
-
-		}
-
-		private void SaveToFile(string textToSave, string fileName)
-		{
-			if (textToSave == "" || fileName == "")
-				return;
-
-			string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-
-			File.WriteAllText(filePath, textToSave);
-		}
-
-		private string GetFileName(int indent, bool isComplementary)
-		{
-			string fileName = "";
-
-			if (isComplementary == true)
-				fileName = "standard-animoacids-indent" + indent.ToString() + ".txt";
-			else
-				fileName = "complementary-animoacids-indent" + indent.ToString() + ".txt";
-
-			_resultFilesNames.Add(fileName);
-			return fileName;
 		}
 	}
 }

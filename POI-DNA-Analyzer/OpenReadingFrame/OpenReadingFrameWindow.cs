@@ -1,52 +1,76 @@
-﻿using static System.Net.Mime.MediaTypeNames;
+﻿using System.IO;
 
 namespace POI_DNA_Analyzer
 {
 	internal class OpenReadingFrameWindow
 	{
-		private StartAminoAcidFile _startAminoAcidFile;
-		private DNACodonTableFile _DNAcodonTableFile;
-		private StartAminoAcidTableFileReader _startAminoAcidTableFileReader;
-		private DNACodonTableFileReader _DNAcodonTableFileReader;
 		private ComplementaryDNACreator _complementaryDNACreator;
+
+		private Codon _codon;
+		private CodonToAminoAcidTranslator _codonToAminoAcidTranslator;
+		private TranslatedFileSaver _translatedFileSaver;
+		private DNACodonTableFile _codonTableFile;
+		private DNACodonTableFileReader _codonTableFileReader;
+
 		private OpenReadingFrame _openReadingFrame;
+
+		private string _complementaryDNA = "";
+		private Languages _language = Languages.English;
 
 		public OpenReadingFrameWindow()
 		{
-			_startAminoAcidFile = new StartAminoAcidFile();
-			_DNAcodonTableFile = new DNACodonTableFile();
-			_startAminoAcidTableFileReader = new StartAminoAcidTableFileReader(_startAminoAcidFile);
-			_DNAcodonTableFileReader = new DNACodonTableFileReader(_DNAcodonTableFile);
 			_complementaryDNACreator = new ComplementaryDNACreator();
+
+			_codon = new Codon();
+			_translatedFileSaver = new TranslatedFileSaver();
+			_codonTableFile = new DNACodonTableFile();
+			_codonTableFileReader = new DNACodonTableFileReader(_codon, _codonTableFile);
+			_codonTableFileReader.Read();
+			_codonToAminoAcidTranslator = new CodonToAminoAcidTranslator(_codon, _translatedFileSaver);
+
 			_openReadingFrame = new OpenReadingFrame();
-
-			_startAminoAcidTableFileReader.ReadTable();
-			_DNAcodonTableFileReader.ReadTable();
 		}
 
-		public void Start(string text, string cultureCode)
+		public void StartEverything(string standardSequence)
 		{
-			if (text == null || text == "")
-				return;
-
-			ReadStandardSequence(text, cultureCode);
-			ReadComplementarySequence(text, cultureCode);
+			GenerateComplementarySequence(standardSequence);
+			TranslateCodonsToFiles(standardSequence);
+			StartOpenReadingFrame();
 		}
 
-		public void Save()
+		public void GenerateComplementarySequence(string standardSequence)
 		{
-
+			_complementaryDNA = _complementaryDNACreator.Create(standardSequence);
 		}
 
-		private void ReadStandardSequence(string text, string cultureCode)
+		public void TranslateCodonsToFiles(string standardSequence)
 		{
-			_openReadingFrame.Start(text, false, cultureCode);
+			_codonToAminoAcidTranslator.TranslateToFiles(standardSequence, false, _language);
+			_codonToAminoAcidTranslator.TranslateToFiles(_complementaryDNA, true, _language);
 		}
 
-		private void ReadComplementarySequence(string text, string cultureCode)
+		public void StartOpenReadingFrame()
 		{
-			string complementarySequence = _complementaryDNACreator.Create(text);
-			_openReadingFrame.Start(complementarySequence, true, cultureCode);
+			FileOpener fileOpener = new FileOpener();
+			OpenReadingFramesFileSaver fileSaver = new OpenReadingFramesFileSaver();
+
+			for (int i = 0; i < _translatedFileSaver.ResultFilesPaths.Count; i++)
+			{
+				StreamReader file = fileOpener.OpenFile(_translatedFileSaver.ResultFilesPaths[i]);
+				_openReadingFrame.HandleSequence(file.ReadToEnd());
+
+				fileSaver.Save(_translatedFileSaver.ResultFilesPathsWithoutName[i], _translatedFileSaver.ResultFilesNames[i], _openReadingFrame.OpenReadingFrameSequences);
+			}
+		}
+
+		public void ChangeResultLanguage(Languages language)
+		{
+			_language = language;
+		}
+
+		public void ChangeSavePath()
+		{
+
 		}
 	}
 }

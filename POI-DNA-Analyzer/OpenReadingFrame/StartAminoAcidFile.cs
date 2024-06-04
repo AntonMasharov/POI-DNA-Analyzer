@@ -1,6 +1,6 @@
 ﻿namespace POI_DNA_Analyzer
 {
-	internal class StartAminoAcidFile : GencodeFile
+	internal class StartAminoAcidFile : TranslationFile
 	{
 		public StartAminoAcidFile() : base() 
 		{ 

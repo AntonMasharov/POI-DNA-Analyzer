@@ -1,6 +1,6 @@
 ﻿namespace POI_DNA_Analyzer
 {
-	internal class DNACodonTableFile : GencodeFile
+	internal class DNACodonTableFile : TranslationFile
 	{
 		public DNACodonTableFile() : base()
 		{

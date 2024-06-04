@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace POI_DNA_Analyzer
+﻿namespace POI_DNA_Analyzer
 {
 	internal class ComplementaryDNACreator
 	{

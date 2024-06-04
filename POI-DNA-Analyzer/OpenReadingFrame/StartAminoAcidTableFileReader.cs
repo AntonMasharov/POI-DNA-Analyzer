@@ -6,14 +6,14 @@
 		private AminoAcid _aminoAcid;
 		private Dictionary<string, int> _header;
 
-		public StartAminoAcidTableFileReader(StartAminoAcidFile file)
+		public StartAminoAcidTableFileReader(AminoAcid aminoAcid, StartAminoAcidFile file)
 		{
 			_startAminoAcidFile = file;
-			_aminoAcid = new AminoAcid();
+			_aminoAcid = aminoAcid;
 			_header = new Dictionary<string, int>();
 		}
 
-		public void ReadTable()
+		public void Read()
 		{
 			SetDefaultState();
 

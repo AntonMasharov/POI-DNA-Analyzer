@@ -20,6 +20,14 @@
 			return true;
 		}
 
+		public bool IsStop(string aminoAcid)
+		{
+			if (aminoAcid == "Start" || aminoAcid == "Старт")
+				return true;
+
+			return false;
+		}
+
 		public void Initialize(string[] contentLines, Dictionary<string, int> header)
 		{
 			foreach (string line in contentLines)

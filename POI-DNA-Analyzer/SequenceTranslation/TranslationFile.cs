@@ -2,11 +2,11 @@
 
 namespace POI_DNA_Analyzer
 {
-	internal abstract class GencodeFile
+	internal abstract class TranslationFile
 	{
 		private string _filePath = "";
 
-		public GencodeFile()
+		public TranslationFile()
 		{
 			SetDefaultPath();
 		}

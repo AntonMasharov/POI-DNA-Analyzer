@@ -66,7 +66,7 @@ namespace POI_DNA_Analyzer
 
 		private void CreateComplementaryDNAButtonClick(object sender, RoutedEventArgs e)
 		{
-			//_openReadingFrameWindow.Start(_fileText);
+			_openReadingFrameWindow.StartEverything(_fileText);
 		}
 
 		private void SaveComplementaryDNAFileButtonClick(object sender, RoutedEventArgs e)
