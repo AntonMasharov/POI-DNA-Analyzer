@@ -20,6 +20,7 @@
 
 		public Dictionary<int, string> OpenReadingFrameSequences { get; private set; } //<index, sequence>
 
+		//СТОП КОДОНЫ ДОЛЖНЫ БЫТЬ В ПОСЛЕДОВАТЕЛЬНОСТИ
 		public void HandleSequence(string sequence)
 		{
 			OpenReadingFrameSequences.Clear();
@@ -38,11 +39,11 @@
 				{
 					i = j;
 
-					if (_aminoAcid.IsStop(aminoAcids[j]) == true)
-						isStopEncoutered = true;
-
 					if (_aminoAcid.IsStop(aminoAcids[j]) == false && isStopEncoutered == true)
 						break;
+
+					if (_aminoAcid.IsStop(aminoAcids[j]) == true)
+						isStopEncoutered = true;
 
 					OpenReadingFrameSequences[startIndex] += aminoAcids[j];
 				}

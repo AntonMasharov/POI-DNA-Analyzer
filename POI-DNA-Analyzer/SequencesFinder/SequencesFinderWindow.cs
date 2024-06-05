@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace POI_DNA_Analyzer
 {
@@ -20,6 +19,8 @@ namespace POI_DNA_Analyzer
 		{
 			if (text == null || text == "")
 				return;
+
+			Clear();
 
 			int result = _sequencesFinder.GetOccurrencesCount(text, sequenceToFind);
 
