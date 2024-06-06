@@ -10,6 +10,8 @@ namespace POI_DNA_Analyzer
 		private DinucleotidesAnalyzerWindow _dinucleotidesAnalyzerWindow;
 		private OpenReadingFrameWindow _openReadingFrameWindow;
 		private StreamReader _fileStream;
+		private CommonFilePath _commonFilePath;
+		private SaveContextMenu _saveContextMenu;
 		private string _fileText = "";
 		private string _filePath = "";
 
@@ -18,8 +20,10 @@ namespace POI_DNA_Analyzer
 			InitializeComponent();
 			Localize("ru");
 
-			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List);
-			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(DinucleotidesAnalyzerProgressBar, OxyPlot, EnableSliderCheckBox, HorizontalScrollBar);
+			_saveContextMenu = new SaveContextMenu(SaveIndividuallyCheckbox, SaveTogetherCheckbox);
+			_commonFilePath = new CommonFilePath();
+			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List, _commonFilePath);
+			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(DinucleotidesAnalyzerProgressBar, OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
 			_openReadingFrameWindow = new OpenReadingFrameWindow();
 		}
 
@@ -35,7 +39,14 @@ namespace POI_DNA_Analyzer
 
 		private void SaveFileButtonClick(object sender, RoutedEventArgs e)
 		{
-			_sequencesFinderWindow.Save(ResultText.Text);
+			if (SaveIndividuallyCheckbox.IsChecked == false)
+			{
+				_sequencesFinderWindow.Save(ResultText.Text);
+			}
+			else
+			{
+				_sequencesFinderWindow.SaveIndividually(ResultText.Text);
+			}
 		}
 
 		private void EnterPromptButtonClick(object sender, RoutedEventArgs e)
@@ -50,7 +61,7 @@ namespace POI_DNA_Analyzer
 
 		private void SaveDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
 		{
-			_dinucleotidesAnalyzerWindow.Save();
+			_dinucleotidesAnalyzerWindow.SaveIndividually();
 		}
 
 		private void StartDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
@@ -80,6 +91,12 @@ namespace POI_DNA_Analyzer
 			_dinucleotidesAnalyzerWindow.ShowGraph(((Button)sender).Tag.ToString());
 		}
 
+		private void SaveMenuButtonClick(object sender, RoutedEventArgs e)
+		{
+			SaveMenuButton.ContextMenu.PlacementTarget = SaveMenuButton;
+			SaveMenuButton.ContextMenu.IsOpen = true;
+		}
+
 		private void OpenFile()
 		{
 			if (_fileStream != null)
@@ -94,6 +111,8 @@ namespace POI_DNA_Analyzer
 		{
 			FilePreparator filePreparator = new FilePreparator();
 			_fileText = filePreparator.GetString(streamReader);
+
+			_commonFilePath.TrySetSequenceFolderName(filePreparator.Header);
 		}
 
 		private void SetRULang(object sender, RoutedEventArgs e)

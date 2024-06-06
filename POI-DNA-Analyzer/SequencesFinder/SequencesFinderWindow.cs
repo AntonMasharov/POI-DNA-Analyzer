@@ -7,12 +7,14 @@ namespace POI_DNA_Analyzer
 		private ResultText _resultText;
 		private ListOfIndexes _listOfIndexes;
 		private SequencesFinder _sequencesFinder;
+		private CommonFilePath _commonFilePath;
 
-		public SequencesFinderWindow(TextBlock resultText, ListBox listOfIndexes)
+		public SequencesFinderWindow(TextBlock resultText, ListBox listOfIndexes, CommonFilePath commonFilePath)
 		{
 			_resultText = new ResultText(resultText);
 			_listOfIndexes = new ListOfIndexes(listOfIndexes);
 			_sequencesFinder = new SequencesFinder();
+			_commonFilePath = commonFilePath;
 		}
 
 		public void Find(string sequenceToFind, string text)
@@ -30,9 +32,14 @@ namespace POI_DNA_Analyzer
 
 		public void Save(string content)
 		{
-			SequenceFinderResultSaver resultSaver = new SequenceFinderResultSaver();
-
+			SequenceFinderResultSaver resultSaver = new SequenceFinderResultSaver(_commonFilePath);
 			resultSaver.Save(content, _sequencesFinder.SequenceIndexes);
+		}
+
+		public void SaveIndividually(string content)
+		{
+			SequenceFinderResultSaver resultSaver = new SequenceFinderResultSaver(_commonFilePath);
+			resultSaver.SaveIndividually(content, _sequencesFinder.SequenceIndexes);
 		}
 
 		public void Clear()

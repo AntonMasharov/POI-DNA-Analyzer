@@ -1,10 +1,31 @@
-﻿using System.Text;
-
+﻿using System.IO;
+using System.Text;
 namespace POI_DNA_Analyzer
 {
 	internal class SequenceFinderResultSaver
 	{
+		private CommonFilePath _commonFilePath;
+		private string _resultFolderName = "SequenceFinder";
+		private string _format = ".txt";
+
+		public SequenceFinderResultSaver(CommonFilePath commonFilePath) 
+		{ 
+			_commonFilePath = commonFilePath;
+		}
+
 		public void Save(string countInfo, LinkedList<int> indexes)
+		{
+			if (countInfo == "")
+				return;
+
+			string fileName = "sequence-finder-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
+			string destination = Path.Combine(_resultFolderName, _commonFilePath.FilePath);
+
+			NoExtentionFileSaver fileSaver = new NoExtentionFileSaver();
+			fileSaver.SaveTo(destination, fileName, BuildWholeString(countInfo, indexes));
+		}
+
+		public void SaveIndividually(string countInfo, LinkedList<int> indexes)
 		{
 			if (countInfo == "")
 				return;

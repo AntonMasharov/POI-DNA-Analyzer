@@ -15,4 +15,6 @@
 	<system:String x:Key="StartButton">Старт</system:String>
 	<system:String x:Key="Language">Language</system:String>
 	<system:String x:Key="OpenReadingFrameTab">Открытые рамки считывания</system:String>
+	<system:String x:Key="SaveIndividuallyCheckbox">Сохранить отдельно</system:String>
+	<system:String x:Key="SaveTogetherCheckbox">Сохранить вместе</system:String>
 </ResourceDictionary>

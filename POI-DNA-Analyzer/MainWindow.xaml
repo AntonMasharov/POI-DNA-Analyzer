@@ -66,26 +66,46 @@
 						Grid.Column="1"/>
 					<Button x:Name="SaveFileButton" 
 						Content="{DynamicResource SaveButton}" 
-						Margin="0,0,10,10" 
+						Margin="0,0,36,10" 
 						Click="SaveFileButtonClick" 
 						HorizontalAlignment="Right" 
-						Width="79" 
+						Width="78" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						Grid.Column="1"/>
 					<Button x:Name="ClearButton" 
 						Content="{DynamicResource ClearButton}" 
 						Click="ClearResultButtonClick" 
-						Margin="0,0,94,10" 
+						Margin="0,0,120,10" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						HorizontalAlignment="Right" 
-						Width="79" 
+						Width="78" 
 						Grid.Column="1"/>
 					<ListBox x:Name="List" 
 						d:ItemsSource="{d:SampleData ItemCount=0}" 
 						Margin="3,36,10,44" 
 						Grid.Column="1"/>
+					<Button Name = "SaveMenuButton"
+						Click="SaveMenuButtonClick"
+						Grid.Column="1" 
+						Content="..." 
+						Margin="0,0,10,10" HorizontalAlignment="Right" Width="26" Height="29" VerticalAlignment="Bottom">
+						<Button.ContextMenu>
+							<ContextMenu Name="SaveButtonContextMenu">
+								<MenuItem Header="{DynamicResource SaveIndividuallyCheckbox}">
+									<MenuItem.Icon>
+										<CheckBox Name="SaveIndividuallyCheckbox" IsChecked="False" IsEnabled="True"/>
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="{DynamicResource SaveTogetherCheckbox}">
+									<MenuItem.Icon>
+										<CheckBox Name="SaveTogetherCheckbox" IsChecked="True" IsEnabled="True"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</ContextMenu>
+						</Button.ContextMenu>
+					</Button>
 				</Grid>
 			</TabItem>
 			<TabItem x:Name="DinucleotidesAnalyzerTab">

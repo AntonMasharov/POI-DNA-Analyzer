@@ -15,4 +15,6 @@
 	<system:String x:Key="StartButton">Start</system:String>
 	<system:String x:Key="Language">Язык</system:String>
 	<system:String x:Key="OpenReadingFrameTab">Open Reading Frame</system:String>
+	<system:String x:Key="SaveIndividuallyCheckbox">Save individually</system:String>
+	<system:String x:Key="SaveTogetherCheckbox">Save together</system:String>
 </ResourceDictionary>

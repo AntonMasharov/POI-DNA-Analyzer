@@ -1,26 +1,40 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 
 namespace POI_DNA_Analyzer
 {
 	internal class DinucleotidesAnalyzerResultSaver
 	{
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
+		private CommonFilePath _commonFilePath;
+		private string _resultFolderName = "DinucleotidesAnalyzer";
+		private string _format = ".csv";
 
-		public DinucleotidesAnalyzerResultSaver(DinucleotidesAnalyzer dinucleotidesAnalyzer)
+		public DinucleotidesAnalyzerResultSaver(DinucleotidesAnalyzer dinucleotidesAnalyzer, CommonFilePath commonFilePath)
 		{
 			_dinucleotidesAnalyzer = dinucleotidesAnalyzer;
+			_commonFilePath = commonFilePath;
 		}
 
 		public void Save()
+		{
+			string fileName = "dinucleotides-analyzer-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
+			string destination = Path.Combine(_resultFolderName, _commonFilePath.FilePath);
+
+			CSVFileSaver fileSaver = new CSVFileSaver();
+			fileSaver.SaveTo(destination, fileName, CreateFileText());
+		}
+
+		public void SaveIndividually()
 		{
 			if (_dinucleotidesAnalyzer.DinucleotidesProbabilities == null || IsDictionaryEmpty())
 				return;
 
 			CSVFileSaver fileSaver = new CSVFileSaver();
-			fileSaver.Save(CreateFile());
+			fileSaver.Save(CreateFileText());
 		}
 
-		private string CreateFile()
+		private string CreateFileText()
 		{
 			StringBuilder sb = new StringBuilder();
 

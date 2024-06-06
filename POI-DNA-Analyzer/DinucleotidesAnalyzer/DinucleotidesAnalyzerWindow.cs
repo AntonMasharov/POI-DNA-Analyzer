@@ -10,6 +10,7 @@ namespace POI_DNA_Analyzer
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
 		private IProbabilityGraph _probabilityGraph;
 		private CheckBox _checkBox;
+		private CommonFilePath _commonFilePath;
 
 		private string _fileText = "";
 		private string _currentDinucleotide = "A";
@@ -17,10 +18,11 @@ namespace POI_DNA_Analyzer
 		private int _chunkSize;
 		private double _similarityCoefficient;
 
-		public DinucleotidesAnalyzerWindow(ProgressBar progressBar, PlotView plotView, CheckBox checkBox, ScrollBar scrollBar)
+		public DinucleotidesAnalyzerWindow(ProgressBar progressBar, PlotView plotView, CheckBox checkBox, ScrollBar scrollBar, CommonFilePath commonFilePath)
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
 			_checkBox = checkBox;
+			_commonFilePath = commonFilePath;
 
 			ProbabilityGraphFactory probabilityGraphFactory = new ProbabilityGraphFactory(plotView, scrollBar);
 			_probabilityGraph = probabilityGraphFactory.Get();
@@ -59,9 +61,13 @@ namespace POI_DNA_Analyzer
 
 		public void Save()
 		{
-			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer);
 
-			resultSaver.Save();
+		}
+
+		public void SaveIndividually()
+		{
+			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer, _commonFilePath);
+			resultSaver.SaveIndividually();
 		}
 
 		public void ShowGraph(string tag)

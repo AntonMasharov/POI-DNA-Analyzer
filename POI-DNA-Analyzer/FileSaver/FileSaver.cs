@@ -20,5 +20,13 @@ namespace POI_DNA_Analyzer
 				File.WriteAllText(saveFileDialog.FileName, text);
 			}
 		}
+
+		public void SaveTo(string destination, string fileName, string text)
+		{
+			FileCopyMaker fileCopyMaker = new FileCopyMaker();
+			string path = fileCopyMaker.HandlePathWithWarning(destination, fileName);
+
+			File.WriteAllText(path, text);
+		}
 	}
 }
