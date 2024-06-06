@@ -26,6 +26,9 @@ namespace POI_DNA_Analyzer
 			FileCopyMaker fileCopyMaker = new FileCopyMaker();
 			string path = fileCopyMaker.HandlePathWithWarning(destination, fileName);
 
+			if (Path.Exists(destination) == false)
+				Directory.CreateDirectory(destination);
+
 			File.WriteAllText(path, text);
 		}
 	}

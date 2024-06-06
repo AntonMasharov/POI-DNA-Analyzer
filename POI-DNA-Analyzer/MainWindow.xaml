@@ -276,6 +276,7 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Button x:Name="CreateComplementaryDNA" 
 						Content="{DynamicResource StartButton}" 
@@ -285,16 +286,114 @@
 						Width="79" 
 						Height="29"
 						VerticalAlignment="Bottom"
-						Grid.Column="1" />
+						Grid.Column="2" />
 					<Button x:Name="SaveComplementaryDNAFile" 
 						Click="SaveComplementaryDNAFileButtonClick" 
 						Content="{DynamicResource SaveButton}" 
-						Margin="0,0,94,10" 
+						Margin="0,0,120,10" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						HorizontalAlignment="Right" 
 						Width="79" 
-						Grid.Column="1" />
+						Grid.Column="2"/>
+					<Button Name = "SaveMenuButton3"
+						Click="SaveMenuButtonClick" 
+						Content="..." 
+						Margin="0,0,94,10" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom" 
+						Grid.Column="2"/>
+					<Button 
+						Content="{DynamicResource StartButton}" 
+						HorizontalAlignment="Center" 
+						Height="29"
+						Width="79" 
+						VerticalAlignment="Center"
+						Grid.Column="0"/>
+					<Button
+						Content="{DynamicResource SaveButton}" 
+						Height="29" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,219,0,150"
+						Grid.Column="0"/>
+					<Button Name = "SaveMenuButton4"
+						Click="SaveMenuButtonClick" 
+						Content="..." 
+						Margin="0,0,67,150" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom" 
+						Grid.Column="2"/>
+					<TextBlock 
+						HorizontalAlignment="Center" 
+						Margin="0,10,0,0" 
+						TextWrapping="Wrap" 
+						Text="Make a complementary DNA" 
+						VerticalAlignment="Top"
+						Grid.Column="0"/>
+					<Button 
+						Content="{DynamicResource StartButton}" 
+						HorizontalAlignment="Center" 
+						Height="29"
+						Width="79" 
+						VerticalAlignment="Center"
+						Grid.Column="1"/>
+					<Button
+						Content="{DynamicResource SaveButton}" 
+						Height="29" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,219,0,150"
+						Grid.Column="1"/>
+					<Button Name = "SaveMenuButton5"
+						Click="SaveMenuButtonClick" 
+						Content="..." 
+						Margin="0,0,67,150" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom" 
+						Grid.Column="1"/>
+					<TextBlock 
+						HorizontalAlignment="Center" 
+						Margin="0,10,0,0" 
+						TextWrapping="Wrap" 
+						Text="Translate codons to amino acids" 
+						VerticalAlignment="Top"
+						Grid.Column="1"/>
+					<Button 
+						Content="{DynamicResource StartButton}" 
+						HorizontalAlignment="Center" 
+						Height="29"
+						Width="79" 
+						VerticalAlignment="Center"
+						Grid.Column="2"/>
+					<Button
+						Content="{DynamicResource SaveButton}" 
+						Height="29" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,219,0,150"
+						Grid.Column="2"/>
+					<Button Name = "SaveMenuButton6"
+						Click="SaveMenuButtonClick" 
+						Content="..." 
+						Margin="0,0,67,150" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom"/>
+					<TextBlock 
+						HorizontalAlignment="Center" 
+						Margin="0,10,0,0" 
+						TextWrapping="Wrap" 
+						Text="Find open reading frames" 
+						VerticalAlignment="Top"
+						Grid.Column="2"/>
 				</Grid>
 			</TabItem>
 		</TabControl>

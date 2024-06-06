@@ -19,7 +19,10 @@ namespace POI_DNA_Analyzer
 		public void Save()
 		{
 			string fileName = "dinucleotides-analyzer-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
-			string destination = Path.Combine(_resultFolderName, _commonFilePath.FilePath);
+			string destination = Path.Combine(_commonFilePath.FilePath, _resultFolderName);
+
+			if (_commonFilePath.IsRootFileDestinationChosen == false)
+				return;
 
 			CSVFileSaver fileSaver = new CSVFileSaver();
 			fileSaver.SaveTo(destination, fileName, CreateFileText());

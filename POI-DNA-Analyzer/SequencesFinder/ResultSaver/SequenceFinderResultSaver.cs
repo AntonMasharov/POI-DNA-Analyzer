@@ -19,7 +19,10 @@ namespace POI_DNA_Analyzer
 				return;
 
 			string fileName = "sequence-finder-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
-			string destination = Path.Combine(_resultFolderName, _commonFilePath.FilePath);
+			string destination = Path.Combine(_commonFilePath.FilePath, _resultFolderName);
+
+			if (_commonFilePath.IsRootFileDestinationChosen == false)
+				return;
 
 			NoExtentionFileSaver fileSaver = new NoExtentionFileSaver();
 			fileSaver.SaveTo(destination, fileName, BuildWholeString(countInfo, indexes));

@@ -31,6 +31,10 @@ namespace POI_DNA_Analyzer
 			{
 				_rootFileDestination = openFolderDialog.FolderName;
 			}
+			else
+			{
+				return;
+			}
 
 			TryMakeFullPath();
 			TryCreateDirectory();
