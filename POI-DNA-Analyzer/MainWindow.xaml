@@ -90,7 +90,11 @@
 						Click="SaveMenuButtonClick"
 						Grid.Column="1" 
 						Content="..." 
-						Margin="0,0,10,10" HorizontalAlignment="Right" Width="26" Height="29" VerticalAlignment="Bottom">
+						Margin="0,0,10,10" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom">
 						<Button.ContextMenu>
 							<ContextMenu Name="SaveButtonContextMenu">
 								<MenuItem Header="{DynamicResource SaveIndividuallyCheckbox}">
@@ -221,7 +225,7 @@
 						<Grid Grid.Row="1">
 							<Button x:Name="StartButton" 
 								Content="{DynamicResource StartButton}" 
-								Margin="0,0,10,10" 
+								Margin="0,0,8,10" 
 								Click="StartDinucleotidesAnalyzerButtonClick"
 								HorizontalAlignment="Right" 
 								Width="79" 
@@ -230,13 +234,21 @@
 							<Button x:Name="SaveDinucleotidesAnalyzer" 
 								Click="SaveDinucleotidesAnalyzerButtonClick" 
 								Content="{DynamicResource SaveButton}" 
-								Margin="0,0,94,10" 
+								Margin="0,0,118,10" 
 								Height="29" 
 								VerticalAlignment="Bottom" 
 								HorizontalAlignment="Right" 
 								Width="79"/>
+							<Button Name = "SaveMenuButton2"
+								Click="SaveMenuButtonClick" 
+								Content="..." 
+								Margin="0,0,92,10" 
+								HorizontalAlignment="Right" 
+								Width="26" 
+								Height="29" 
+								VerticalAlignment="Bottom"/>
 							<ProgressBar x:Name="DinucleotidesAnalyzerProgressBar"
-								Margin="10,0,178,10" 
+								Margin="10,0,202,10" 
 								Height="29" 
 								VerticalAlignment="Bottom"/>
 						</Grid>

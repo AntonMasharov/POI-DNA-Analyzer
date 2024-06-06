@@ -40,13 +40,9 @@ namespace POI_DNA_Analyzer
 		private void SaveFileButtonClick(object sender, RoutedEventArgs e)
 		{
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-			{
 				_sequencesFinderWindow.Save(ResultText.Text);
-			}
 			else
-			{
 				_sequencesFinderWindow.SaveIndividually(ResultText.Text);
-			}
 		}
 
 		private void EnterPromptButtonClick(object sender, RoutedEventArgs e)
@@ -61,7 +57,10 @@ namespace POI_DNA_Analyzer
 
 		private void SaveDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
 		{
-			_dinucleotidesAnalyzerWindow.SaveIndividually();
+			if (SaveIndividuallyCheckbox.IsChecked == false)
+				_dinucleotidesAnalyzerWindow.Save();
+			else
+				_dinucleotidesAnalyzerWindow.SaveIndividually();
 		}
 
 		private void StartDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
@@ -93,7 +92,8 @@ namespace POI_DNA_Analyzer
 
 		private void SaveMenuButtonClick(object sender, RoutedEventArgs e)
 		{
-			SaveMenuButton.ContextMenu.PlacementTarget = SaveMenuButton;
+
+			SaveMenuButton.ContextMenu.PlacementTarget = ((Button)sender);
 			SaveMenuButton.ContextMenu.IsOpen = true;
 		}
 

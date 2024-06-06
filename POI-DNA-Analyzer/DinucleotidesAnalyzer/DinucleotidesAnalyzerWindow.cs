@@ -61,7 +61,8 @@ namespace POI_DNA_Analyzer
 
 		public void Save()
 		{
-
+			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer, _commonFilePath);
+			resultSaver.Save();
 		}
 
 		public void SaveIndividually()
