@@ -85,7 +85,7 @@ namespace POI_DNA_Analyzer
 			MessageBoxResult result = MessageBox.Show(
 				"A destination with this sequence name already exists. Do you want to use it?",
 				"Folder Exists",
-				MessageBoxButton.YesNoCancel,
+				MessageBoxButton.YesNo,
 				MessageBoxImage.Warning
 			);
 

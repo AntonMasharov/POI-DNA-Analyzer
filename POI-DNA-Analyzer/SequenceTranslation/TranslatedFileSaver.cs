@@ -4,12 +4,11 @@ namespace POI_DNA_Analyzer
 {
 	internal class TranslatedFileSaver
 	{
+		private string _resultFolderName = "TranslationResult";
 		private string _savePathWithoutName = "";
+		private string _defaultpathWithoutName = AppDomain.CurrentDomain.BaseDirectory;
 
-		public TranslatedFileSaver() 
-		{ 
-			SetDefaultPath();
-		}
+		public bool IsCustomPathSet { get { return _savePathWithoutName != ""; } }
 
 		public List<string> ResultFilesPaths { get; private set; } = new List<string>();
 
@@ -19,11 +18,18 @@ namespace POI_DNA_Analyzer
 
 		public void Save(string textToSave, string fileName)
 		{
-			string fullPath = Path.Combine(_savePathWithoutName, fileName);
-			File.WriteAllText(fullPath, textToSave);
+			string destination;
+
+            if (_savePathWithoutName == "")
+				destination = Path.Combine(_defaultpathWithoutName, _resultFolderName);
+			else
+				destination = Path.Combine(_savePathWithoutName, _resultFolderName);
+
+			NoExtentionFileSaver noExtentionFileSaver = new NoExtentionFileSaver();
+			noExtentionFileSaver.SaveTo(destination, fileName, textToSave);
 
 			ResultFilesPathsWithoutName.Add(_savePathWithoutName);
-			ResultFilesPaths.Add(fullPath);
+			ResultFilesPaths.Add(destination);
 			ResultFilesNames.Add(fileName);
 		}
 
@@ -35,9 +41,9 @@ namespace POI_DNA_Analyzer
 			_savePathWithoutName = filePathWithoutName;
 		}
 
-		private void SetDefaultPath()
+		public void ClearPath()
 		{
-			_savePathWithoutName = AppDomain.CurrentDomain.BaseDirectory;
+			_savePathWithoutName = "";
 		}
 	}
 }

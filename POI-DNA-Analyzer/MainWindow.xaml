@@ -278,10 +278,10 @@
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Button x:Name="CreateComplementaryDNA" 
+					<Button x:Name="CreateEverything" 
 						Content="{DynamicResource StartButton}" 
 						Margin="0,0,10,10" 
-						Click="CreateComplementaryDNAButtonClick"
+						Click="CreateEverythingButtonClick"
 						HorizontalAlignment="Right" 
 						Width="79" 
 						Height="29"
@@ -290,44 +290,35 @@
 					<Button x:Name="SaveComplementaryDNAFile" 
 						Click="SaveComplementaryDNAFileButtonClick" 
 						Content="{DynamicResource SaveButton}" 
-						Margin="0,0,120,10" 
+						Margin="0,0,94,10" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						HorizontalAlignment="Right" 
 						Width="79" 
 						Grid.Column="2"/>
-					<Button Name = "SaveMenuButton3"
-						Click="SaveMenuButtonClick" 
-						Content="..." 
-						Margin="0,0,94,10" 
-						HorizontalAlignment="Right" 
-						Width="26" 
-						Height="29" 
-						VerticalAlignment="Bottom" 
-						Grid.Column="2"/>
-					<Button 
+					<Button Name = "CreateComplementaryDNA"
 						Content="{DynamicResource StartButton}" 
+						Click="CreateComplementaryDNAButtonClick"
 						HorizontalAlignment="Center" 
 						Height="29"
-						Width="79" 
-						VerticalAlignment="Center"
+						Width="79"
 						Grid.Column="0"/>
 					<Button
 						Content="{DynamicResource SaveButton}" 
+						Click="SaveComplementaryDNAFileButtonClick"
 						Height="29" 
 						HorizontalAlignment="Center" 
 						Width="79" 
-						Margin="0,219,0,150"
+						Margin="0,68,0,0"
 						Grid.Column="0"/>
-					<Button Name = "SaveMenuButton4"
+					<Button Name = "SaveMenuButton6"
 						Click="SaveMenuButtonClick" 
 						Content="..." 
-						Margin="0,0,67,150" 
-						HorizontalAlignment="Right" 
+						Margin="105,68,0,0" 
+						HorizontalAlignment="Center" 
 						Width="26" 
-						Height="29" 
-						VerticalAlignment="Bottom" 
-						Grid.Column="2"/>
+						Height="29"
+						Grid.Column="0"/>
 					<TextBlock 
 						HorizontalAlignment="Center" 
 						Margin="0,10,0,0" 
@@ -337,26 +328,34 @@
 						Grid.Column="0"/>
 					<Button 
 						Content="{DynamicResource StartButton}" 
+						Click="StartTranslation" 
 						HorizontalAlignment="Center" 
 						Height="29"
-						Width="79" 
-						VerticalAlignment="Center"
+						Width="79"
 						Grid.Column="1"/>
 					<Button
-						Content="{DynamicResource SaveButton}" 
+						Content="Save path" 
+						Click="ChangeTranslationResultPath" 
 						Height="29" 
 						HorizontalAlignment="Center" 
 						Width="79" 
-						Margin="0,219,0,150"
+						Margin="0,68,0,0"
 						Grid.Column="1"/>
-					<Button Name = "SaveMenuButton5"
-						Click="SaveMenuButtonClick" 
-						Content="..." 
-						Margin="0,0,67,150" 
-						HorizontalAlignment="Right" 
-						Width="26" 
+					<Button
+						Content="Config" 
+						Click="ChangeTranslationConfig" 
 						Height="29" 
-						VerticalAlignment="Bottom" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,253,0,116"
+						Grid.Column="1"/>
+					<Button
+						Click="ResetTranslationConfigButtonClick" 
+						Content="R" 
+						Margin="105,137,0,0" 
+						HorizontalAlignment="Center" 
+						Width="26" 
+						Height="29"
 						Grid.Column="1"/>
 					<TextBlock 
 						HorizontalAlignment="Center" 
@@ -366,33 +365,56 @@
 						VerticalAlignment="Top"
 						Grid.Column="1"/>
 					<Button 
+						Click="OpenReadingFrameStartButtonClick"
 						Content="{DynamicResource StartButton}" 
 						HorizontalAlignment="Center" 
 						Height="29"
-						Width="79" 
-						VerticalAlignment="Center"
+						Width="79"
 						Grid.Column="2"/>
 					<Button
-						Content="{DynamicResource SaveButton}" 
+						Content="Save path"  
+						Click="ChangeOpenReadingFramesResultPath" 
 						Height="29" 
 						HorizontalAlignment="Center" 
 						Width="79" 
-						Margin="0,219,0,150"
+						Margin="0,68,0,0"
 						Grid.Column="2"/>
-					<Button Name = "SaveMenuButton6"
-						Click="SaveMenuButtonClick" 
-						Content="..." 
-						Margin="0,0,67,150" 
-						HorizontalAlignment="Right" 
-						Width="26" 
-						Height="29" 
-						VerticalAlignment="Bottom"/>
 					<TextBlock 
 						HorizontalAlignment="Center" 
 						Margin="0,10,0,0" 
 						TextWrapping="Wrap" 
 						Text="Find open reading frames" 
 						VerticalAlignment="Top"
+						Grid.Column="2"/>
+					<TextBox Name="MinSizeToSaveTextBox"
+						Grid.Column="2" 
+						HorizontalAlignment="Center" 
+						Margin="0,146,0,0" 
+						TextWrapping="Wrap"
+						Text="100" 
+						VerticalAlignment="Top" 
+						Width="120"/>
+					<TextBlock Grid.Column="2" 
+						HorizontalAlignment="Center" 
+						Margin="0,125,0,0" 
+						TextWrapping="Wrap" 
+						Text="Min size to save:" 
+						VerticalAlignment="Top"/>
+					<Button
+						Content="Config"  
+						Click="ChangeOpenReadingFramesConfig" 
+						Height="29" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,253,0,116"
+						Grid.Column="2"/>
+					<Button
+						Click="ResetOpenReadingFramesConfigButtonClick" 
+						Content="R" 
+						Margin="105,137,0,0" 
+						HorizontalAlignment="Center" 
+						Width="26" 
+						Height="29"
 						Grid.Column="2"/>
 				</Grid>
 			</TabItem>

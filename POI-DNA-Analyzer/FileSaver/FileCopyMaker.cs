@@ -77,7 +77,7 @@ namespace POI_DNA_Analyzer
 			MessageBoxResult result = MessageBox.Show(
 			"A file with this name already exists. Do you want to replace it?",
 			"File Exists",
-			MessageBoxButton.YesNoCancel,
+			MessageBoxButton.YesNo,
 			MessageBoxImage.Warning
 			);
 

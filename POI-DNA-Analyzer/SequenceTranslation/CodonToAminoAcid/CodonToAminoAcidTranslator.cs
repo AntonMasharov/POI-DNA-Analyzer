@@ -2,24 +2,34 @@
 {
 	internal class CodonToAminoAcidTranslator
 	{
+		private CommonFilePath _commonFilePath;
 		private TranslatedFileSaver _fileSaver;
 		private Codon _codon;
 		private int _codonSize = 3;
 
-		public CodonToAminoAcidTranslator(Codon codon, TranslatedFileSaver fileSaver)
+		public CodonToAminoAcidTranslator(Codon codon, TranslatedFileSaver fileSaver, CommonFilePath commonFilePath)
 		{
+			_commonFilePath = commonFilePath;
 			_fileSaver = fileSaver;
 			_codon = codon;
 		}
 
 		public void TranslateToFiles(string text, bool isComplementary, Languages language)
 		{
-			//_fileSaver.ResultFilesPaths.Clear();
+			if (_fileSaver.IsCustomPathSet == false)
+			{
+				_fileSaver.ChangePath(_commonFilePath.FilePath);
+
+				if (_commonFilePath.IsRootFileDestinationChosen == false)
+					return;
+			}
 
 			for (int i = 0; i < 3; i++)
 			{
 				SaveToFile(ReadCodons(text, i, language), GetFileName(i, isComplementary));
 			}
+
+			//_fileSaver.ClearPath();
 		}
 
 		private string ReadCodons(string text, int indent, Languages language)

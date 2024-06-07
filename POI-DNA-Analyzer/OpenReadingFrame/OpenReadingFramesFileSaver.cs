@@ -4,10 +4,12 @@ namespace POI_DNA_Analyzer
 {
 	internal class OpenReadingFramesFileSaver
 	{
+		private string _resultFolderName = "OpenReadingFrames";
+		private string _format = ".txt";
+
 		public void Save(string filePath, string fileName, Dictionary<int, string> openReadingFrames, int minSizeToSave = 100)
 		{
-			CreateDirectory(filePath);
-			string newFilePath = filePath + "OpenReadingFrames\\" + fileName;
+			string destination = Path.Combine(filePath, _resultFolderName);
 			string text = MakeHeader();
 
 			foreach (int key in openReadingFrames.Keys)
@@ -18,20 +20,13 @@ namespace POI_DNA_Analyzer
 				text += "\n" + key.ToString() + "," + openReadingFrames[key].Length + "," + openReadingFrames[key];
 			}
 
-			File.WriteAllText(newFilePath, text);
+			NoExtentionFileSaver noExtentionFileSaver = new NoExtentionFileSaver();
+			noExtentionFileSaver.SaveTo(destination, fileName, text);
 		}
 
 		private string MakeHeader()
 		{
 			return "index,length,sequence";
-		}
-
-		private void CreateDirectory(string filePath)
-		{
-			string newFilePath = filePath + "OpenReadingFrames\\";
-
-			if (File.Exists(newFilePath) == false)
-				Directory.CreateDirectory(newFilePath);
 		}
 	}
 }

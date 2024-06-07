@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,19 +13,22 @@ namespace POI_DNA_Analyzer
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
 		private SaveContextMenu _saveContextMenu;
+		private TranslatedFileSaver _translatedFileSaver;
 		private string _fileText = "";
 		private string _filePath = "";
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			Localize("ru");
 
 			_saveContextMenu = new SaveContextMenu(SaveIndividuallyCheckbox, SaveTogetherCheckbox);
 			_commonFilePath = new CommonFilePath();
 			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List, _commonFilePath);
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(DinucleotidesAnalyzerProgressBar, OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
-			_openReadingFrameWindow = new OpenReadingFrameWindow();
+			_translatedFileSaver = new TranslatedFileSaver();
+			_openReadingFrameWindow = new OpenReadingFrameWindow(_commonFilePath, _translatedFileSaver);
+
+			Localize("ru");
 		}
 
 		private void OpenFileButtonClick(object sender, RoutedEventArgs e)
@@ -76,12 +80,44 @@ namespace POI_DNA_Analyzer
 
 		private void CreateComplementaryDNAButtonClick(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.StartEverything(_fileText);
+			_openReadingFrameWindow.GenerateComplementarySequence(_fileText);
 		}
 
 		private void SaveComplementaryDNAFileButtonClick(object sender, RoutedEventArgs e)
 		{
-			//_openReadingFrameWindow.Save();
+			if (SaveIndividuallyCheckbox.IsChecked == false)
+				_openReadingFrameWindow.SaveComplementarySequence();
+			else
+				_openReadingFrameWindow.SaveComplementarySequenceIndividually();
+		}
+
+		private void StartTranslation(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.TranslateCodonsToFiles(_fileText);
+		}
+
+		private void ChangeTranslationResultPath(object sender, RoutedEventArgs e)
+		{
+			OpenFolderDialog openFolderDialog = new OpenFolderDialog();
+
+			if (openFolderDialog.ShowDialog() == true)
+			{
+				_translatedFileSaver.ChangePath(openFolderDialog.FolderName); 
+			}
+			else
+			{
+				return;
+			}
+		}
+
+		private void OpenReadingFrameStartButtonClick(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.StartOpenReadingFrame(MinSizeToSaveTextBox.Text);
+		}
+
+		private void CreateEverythingButtonClick(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.StartEverything(_fileText, MinSizeToSaveTextBox.Text);
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)
@@ -92,7 +128,6 @@ namespace POI_DNA_Analyzer
 
 		private void SaveMenuButtonClick(object sender, RoutedEventArgs e)
 		{
-
 			SaveMenuButton.ContextMenu.PlacementTarget = ((Button)sender);
 			SaveMenuButton.ContextMenu.IsOpen = true;
 		}
@@ -133,6 +168,11 @@ namespace POI_DNA_Analyzer
 			dictionary.Source = new Uri(path, UriKind.Relative);
 
 			this.Resources.MergedDictionaries.Add(dictionary);
+
+			if (code == "ru")
+				_openReadingFrameWindow.ChangeResultLanguage(Languages.Russian);
+			else
+				_openReadingFrameWindow.ChangeResultLanguage(Languages.English);
 		}
 	}
 }
