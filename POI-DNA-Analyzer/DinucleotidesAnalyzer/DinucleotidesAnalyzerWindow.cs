@@ -1,5 +1,4 @@
 ﻿using OxyPlot.Wpf;
-using System.IO;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -7,31 +6,44 @@ namespace POI_DNA_Analyzer
 {
 	internal class DinucleotidesAnalyzerWindow
 	{
-		private StreamReader _fileStream;
+		private DinucleotidesAnalyzerProgressBar _dinucleotidesAnalyzerProgressBar;
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
 		private IProbabilityGraph _probabilityGraph;
 		private CheckBox _checkBox;
+		private CommonFilePath _commonFilePath;
 
+		private string _fileText = "";
 		private string _currentDinucleotide = "A";
 		private int _defaultChunkSize = 100;
 		private int _chunkSize;
 		private double _similarityCoefficient;
 
-		public DinucleotidesAnalyzerWindow(PlotView plotView, CheckBox checkBox, ScrollBar scrollBar)
+		public DinucleotidesAnalyzerWindow(ProgressBar progressBar, PlotView plotView, CheckBox checkBox, ScrollBar scrollBar, CommonFilePath commonFilePath)
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
 			_checkBox = checkBox;
+			_commonFilePath = commonFilePath;
 
 			ProbabilityGraphFactory probabilityGraphFactory = new ProbabilityGraphFactory(plotView, scrollBar);
 			_probabilityGraph = probabilityGraphFactory.Get();
+
+			_dinucleotidesAnalyzerProgressBar = new DinucleotidesAnalyzerProgressBar(progressBar);
+			_dinucleotidesAnalyzer.Executing += _dinucleotidesAnalyzerProgressBar.Update;
+			_dinucleotidesAnalyzer.Started += _dinucleotidesAnalyzerProgressBar.Show;
 		}
 
-		public void UpdateFileStream(StreamReader fileStream)
+		~DinucleotidesAnalyzerWindow()
 		{
-			if (fileStream == null)
+			_dinucleotidesAnalyzer.Executing -= _dinucleotidesAnalyzerProgressBar.Update;
+			_dinucleotidesAnalyzer.Started -= _dinucleotidesAnalyzerProgressBar.Show;
+		}
+
+		public void UpdateText(string text)
+		{
+			if (text == null || text == "") 
 				return;
 
-			_fileStream = fileStream;
+			_fileText = text;
 		}
 
 		public void Analyze(TextBox textBox, double similarityCoefficient)
@@ -49,9 +61,14 @@ namespace POI_DNA_Analyzer
 
 		public void Save()
 		{
-			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer);
-
+			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer, _commonFilePath);
 			resultSaver.Save();
+		}
+
+		public void SaveIndividually()
+		{
+			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer, _commonFilePath);
+			resultSaver.SaveIndividually();
 		}
 
 		public void ShowGraph(string tag)
@@ -62,10 +79,10 @@ namespace POI_DNA_Analyzer
 
 		private void ShowGraph()
 		{
-			if (_fileStream == null)
+			if (_fileText == null || _fileText == "")
 				return;
 
-			_dinucleotidesAnalyzer.Analyze(_fileStream, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
+			_dinucleotidesAnalyzer.Analyze(_fileText, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
 			_probabilityGraph.Clear();
 
 			if (_currentDinucleotide.Length == 1)

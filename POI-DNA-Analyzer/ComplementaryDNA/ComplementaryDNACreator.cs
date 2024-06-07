@@ -1,16 +1,12 @@
-﻿using System.IO;
-using System.Text.RegularExpressions;
-
-namespace POI_DNA_Analyzer
+﻿namespace POI_DNA_Analyzer
 {
 	internal class ComplementaryDNACreator
 	{
-		public string Create(StreamReader fileStream)
+		public string Create(string text)
 		{
-			if (fileStream == null)
-				throw new ArgumentNullException("FileStream is null");
+			if (text == null || text == "")
+				return "";
 
-			string text = fileStream.ReadToEnd();
 			text = ReplaceLetters(text);
 			text = InvertText(text);
 
@@ -25,7 +21,6 @@ namespace POI_DNA_Analyzer
 			text = text.Replace('C', 'Y');
 			text = text.Replace('G', 'C');
 			text = text.Replace('Y', 'G');
-			text = Regex.Replace(text, @"\t|\n|\r", "");
 
 			return text;
 		}

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace POI_DNA_Analyzer
 {
@@ -8,20 +7,24 @@ namespace POI_DNA_Analyzer
 		private ResultText _resultText;
 		private ListOfIndexes _listOfIndexes;
 		private SequencesFinder _sequencesFinder;
+		private CommonFilePath _commonFilePath;
 
-		public SequencesFinderWindow(TextBlock resultText, ListBox listOfIndexes)
+		public SequencesFinderWindow(TextBlock resultText, ListBox listOfIndexes, CommonFilePath commonFilePath)
 		{
 			_resultText = new ResultText(resultText);
 			_listOfIndexes = new ListOfIndexes(listOfIndexes);
 			_sequencesFinder = new SequencesFinder();
+			_commonFilePath = commonFilePath;
 		}
 
-		public void Find(string sequenceToFind, StreamReader fileStream)
+		public void Find(string sequenceToFind, string text)
 		{
-			if (fileStream == null)
+			if (text == null || text == "")
 				return;
 
-			int result = _sequencesFinder.GetOccurrencesCount(fileStream.ReadToEnd(), sequenceToFind);
+			Clear();
+
+			int result = _sequencesFinder.GetOccurrencesCount(text, sequenceToFind);
 
 			_resultText.ShowOccurrencesCount(result.ToString());
 			_listOfIndexes.ShowOccurrencesIndexes(_sequencesFinder.SequenceIndexes);
@@ -29,9 +32,14 @@ namespace POI_DNA_Analyzer
 
 		public void Save(string content)
 		{
-			SequenceFinderResultSaver resultSaver = new SequenceFinderResultSaver();
-
+			SequenceFinderResultSaver resultSaver = new SequenceFinderResultSaver(_commonFilePath);
 			resultSaver.Save(content, _sequencesFinder.SequenceIndexes);
+		}
+
+		public void SaveIndividually(string content)
+		{
+			SequenceFinderResultSaver resultSaver = new SequenceFinderResultSaver(_commonFilePath);
+			resultSaver.SaveIndividually(content, _sequencesFinder.SequenceIndexes);
 		}
 
 		public void Clear()

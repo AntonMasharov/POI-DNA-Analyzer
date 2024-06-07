@@ -1,9 +1,10 @@
-﻿using System.IO;
-
-namespace POI_DNA_Analyzer
+﻿namespace POI_DNA_Analyzer
 {
 	internal class DinucleotidesAnalyzer
     {
+		public event Action Started;
+		public event Action<int, int> Executing;
+
 		private ChunkAnalyzer _chunkAnalyzer;
 		private ChunkMatrixBuilder _chunkMatrixBuilder;
 		private IMatrixComparator _matrixComparator;
@@ -24,22 +25,18 @@ namespace POI_DNA_Analyzer
 
 		public List<int> Indexes { get; private set; } = new List<int>();
 
-		public void Analyze(StreamReader fileStream, int chunkSize, double similarityCoefficient, bool canSkipCheckboxState)
+		public void Analyze(string text, int chunkSize, double similarityCoefficient, bool canSkipCheckboxState)
 		{
-			ClearDictionary();
-			Indexes.Clear();
-			_lastMatrix.Clear();
-			_lastIndex = 1;
+			SetDefaultState();
+			int actualIndex = 1;
 
-			char[] buffer = new char[chunkSize];
-			int charsRead;
+			List<string> parts = DivideIntoParts(text, chunkSize);
 
-			while ((charsRead = fileStream.ReadBlock(buffer, 0, buffer.Length)) > 0)
+			foreach (string part in parts)
 			{
-				string chunk = new string(buffer, 0, charsRead);
-
-				_chunkAnalyzer.AnalyzeChunk(chunk);
+				_chunkAnalyzer.AnalyzeChunk(part);
 				_chunkMatrixBuilder.Build();
+				Executing?.Invoke(parts.Count, actualIndex);
 
 				if (CanSkip(similarityCoefficient, canSkipCheckboxState) == false)
 				{
@@ -48,9 +45,37 @@ namespace POI_DNA_Analyzer
 				}
 
 				_lastIndex++;
-
-				fileStream.BaseStream.Seek(chunkSize, SeekOrigin.Current);
+				actualIndex++;
 			}
+		}
+
+		private void SetDefaultState()
+		{
+			Started?.Invoke();
+			ClearDictionary();
+			Indexes.Clear();
+			_lastMatrix.Clear();
+			_lastIndex = 1;
+		}
+
+		private List<string> DivideIntoParts(string text, int chunkSize)
+		{
+			List<string> result = new List<string>();
+			int leftBorder = 0;
+
+			while (leftBorder + chunkSize < text.Length)
+			{
+				result.Add(text.Substring(leftBorder, chunkSize));
+				leftBorder += chunkSize;
+			}
+
+			if (leftBorder < text.Length)
+			{
+				int partSize = text.Length - leftBorder;
+				result.Add(text.Substring(leftBorder, partSize));
+			}
+
+			return result;
 		}
 
 		private void GetDataFromMatrix(Dictionary<string, float> matrix)

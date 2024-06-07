@@ -66,26 +66,50 @@
 						Grid.Column="1"/>
 					<Button x:Name="SaveFileButton" 
 						Content="{DynamicResource SaveButton}" 
-						Margin="0,0,10,10" 
+						Margin="0,0,36,10" 
 						Click="SaveFileButtonClick" 
 						HorizontalAlignment="Right" 
-						Width="79" 
+						Width="78" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						Grid.Column="1"/>
 					<Button x:Name="ClearButton" 
 						Content="{DynamicResource ClearButton}" 
 						Click="ClearResultButtonClick" 
-						Margin="0,0,94,10" 
+						Margin="0,0,120,10" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						HorizontalAlignment="Right" 
-						Width="79" 
+						Width="78" 
 						Grid.Column="1"/>
 					<ListBox x:Name="List" 
 						d:ItemsSource="{d:SampleData ItemCount=0}" 
 						Margin="3,36,10,44" 
 						Grid.Column="1"/>
+					<Button Name = "SaveMenuButton"
+						Click="SaveMenuButtonClick"
+						Grid.Column="1" 
+						Content="..." 
+						Margin="0,0,10,10" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom">
+						<Button.ContextMenu>
+							<ContextMenu Name="SaveButtonContextMenu">
+								<MenuItem Header="{DynamicResource SaveIndividuallyCheckbox}">
+									<MenuItem.Icon>
+										<CheckBox Name="SaveIndividuallyCheckbox" IsChecked="False" IsEnabled="True"/>
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="{DynamicResource SaveTogetherCheckbox}">
+									<MenuItem.Icon>
+										<CheckBox Name="SaveTogetherCheckbox" IsChecked="True" IsEnabled="True"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</ContextMenu>
+						</Button.ContextMenu>
+					</Button>
 				</Grid>
 			</TabItem>
 			<TabItem x:Name="DinucleotidesAnalyzerTab">
@@ -201,7 +225,7 @@
 						<Grid Grid.Row="1">
 							<Button x:Name="StartButton" 
 								Content="{DynamicResource StartButton}" 
-								Margin="0,0,10,10" 
+								Margin="0,0,8,10" 
 								Click="StartDinucleotidesAnalyzerButtonClick"
 								HorizontalAlignment="Right" 
 								Width="79" 
@@ -210,11 +234,23 @@
 							<Button x:Name="SaveDinucleotidesAnalyzer" 
 								Click="SaveDinucleotidesAnalyzerButtonClick" 
 								Content="{DynamicResource SaveButton}" 
-								Margin="0,0,94,10" 
+								Margin="0,0,118,10" 
 								Height="29" 
 								VerticalAlignment="Bottom" 
 								HorizontalAlignment="Right" 
 								Width="79"/>
+							<Button Name = "SaveMenuButton2"
+								Click="SaveMenuButtonClick" 
+								Content="..." 
+								Margin="0,0,92,10" 
+								HorizontalAlignment="Right" 
+								Width="26" 
+								Height="29" 
+								VerticalAlignment="Bottom"/>
+							<ProgressBar x:Name="DinucleotidesAnalyzerProgressBar"
+								Margin="10,0,202,10" 
+								Height="29" 
+								VerticalAlignment="Bottom"/>
 						</Grid>
 						<Grid Grid.Row="0">
 							<oxy:PlotView x:Name="OxyPlot" 
@@ -240,25 +276,146 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Button x:Name="CreateComplementaryDNA" 
-						Content="{DynamicResource StartButton}" 
+					<Button x:Name="CreateEverything" 
+						Content="{DynamicResource OpenReadingFrameStartEverything}" 
 						Margin="0,0,10,10" 
-						Click="CreateComplementaryDNAButtonClick"
+						Click="CreateEverythingButtonClick"
 						HorizontalAlignment="Right" 
 						Width="79" 
 						Height="29"
 						VerticalAlignment="Bottom"
-						Grid.Column="1" />
-					<Button x:Name="SaveComplementaryDNAFile" 
-						Click="SaveComplementaryDNAFileButtonClick" 
-						Content="{DynamicResource SaveButton}" 
+						Grid.Column="2" />
+					<Button x:Name="ChooseSavePath" 
+						Click="ChooseOpenReadingFramesSavePathButtonClick" 
+						Content="{DynamicResource ChooseSavePath}" 
 						Margin="0,0,94,10" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						HorizontalAlignment="Right" 
 						Width="79" 
-						Grid.Column="1" />
+						Grid.Column="2"/>
+					<Button Name = "CreateComplementaryDNA"
+						Content="{DynamicResource StartButton}" 
+						Click="CreateComplementaryDNAButtonClick"
+						HorizontalAlignment="Center" 
+						Height="29"
+						Width="79"
+						Grid.Column="0"/>
+					<Button
+						Content="{DynamicResource SaveButton}" 
+						Click="SaveComplementaryDNAFileButtonClick"
+						Height="29" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,68,0,0"
+						Grid.Column="0"/>
+					<Button Name = "SaveMenuButton6"
+						Click="SaveMenuButtonClick" 
+						Content="..." 
+						Margin="105,68,0,0" 
+						HorizontalAlignment="Center" 
+						Width="26" 
+						Height="29"
+						Grid.Column="0"/>
+					<TextBlock 
+						HorizontalAlignment="Center" 
+						Margin="0,10,0,0" 
+						TextWrapping="Wrap" 
+						Text="{DynamicResource MakeComplementaryDNA}" 
+						VerticalAlignment="Top"
+						Grid.Column="0"/>
+					<Button 
+						Content="{DynamicResource StartButton}" 
+						Click="StartTranslation" 
+						HorizontalAlignment="Center" 
+						Height="29"
+						Width="79"
+						Grid.Column="1"/>
+					<Button
+						Content="{DynamicResource ChooseSavePath}" 
+						Click="ChangeTranslationResultPath" 
+						Height="29" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,68,0,0"
+						Grid.Column="1"/>
+					<Button
+						Content="{DynamicResource ChangeConfig}" 
+						Click="ChangeTranslationConfig" 
+						HorizontalAlignment="Center" 
+						Height="29" 
+						Width="79" 
+						Margin="0,137,0,0"
+						Grid.Column="1"/>
+					<Button
+						Click="ResetTranslationConfigButtonClick" 
+						Content="R" 
+						Margin="105,137,0,0" 
+						HorizontalAlignment="Center" 
+						Width="26" 
+						Height="29"
+						Grid.Column="1"/>
+					<TextBlock 
+						HorizontalAlignment="Center" 
+						Margin="0,10,0,0" 
+						TextWrapping="Wrap" 
+						Text="{DynamicResource Translate}" 
+						VerticalAlignment="Top"
+						Grid.Column="1"/>
+					<Button 
+						Click="OpenReadingFrameStartButtonClick"
+						Content="{DynamicResource StartButton}" 
+						HorizontalAlignment="Center" 
+						Height="29"
+						Width="79"
+						Grid.Column="2"/>
+					<Button
+						Content="{DynamicResource ChooseSavePath}"  
+						Click="ChangeOpenReadingFramesResultPath" 
+						Height="29" 
+						HorizontalAlignment="Center" 
+						Width="79" 
+						Margin="0,68,0,0"
+						Grid.Column="2"/>
+					<TextBlock 
+						HorizontalAlignment="Center" 
+						Margin="0,10,0,0" 
+						TextWrapping="Wrap" 
+						Text="{DynamicResource FindOpenReadingFrames}" 
+						VerticalAlignment="Top"
+						Grid.Column="2"/>
+					<TextBox Name="MinSizeToSaveTextBox"
+						Grid.Column="2" 
+						HorizontalAlignment="Center" 
+						Margin="0,146,0,0" 
+						TextWrapping="Wrap"
+						Text="100" 
+						VerticalAlignment="Top" 
+						Width="120"/>
+					<TextBlock Grid.Column="2" 
+						HorizontalAlignment="Center" 
+						Margin="0,125,0,0" 
+						TextWrapping="Wrap" 
+						Text="{DynamicResource OpenReadingFrameMinSizeToSave}" 
+						VerticalAlignment="Top"/>
+					<Button
+						Content="{DynamicResource ChangeConfig}"  
+						Click="ChangeOpenReadingFramesConfig" 
+						HorizontalAlignment="Center" 
+						Height="29" 
+						Width="79" 
+						Margin="0,137,0,0"
+						Grid.Column="2"/>
+					<Button
+						Click="ResetOpenReadingFramesConfigButtonClick" 
+						Content="R" 
+						Margin="105,137,0,0" 
+						HorizontalAlignment="Center" 
+						Width="26" 
+						Height="29"
+						Grid.Column="2"/>
 				</Grid>
 			</TabItem>
 		</TabControl>
