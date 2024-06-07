@@ -279,7 +279,7 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Button x:Name="CreateEverything" 
-						Content="{DynamicResource StartButton}" 
+						Content="{DynamicResource OpenReadingFrameStartEverything}" 
 						Margin="0,0,10,10" 
 						Click="CreateEverythingButtonClick"
 						HorizontalAlignment="Right" 
@@ -289,7 +289,7 @@
 						Grid.Column="2" />
 					<Button x:Name="ChooseSavePath" 
 						Click="ChooseOpenReadingFramesSavePathButtonClick" 
-						Content="{DynamicResource SaveButton}" 
+						Content="{DynamicResource ChooseSavePath}" 
 						Margin="0,0,94,10" 
 						Height="29" 
 						VerticalAlignment="Bottom" 
@@ -323,7 +323,7 @@
 						HorizontalAlignment="Center" 
 						Margin="0,10,0,0" 
 						TextWrapping="Wrap" 
-						Text="Make a complementary DNA" 
+						Text="{DynamicResource MakeComplementaryDNA}" 
 						VerticalAlignment="Top"
 						Grid.Column="0"/>
 					<Button 
@@ -334,7 +334,7 @@
 						Width="79"
 						Grid.Column="1"/>
 					<Button
-						Content="Save path" 
+						Content="{DynamicResource ChooseSavePath}" 
 						Click="ChangeTranslationResultPath" 
 						Height="29" 
 						HorizontalAlignment="Center" 
@@ -342,7 +342,7 @@
 						Margin="0,68,0,0"
 						Grid.Column="1"/>
 					<Button
-						Content="Config" 
+						Content="{DynamicResource ChangeConfig}" 
 						Click="ChangeTranslationConfig" 
 						HorizontalAlignment="Center" 
 						Height="29" 
@@ -361,7 +361,7 @@
 						HorizontalAlignment="Center" 
 						Margin="0,10,0,0" 
 						TextWrapping="Wrap" 
-						Text="Translate codons to amino acids" 
+						Text="{DynamicResource Translate}" 
 						VerticalAlignment="Top"
 						Grid.Column="1"/>
 					<Button 
@@ -372,7 +372,7 @@
 						Width="79"
 						Grid.Column="2"/>
 					<Button
-						Content="Save path"  
+						Content="{DynamicResource ChooseSavePath}"  
 						Click="ChangeOpenReadingFramesResultPath" 
 						Height="29" 
 						HorizontalAlignment="Center" 
@@ -383,7 +383,7 @@
 						HorizontalAlignment="Center" 
 						Margin="0,10,0,0" 
 						TextWrapping="Wrap" 
-						Text="Find open reading frames" 
+						Text="{DynamicResource FindOpenReadingFrames}" 
 						VerticalAlignment="Top"
 						Grid.Column="2"/>
 					<TextBox Name="MinSizeToSaveTextBox"
@@ -398,10 +398,10 @@
 						HorizontalAlignment="Center" 
 						Margin="0,125,0,0" 
 						TextWrapping="Wrap" 
-						Text="Min size to save:" 
+						Text="{DynamicResource OpenReadingFrameMinSizeToSave}" 
 						VerticalAlignment="Top"/>
 					<Button
-						Content="Config"  
+						Content="{DynamicResource ChangeConfig}"  
 						Click="ChangeOpenReadingFramesConfig" 
 						HorizontalAlignment="Center" 
 						Height="29" 

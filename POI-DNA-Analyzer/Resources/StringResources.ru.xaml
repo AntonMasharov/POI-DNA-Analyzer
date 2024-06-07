@@ -17,4 +17,11 @@
 	<system:String x:Key="OpenReadingFrameTab">Открытые рамки считывания</system:String>
 	<system:String x:Key="SaveIndividuallyCheckbox">Сохранить отдельно</system:String>
 	<system:String x:Key="SaveTogetherCheckbox">Сохранить вместе</system:String>
+	<system:String x:Key="OpenReadingFrameStartEverything">Старт</system:String>
+	<system:String x:Key="ChooseSavePath">Путь сохранения</system:String>
+	<system:String x:Key="ChangeConfig">Конфиг файл</system:String>
+	<system:String x:Key="OpenReadingFrameMinSizeToSave">Минимальный размер для сохранения:</system:String>
+	<system:String x:Key="MakeComplementaryDNA">Сделать комплементарную цепь</system:String>
+	<system:String x:Key="Translate">Трансляция</system:String>
+	<system:String x:Key="FindOpenReadingFrames">Найти открытые рамки считывания</system:String>
 </ResourceDictionary>
