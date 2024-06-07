@@ -1,4 +1,6 @@
-﻿namespace POI_DNA_Analyzer
+﻿using Microsoft.Win32;
+
+namespace POI_DNA_Analyzer
 {
 	internal class CodonToAminoAcidTranslator
 	{
@@ -18,10 +20,16 @@
 		{
 			if (_fileSaver.IsCustomPathSet == false)
 			{
-				_fileSaver.ChangePath(_commonFilePath.FilePath);
+				OpenFolderDialog openFolderDialog = new OpenFolderDialog();
 
-				if (_commonFilePath.IsRootFileDestinationChosen == false)
+				if (openFolderDialog.ShowDialog() == true)
+				{
+					_fileSaver.ChangePath(openFolderDialog.FolderName);
+				}
+				else
+				{
 					return;
+				}
 			}
 
 			for (int i = 0; i < 3; i++)

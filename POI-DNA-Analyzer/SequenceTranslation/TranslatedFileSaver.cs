@@ -41,6 +41,13 @@ namespace POI_DNA_Analyzer
 			_savePathWithoutName = filePathWithoutName;
 		}
 
+		public void ClearLists()
+		{
+			ResultFilesPaths.Clear();
+			ResultFilesNames.Clear();
+			ResultFilesPathsWithoutName.Clear();
+		}
+
 		public void ClearPath()
 		{
 			_savePathWithoutName = "";

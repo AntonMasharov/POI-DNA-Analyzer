@@ -1,7 +1,5 @@
 ﻿using System.IO;
-using System.Web;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace POI_DNA_Analyzer
 {
@@ -17,6 +15,7 @@ namespace POI_DNA_Analyzer
 		private DNACodonTableFileReader _codonTableFileReader;
 
 		private OpenReadingFrame _openReadingFrame;
+		private OpenReadingFramesFileSaver _openReadingFrameFileSaver;
 
 		private int _defaultMinSizeToSave = 100;
 		private string _complementaryDNA = "";
@@ -35,30 +34,40 @@ namespace POI_DNA_Analyzer
 			_codonToAminoAcidTranslator = new CodonToAminoAcidTranslator(_codon, _translatedFileSaver, commonFilePath);
 
 			_openReadingFrame = new OpenReadingFrame();
+			_openReadingFrameFileSaver = new OpenReadingFramesFileSaver();
 			_commonFilePath = commonFilePath;
 			_complementaryDNASaver = new ComplementaryDNASaver(_commonFilePath);
 		}
 
 		public void StartEverything(string standardSequence, string minSizeToSave)
 		{
-			GenerateComplementarySequence(standardSequence);
+			_translatedFileSaver.ClearPath();
+			_translatedFileSaver.ChangePath(_commonFilePath.FilePath);
+			_openReadingFrameFileSaver.ChangePath(_commonFilePath.FilePath);
+
+			GenerateComplementaryDNA(standardSequence);
 			TranslateCodonsToFiles(standardSequence);
 			StartOpenReadingFrame(minSizeToSave);
 		}
 
-		public void GenerateComplementarySequence(string standardSequence)
+		public void GenerateComplementaryDNA(string standardSequence)
 		{
 			_complementaryDNA = _complementaryDNACreator.Create(standardSequence);
 		}
 
-		public void SaveComplementarySequence()
+		public void SaveComplementaryDNA()
 		{
 			_complementaryDNASaver.Save(_complementaryDNA);
 		}
 
-		public void SaveComplementarySequenceIndividually()
+		public void SaveComplementaryDNAIndividually()
 		{
 			_complementaryDNASaver.SaveIndividually(_complementaryDNA);
+		}
+
+		public void ResetComplementaryDNA()
+		{
+			_complementaryDNA = "";
 		}
 
 		public void TranslateCodonsToFiles(string standardSequence)
@@ -69,8 +78,20 @@ namespace POI_DNA_Analyzer
 				return;
 			}
 
+			_translatedFileSaver.ClearLists();
 			_codonToAminoAcidTranslator.TranslateToFiles(standardSequence, false, _language);
 			_codonToAminoAcidTranslator.TranslateToFiles(_complementaryDNA, true, _language);
+		}
+
+		public void ChangeTranslationConfig()
+		{
+			FilePicker filePicker = new FilePicker();
+			_codonTableFile.SetNewPath(filePicker.PickFilePath(filePicker.FilterCSV));
+		}
+
+		public void ResetTranslationConfig()
+		{
+			_codonTableFile.ResetPath();
 		}
 
 		public void StartOpenReadingFrame(string minSizeToSave)
@@ -80,24 +101,41 @@ namespace POI_DNA_Analyzer
 				WarningBox1();
 				return; 
 			}
+			
+			if (_translatedFileSaver.ResultFilesPaths == null || _translatedFileSaver.ResultFilesPaths.Count == 0)
+			{
+				WarningBox2();
+				return;
+			}
 
 			FileOpener fileOpener = new FileOpener();
-			OpenReadingFramesFileSaver fileSaver = new OpenReadingFramesFileSaver();
 
 			for (int i = 0; i < _translatedFileSaver.ResultFilesPaths.Count; i++)
 			{
-				StreamReader file = fileOpener.OpenFile(_translatedFileSaver.ResultFilesPaths[i]);
-
-				if (file == null)
-				{
-					WarningBox2();
-					return;
-				}
+				StreamReader file = fileOpener.OpenFile(Path.Combine(_translatedFileSaver.ResultFilesPaths[i], _translatedFileSaver.ResultFilesNames[i]));
 
 				_openReadingFrame.HandleSequence(file.ReadToEnd());
 
-				fileSaver.Save(_translatedFileSaver.ResultFilesPathsWithoutName[i], _translatedFileSaver.ResultFilesNames[i], _openReadingFrame.OpenReadingFrameSequences, HandleMinSizeToSave(minSizeToSave));
+				Dictionary<int, string> result = _openReadingFrame.OpenReadingFrameSequences;
+				string name = _translatedFileSaver.ResultFilesNames[i];
+
+				_openReadingFrameFileSaver.Save(name, result, HandleMinSizeToSave(minSizeToSave));
 			}
+		}
+
+		public void ChangeOpenReadingFramesResultPath()
+		{
+			_openReadingFrameFileSaver.ChoosePath();
+		}
+
+		public void ChangeOpenReadingFramesConfig()
+		{
+			_openReadingFrame.ChangeConfig();
+		}
+
+		public void ResetOpenReadingFramesConfig()
+		{
+			_openReadingFrame.ResetConfig();
 		}
 
 		public void ChangeResultLanguage(Languages language)

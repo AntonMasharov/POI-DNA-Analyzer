@@ -287,8 +287,8 @@
 						Height="29"
 						VerticalAlignment="Bottom"
 						Grid.Column="2" />
-					<Button x:Name="SaveComplementaryDNAFile" 
-						Click="SaveComplementaryDNAFileButtonClick" 
+					<Button x:Name="ChooseSavePath" 
+						Click="ChooseOpenReadingFramesSavePathButtonClick" 
 						Content="{DynamicResource SaveButton}" 
 						Margin="0,0,94,10" 
 						Height="29" 
@@ -344,10 +344,10 @@
 					<Button
 						Content="Config" 
 						Click="ChangeTranslationConfig" 
-						Height="29" 
 						HorizontalAlignment="Center" 
+						Height="29" 
 						Width="79" 
-						Margin="0,253,0,116"
+						Margin="0,137,0,0"
 						Grid.Column="1"/>
 					<Button
 						Click="ResetTranslationConfigButtonClick" 
@@ -403,10 +403,10 @@
 					<Button
 						Content="Config"  
 						Click="ChangeOpenReadingFramesConfig" 
-						Height="29" 
 						HorizontalAlignment="Center" 
+						Height="29" 
 						Width="79" 
-						Margin="0,253,0,116"
+						Margin="0,137,0,0"
 						Grid.Column="2"/>
 					<Button
 						Click="ResetOpenReadingFramesConfigButtonClick" 

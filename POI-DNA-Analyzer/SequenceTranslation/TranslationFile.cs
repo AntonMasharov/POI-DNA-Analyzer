@@ -25,7 +25,15 @@ namespace POI_DNA_Analyzer
 
 		public void SetNewPath(string newFilePath)
 		{
+			if (newFilePath == "")
+				return;
+
 			_filePath = Path.Combine(newFilePath);
+		}
+
+		public void ResetPath()
+		{
+			SetDefaultPath();
 		}
 
 		private void SetDefaultPath()

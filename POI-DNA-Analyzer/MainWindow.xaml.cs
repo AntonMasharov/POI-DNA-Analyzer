@@ -35,7 +35,7 @@ namespace POI_DNA_Analyzer
 		{
 			FilePicker filePicker = new FilePicker();
 
-			_filePath = filePicker.PickFilePath();
+			_filePath = filePicker.PickFilePath(filePicker.FilterTXTandFASTA);
 
 			OpenFile();
 			ReadTextFromFile(_fileStream);
@@ -80,15 +80,15 @@ namespace POI_DNA_Analyzer
 
 		private void CreateComplementaryDNAButtonClick(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.GenerateComplementarySequence(_fileText);
+			_openReadingFrameWindow.GenerateComplementaryDNA(_fileText);
 		}
 
 		private void SaveComplementaryDNAFileButtonClick(object sender, RoutedEventArgs e)
 		{
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-				_openReadingFrameWindow.SaveComplementarySequence();
+				_openReadingFrameWindow.SaveComplementaryDNA();
 			else
-				_openReadingFrameWindow.SaveComplementarySequenceIndividually();
+				_openReadingFrameWindow.SaveComplementaryDNAIndividually();
 		}
 
 		private void StartTranslation(object sender, RoutedEventArgs e)
@@ -110,14 +110,44 @@ namespace POI_DNA_Analyzer
 			}
 		}
 
+		private void ChangeTranslationConfig(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.ChangeTranslationConfig();
+		}
+
+		private void ResetTranslationConfigButtonClick(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.ResetTranslationConfig();
+		}
+
 		private void OpenReadingFrameStartButtonClick(object sender, RoutedEventArgs e)
 		{
 			_openReadingFrameWindow.StartOpenReadingFrame(MinSizeToSaveTextBox.Text);
 		}
 
+		private void ChangeOpenReadingFramesResultPath(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.ChangeOpenReadingFramesResultPath();
+		}
+
+		private void ChangeOpenReadingFramesConfig(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.ChangeOpenReadingFramesConfig();
+		}
+
+		private void ResetOpenReadingFramesConfigButtonClick(object sender, RoutedEventArgs e)
+		{
+			_openReadingFrameWindow.ResetOpenReadingFramesConfig();
+		}
+
 		private void CreateEverythingButtonClick(object sender, RoutedEventArgs e)
 		{
 			_openReadingFrameWindow.StartEverything(_fileText, MinSizeToSaveTextBox.Text);
+		}
+
+		private void ChooseOpenReadingFramesSavePathButtonClick(object sender, RoutedEventArgs e)
+		{
+			_commonFilePath.ChooseFolder();
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)
@@ -140,6 +170,10 @@ namespace POI_DNA_Analyzer
 			FileOpener fileOpener = new FileOpener();
 
 			_fileStream = fileOpener.OpenFile(_filePath);
+
+			//Not the responsibility of this method, but for now it's normal
+			_openReadingFrameWindow.ResetComplementaryDNA();
+			_translatedFileSaver.ClearLists();
 		}
 
 		private void ReadTextFromFile(StreamReader streamReader)

@@ -34,11 +34,12 @@
 				int startIndex = i;
 				bool isStopEncoutered = false;
 				OpenReadingFrameSequences.Add(startIndex, "");
+				string a = "";
 
 				for (int j = i; j < aminoAcids.Length; j++)
 				{
 					i = j;
-
+					a = aminoAcids[j];
 					if (_aminoAcid.IsStop(aminoAcids[j]) == false && isStopEncoutered == true)
 						break;
 
@@ -48,6 +49,17 @@
 					OpenReadingFrameSequences[startIndex] += aminoAcids[j];
 				}
 			}
+		}
+
+		public void ChangeConfig()
+		{
+			FilePicker filePicker = new FilePicker();
+			_startAminoAcidFile.SetNewPath(filePicker.PickFilePath(filePicker.FilterCSV));
+		}
+
+		public void ResetConfig()
+		{
+			_startAminoAcidFile.ResetPath();
 		}
 	}
 }

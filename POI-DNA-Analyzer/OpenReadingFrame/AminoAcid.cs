@@ -22,7 +22,7 @@
 
 		public bool IsStop(string aminoAcid)
 		{
-			if (aminoAcid == "Start" || aminoAcid == "Старт")
+			if (aminoAcid == "Stop" || aminoAcid == "Стоп")
 				return true;
 
 			return false;
