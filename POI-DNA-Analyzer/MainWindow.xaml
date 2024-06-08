@@ -418,6 +418,46 @@
 						Grid.Column="2"/>
 				</Grid>
 			</TabItem>
+			<TabItem x:Name="ATGCWindow">
+				<TabItem.Header>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Margin="3" Text="{DynamicResource ATGCPercent}"></TextBlock>
+					</StackPanel>
+				</TabItem.Header>
+				<Grid>
+					<Button x:Name="StartATGCPercentButton" 
+						Content="{DynamicResource StartButton}" 
+						Margin="0,0,8,10" 
+						Click="StartATGCPercentButtonClick"
+						HorizontalAlignment="Right" 
+						Width="79" 
+						Height="29"
+						VerticalAlignment="Bottom"/>
+					<Button x:Name="SaveATGCPercent" 
+						Click="SaveATGCPercentButtonClick" 
+						Content="{DynamicResource SaveButton}" 
+						Margin="0,0,118,10" 
+						Height="29" 
+						VerticalAlignment="Bottom" 
+						HorizontalAlignment="Right" 
+						Width="79"/>
+					<Button Name = "SaveMenuButton5"
+						Click="SaveMenuButtonClick" 
+						Content="..." 
+						Margin="0,0,92,10" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom"/>
+					<TextBlock Name = "ATGCResult"
+						HorizontalAlignment="Center" 
+						TextWrapping="Wrap" 
+						Text="TextBlock" 
+						VerticalAlignment="Center" 
+						Height="72" 
+						Width="142"/>
+				</Grid>
+			</TabItem>
 		</TabControl>
 		<Button x:Name="OpenFileButton" 
 			Content="{DynamicResource OpenFileButton}" 

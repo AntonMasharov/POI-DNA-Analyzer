@@ -10,6 +10,7 @@ namespace POI_DNA_Analyzer
 		private SequencesFinderWindow _sequencesFinderWindow;
 		private DinucleotidesAnalyzerWindow _dinucleotidesAnalyzerWindow;
 		private OpenReadingFrameWindow _openReadingFrameWindow;
+		private ATGCWindow _atgcWindow;
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
 		private SaveContextMenu _saveContextMenu;
@@ -27,6 +28,7 @@ namespace POI_DNA_Analyzer
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(DinucleotidesAnalyzerProgressBar, OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
 			_translatedFileSaver = new TranslatedFileSaver();
 			_openReadingFrameWindow = new OpenReadingFrameWindow(_commonFilePath, _translatedFileSaver);
+			_atgcWindow = new ATGCWindow(ATGCResult, _commonFilePath);
 
 			Localize("ru");
 		}
@@ -148,6 +150,19 @@ namespace POI_DNA_Analyzer
 		private void ChooseOpenReadingFramesSavePathButtonClick(object sender, RoutedEventArgs e)
 		{
 			_commonFilePath.ChooseFolder();
+		}
+
+		private void StartATGCPercentButtonClick(object sender, RoutedEventArgs e)
+		{
+			_atgcWindow.Start(_fileText);
+		}
+
+		private void SaveATGCPercentButtonClick(object sender, RoutedEventArgs e)
+		{
+			if (SaveIndividuallyCheckbox.IsChecked == false)
+				_atgcWindow.Save();
+			else
+				_atgcWindow.SaveIndividually();
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)

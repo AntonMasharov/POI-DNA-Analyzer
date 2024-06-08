@@ -24,4 +24,5 @@
 	<system:String x:Key="MakeComplementaryDNA">Сделать комплементарную цепь</system:String>
 	<system:String x:Key="Translate">Трансляция</system:String>
 	<system:String x:Key="FindOpenReadingFrames">Найти открытые рамки считывания</system:String>
+	<system:String x:Key="ATGCPercent">Процент AT-GC</system:String>
 </ResourceDictionary>
