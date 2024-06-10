@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace POI_DNA_Analyzer
+﻿namespace POI_DNA_Analyzer
 {
 	class ATGCResultSaver
     {

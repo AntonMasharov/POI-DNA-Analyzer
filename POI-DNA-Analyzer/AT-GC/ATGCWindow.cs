@@ -8,6 +8,7 @@ namespace POI_DNA_Analyzer
 		private ChunkAnalyzer _chunkAnalyzer;
 		private CommonFilePath _commonFilePath;
 		private ATGCResultSaver _resultSaver;
+
 		double _atCount = 0;
 		double _gcCount = 0;
 		double _wholeCount = 0;
