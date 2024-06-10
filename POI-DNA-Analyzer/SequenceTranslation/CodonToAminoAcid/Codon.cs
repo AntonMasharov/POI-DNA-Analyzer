@@ -25,6 +25,9 @@
 
 		public void InitializeDictionaries(string[] contentLines, Dictionary<string, int> header)
 		{
+			_codonsEN.Clear();
+			_codonsRU.Clear();
+
 			foreach (string line in contentLines)
 			{
 				string[] parts = line.Split(',');

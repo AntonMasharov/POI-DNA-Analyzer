@@ -6,6 +6,7 @@
 		private StartAminoAcidFile _startAminoAcidFile;
 		private StartAminoAcidTableFileReader _startAminoAcidTableFileReader;
 		private ResultAminoAcidsFileReader _resultFilesReader;
+		private Dictionary<int, string> _openReadingFrameSequences; //<index, sequence>
 
 		public OpenReadingFrame()
 		{
@@ -14,16 +15,14 @@
 			_startAminoAcidTableFileReader = new StartAminoAcidTableFileReader(_aminoAcid, _startAminoAcidFile);
 			_startAminoAcidTableFileReader.Read();
 			_resultFilesReader = new ResultAminoAcidsFileReader();
-
-			OpenReadingFrameSequences = new Dictionary<int, string>();
+			_openReadingFrameSequences = new Dictionary<int, string>();
 		}
 
-		public Dictionary<int, string> OpenReadingFrameSequences { get; private set; } //<index, sequence>
+		public IReadOnlyDictionary<int, string> OpenReadingFrameSequences => _openReadingFrameSequences;
 
-		//СТОП КОДОНЫ ДОЛЖНЫ БЫТЬ В ПОСЛЕДОВАТЕЛЬНОСТИ
-		public void HandleSequence(string sequence)
+		public void FindOpenReadingFrames(string sequence)
 		{
-			OpenReadingFrameSequences.Clear();
+			_openReadingFrameSequences.Clear();
 			string[] aminoAcids = sequence.Split(',');
 
 			for (int i = 0; i < aminoAcids.Length; i++)
@@ -33,7 +32,7 @@
 
 				int startIndex = i;
 				bool isStopEncoutered = false;
-				OpenReadingFrameSequences.Add(startIndex, "");
+				_openReadingFrameSequences.Add(startIndex, "");
 
 				for (int j = i; j < aminoAcids.Length; j++)
 				{
@@ -45,7 +44,7 @@
 					if (_aminoAcid.IsStop(aminoAcids[j]) == true)
 						isStopEncoutered = true;
 
-					OpenReadingFrameSequences[startIndex] += aminoAcids[j];
+					_openReadingFrameSequences[startIndex] += aminoAcids[j];
 				}
 			}
 		}
@@ -54,11 +53,13 @@
 		{
 			FilePicker filePicker = new FilePicker();
 			_startAminoAcidFile.SetNewPath(filePicker.PickFilePath(filePicker.FilterCSV));
+			_startAminoAcidTableFileReader.Read();
 		}
 
 		public void ResetConfig()
 		{
 			_startAminoAcidFile.ResetPath();
+			_startAminoAcidTableFileReader.Read();
 		}
 	}
 }

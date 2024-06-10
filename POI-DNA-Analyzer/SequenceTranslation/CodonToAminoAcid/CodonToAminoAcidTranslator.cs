@@ -1,43 +1,27 @@
-﻿using Microsoft.Win32;
-
-namespace POI_DNA_Analyzer
+﻿namespace POI_DNA_Analyzer
 {
 	internal class CodonToAminoAcidTranslator
 	{
-		private CommonFilePath _commonFilePath;
-		private TranslatedFileSaver _fileSaver;
 		private Codon _codon;
 		private int _codonSize = 3;
+		private Dictionary<int, string> _translatedSequences;
 
-		public CodonToAminoAcidTranslator(Codon codon, TranslatedFileSaver fileSaver, CommonFilePath commonFilePath)
+		public CodonToAminoAcidTranslator(Codon codon)
 		{
-			_commonFilePath = commonFilePath;
-			_fileSaver = fileSaver;
 			_codon = codon;
+			_translatedSequences = new Dictionary<int, string>();
 		}
 
-		public void TranslateToFiles(string text, bool isComplementary, Languages language)
+		public IReadOnlyDictionary<int, string> TranslatedSequences => _translatedSequences;
+
+		public void Translate(string text, Languages language)
 		{
-			if (_fileSaver.IsCustomPathSet == false)
+			_translatedSequences.Clear();
+
+			for (int indent = 0; indent < _codonSize; indent++)
 			{
-				OpenFolderDialog openFolderDialog = new OpenFolderDialog();
-
-				if (openFolderDialog.ShowDialog() == true)
-				{
-					_fileSaver.ChangePath(openFolderDialog.FolderName);
-				}
-				else
-				{
-					return;
-				}
+				_translatedSequences.Add(indent, ReadCodons(text, indent, language));
 			}
-
-			for (int i = 0; i < 3; i++)
-			{
-				SaveToFile(ReadCodons(text, i, language), GetFileName(i, isComplementary));
-			}
-
-			//_fileSaver.ClearPath();
 		}
 
 		private string ReadCodons(string text, int indent, Languages language)
@@ -56,26 +40,6 @@ namespace POI_DNA_Analyzer
 			}
 
 			return outputText;
-		}
-
-		private void SaveToFile(string textToSave, string fileName)
-		{
-			if (textToSave == "" || fileName == "")
-				return;
-
-			_fileSaver.Save(textToSave, fileName);
-		}
-
-		private string GetFileName(int indent, bool isComplementary)
-		{
-			string fileName = "";
-
-			if (isComplementary == true)
-				fileName = "standard-animoacids-indent" + indent.ToString() + ".txt";
-			else
-				fileName = "complementary-animoacids-indent" + indent.ToString() + ".txt";
-
-			return fileName;
 		}
 	}
 }

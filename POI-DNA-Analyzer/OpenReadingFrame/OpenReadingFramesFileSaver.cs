@@ -9,7 +9,7 @@ namespace POI_DNA_Analyzer
 		private string _savePathWithoutName = AppDomain.CurrentDomain.BaseDirectory;
 		private string _format = ".csv";
 
-		public void Save(string fileName, Dictionary<int, string> openReadingFrames, int minSizeToSave = 100)
+		public void Save(string fileName, IReadOnlyDictionary<int, string> openReadingFrames, int minSizeToSave = 100)
 		{
 			string destination = Path.Combine(_savePathWithoutName, _resultFolderName);
 			fileName = "open-reading-frame-" + RemoveFileExtension(fileName) + _format;

@@ -21,7 +21,7 @@
 
 		public abstract bool CanSave();
 
-		public void Save()
+		public virtual void Save()
 		{
 			if (CanSave() == false)
 				return;
@@ -35,7 +35,7 @@
 			_fileSaver.SaveTo(destination, fileName, GetContent());
 		}
 
-		public void SaveIndividually()
+		public virtual void SaveIndividually()
 		{
 			if (CanSave() == false)
 				return;

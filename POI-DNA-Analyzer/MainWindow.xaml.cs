@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,10 +10,11 @@ namespace POI_DNA_Analyzer
 		private DinucleotidesAnalyzerWindowController _dinucleotidesAnalyzerWindow;
 		private OpenReadingFrameWindowController _openReadingFrameWindow;
 		private ATGCWindow _atgcWindow;
+
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
 		private SaveContextMenu _saveContextMenu;
-		private TranslatedFileSaver _translatedFileSaver;
+
 		private string _fileText = "";
 		private string _filePath = "";
 
@@ -26,9 +26,8 @@ namespace POI_DNA_Analyzer
 			_commonFilePath = new CommonFilePath();
 			_sequencesFinderWindow = new SequencesFinderWindowController(ResultText, List, _commonFilePath);
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindowController(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
+			_openReadingFrameWindow = new OpenReadingFrameWindowController(_commonFilePath);
 
-			_translatedFileSaver = new TranslatedFileSaver();
-			_openReadingFrameWindow = new OpenReadingFrameWindowController(_commonFilePath, _translatedFileSaver);
 			_atgcWindow = new ATGCWindow(ATGCResult, _commonFilePath);
 
 			Localize("ru");
@@ -101,16 +100,7 @@ namespace POI_DNA_Analyzer
 
 		private void ChangeTranslationResultPath(object sender, RoutedEventArgs e)
 		{
-			OpenFolderDialog openFolderDialog = new OpenFolderDialog();
-
-			if (openFolderDialog.ShowDialog() == true)
-			{
-				_translatedFileSaver.ChangePath(openFolderDialog.FolderName); 
-			}
-			else
-			{
-				return;
-			}
+			_openReadingFrameWindow.ChangeTranslationResultPath();
 		}
 
 		private void ChangeTranslationConfig(object sender, RoutedEventArgs e)
@@ -189,7 +179,7 @@ namespace POI_DNA_Analyzer
 
 			//Not the responsibility of this method, but for now it's normal
 			_openReadingFrameWindow.ResetComplementaryDNA();
-			_translatedFileSaver.ClearLists();
+			_openReadingFrameWindow.ResetLists();
 		}
 
 		private void ReadTextFromFile(StreamReader streamReader)

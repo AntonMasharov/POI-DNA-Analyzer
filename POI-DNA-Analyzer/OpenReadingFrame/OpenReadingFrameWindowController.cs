@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 
 namespace POI_DNA_Analyzer
@@ -13,6 +14,7 @@ namespace POI_DNA_Analyzer
 		private TranslatedFileSaver _translatedFileSaver;
 		private DNACodonTableFile _codonTableFile;
 		private DNACodonTableFileReader _codonTableFileReader;
+		private TranslatedFilesPathsList _translatedFilesPathsList;
 
 		private OpenReadingFrame _openReadingFrame;
 		private OpenReadingFramesFileSaver _openReadingFrameFileSaver;
@@ -21,16 +23,17 @@ namespace POI_DNA_Analyzer
 		private Languages _language = Languages.English;
 		private CommonFilePath _commonFilePath;
 
-		public OpenReadingFrameWindowController(CommonFilePath commonFilePath, TranslatedFileSaver translatedFileSaver)
+		public OpenReadingFrameWindowController(CommonFilePath commonFilePath)
 		{
 			_complementaryDNA = new ComplementaryDNA();
 
 			_codon = new Codon();
-			_translatedFileSaver = translatedFileSaver;
 			_codonTableFile = new DNACodonTableFile();
 			_codonTableFileReader = new DNACodonTableFileReader(_codon, _codonTableFile);
 			_codonTableFileReader.Read();
-			_codonToAminoAcidTranslator = new CodonToAminoAcidTranslator(_codon, _translatedFileSaver, commonFilePath);
+			_translatedFilesPathsList = new TranslatedFilesPathsList();
+			_codonToAminoAcidTranslator = new CodonToAminoAcidTranslator(_codon);
+			_translatedFileSaver = new TranslatedFileSaver(_codonToAminoAcidTranslator, _translatedFilesPathsList, commonFilePath);
 
 			_openReadingFrame = new OpenReadingFrame();
 			_openReadingFrameFileSaver = new OpenReadingFramesFileSaver();
@@ -40,6 +43,9 @@ namespace POI_DNA_Analyzer
 
 		public void StartEverything(string standardSequence, string minSizeToSave)
 		{
+			if (standardSequence == null || standardSequence == "")
+				return;
+
 			_translatedFileSaver.ClearPath();
 			_translatedFileSaver.ChangePath(_commonFilePath.FilePath);
 			_openReadingFrameFileSaver.ChangePath(_commonFilePath.FilePath);
@@ -51,6 +57,9 @@ namespace POI_DNA_Analyzer
 
 		public void GenerateComplementaryDNA(string standardSequence)
 		{
+			if (standardSequence == null || standardSequence == "")
+				return;
+
 			_complementaryDNA.Create(standardSequence);
 		}
 
@@ -73,52 +82,69 @@ namespace POI_DNA_Analyzer
 		{
 			if (_complementaryDNA.Get() == "")
 			{
-				WarningBox1();
+				WarningBoxStep1();
 				return;
 			}
 
 			_translatedFileSaver.ClearLists();
-			_codonToAminoAcidTranslator.TranslateToFiles(standardSequence, false, _language);
-			_codonToAminoAcidTranslator.TranslateToFiles(_complementaryDNA.Get(), true, _language);
+
+			_codonToAminoAcidTranslator.Translate(standardSequence, _language);
+			_translatedFileSaver.Save(false);
+
+			_codonToAminoAcidTranslator.Translate(_complementaryDNA.Get(), _language);
+			_translatedFileSaver.Save(true);
+		}
+
+		public void ChangeTranslationResultPath()
+		{
+			OpenFolderDialog openFolderDialog = new OpenFolderDialog();
+
+			if (openFolderDialog.ShowDialog() == true)
+			{
+				_translatedFileSaver.ChangePath(openFolderDialog.FolderName);
+			}
+			else
+			{
+				return;
+			}
 		}
 
 		public void ChangeTranslationConfig()
 		{
 			FilePicker filePicker = new FilePicker();
 			_codonTableFile.SetNewPath(filePicker.PickFilePath(filePicker.FilterCSV));
+			_codonTableFileReader.Read();
 		}
 
 		public void ResetTranslationConfig()
 		{
 			_codonTableFile.ResetPath();
+			_codonTableFileReader.Read();
 		}
 
 		public void StartOpenReadingFrame(string minSizeToSave)
 		{
 			if (_complementaryDNA.Get() == "")
 			{
-				WarningBox1();
+				WarningBoxStep1();
 				return; 
 			}
 			
-			if (_translatedFileSaver.ResultFilesPaths == null || _translatedFileSaver.ResultFilesPaths.Count == 0)
+			if (_translatedFilesPathsList.ResultFilesPaths == null || _translatedFilesPathsList.ResultFilesPaths.Count == 0)
 			{
-				WarningBox2();
+				WarningBoxStep2();
 				return;
 			}
 
 			FileOpener fileOpener = new FileOpener();
 
-			for (int i = 0; i < _translatedFileSaver.ResultFilesPaths.Count; i++)
+			for (int i = 0; i < _translatedFilesPathsList.ResultFilesPaths.Count; i++)
 			{
-				StreamReader file = fileOpener.OpenFile(Path.Combine(_translatedFileSaver.ResultFilesPaths[i], _translatedFileSaver.ResultFilesNames[i]));
+				string path = Path.Combine(_translatedFilesPathsList.ResultFilesPaths[i], _translatedFilesPathsList.ResultFilesNames[i]);
+				StreamReader file = fileOpener.OpenFile(path);
 
-				_openReadingFrame.HandleSequence(file.ReadToEnd());
-
-				Dictionary<int, string> result = _openReadingFrame.OpenReadingFrameSequences;
-				string name = _translatedFileSaver.ResultFilesNames[i];
-
-				_openReadingFrameFileSaver.Save(name, result, HandleMinSizeToSave(minSizeToSave));
+				_openReadingFrame.FindOpenReadingFrames(file.ReadToEnd());
+				SaveOpenReadingFramesResult(i, minSizeToSave);
 			}
 		}
 
@@ -142,6 +168,19 @@ namespace POI_DNA_Analyzer
 			_language = language;
 		}
 
+		public void ResetLists()
+		{
+			_translatedFileSaver.ClearLists();
+		}
+
+		private void SaveOpenReadingFramesResult(int indent, string minSizeToSave)
+		{
+			IReadOnlyDictionary<int, string> result = _openReadingFrame.OpenReadingFrameSequences;
+			string name = _translatedFilesPathsList.ResultFilesNames[indent];
+
+			_openReadingFrameFileSaver.Save(name, result, HandleMinSizeToSave(minSizeToSave));
+		}
+
 		private int HandleMinSizeToSave(string value)
 		{
 			int output = 0;
@@ -155,7 +194,7 @@ namespace POI_DNA_Analyzer
 			return output;
 		}
 
-		private void WarningBox1()
+		private void WarningBoxStep1()
 		{
 			MessageBox.Show(
 				"Create a complementary DNA first",
@@ -165,7 +204,7 @@ namespace POI_DNA_Analyzer
 			);
 		}
 
-		private void WarningBox2()
+		private void WarningBoxStep2()
 		{
 			MessageBox.Show(
 				"Make a translation files first",
