@@ -1,16 +1,28 @@
 ﻿namespace POI_DNA_Analyzer
 {
-	internal class ComplementaryDNACreator
+	internal class ComplementaryDNA
 	{
+		private string _complementaryDNA = "";
+
+		public string Get()
+		{
+			return _complementaryDNA;
+		}
+
 		public string Create(string text)
 		{
 			if (text == null || text == "")
 				return "";
 
-			text = ReplaceLetters(text);
-			text = InvertText(text);
+			_complementaryDNA = ReplaceLetters(text);
+			_complementaryDNA = InvertText(text);
 
-			return text;
+			return _complementaryDNA;
+		}
+
+		public void Reset()
+		{
+			_complementaryDNA = "";
 		}
 
 		private string ReplaceLetters(string text)
@@ -29,6 +41,7 @@
 		{
 			char[] charArray = text.ToCharArray();
 			Array.Reverse(charArray);
+
 			return new string(charArray);
 		}
 	}

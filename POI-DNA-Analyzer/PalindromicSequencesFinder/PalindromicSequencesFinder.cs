@@ -14,7 +14,7 @@ namespace POI_DNA_Analyzer
 		public void Start(string standardDNA)
 		{
 			PalindromicSequences.Clear();
-			string complementaryDNA = new ComplementaryDNACreator().Create(standardDNA);
+			string complementaryDNA = new ComplementaryDNA().Create(standardDNA);
 			//Read(standardDNA, complementaryDNA);
 			Read(standardDNA);
 		}

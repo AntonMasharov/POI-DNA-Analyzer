@@ -1,37 +1,43 @@
 ﻿namespace POI_DNA_Analyzer
 {
-	class ComplementaryDNASaver
+	class ComplementaryDNASaver : ResultSaver
     {
+		private ComplementaryDNA _complementaryDNA;
 		private CommonFilePath _commonFilePath;
 		private string _format = ".txt";
 
-		public ComplementaryDNASaver(CommonFilePath commonFilePath)
+		public ComplementaryDNASaver(ComplementaryDNA complementaryDNA, CommonFilePath commonFilePath):base(commonFilePath)
 		{
+			_complementaryDNA = complementaryDNA;
 			_commonFilePath = commonFilePath;
 		}
 
-		public void Save(string text)
+		public override FileSaver GetFileSaver()
 		{
-			if (text == null || text == "")
-				return;
-
-			string fileName = "complementary-sequence" + _format;
-			string destination = _commonFilePath.FilePath;
-
-			if (_commonFilePath.IsRootFileDestinationChosen == false)
-				return;
-
-			NoExtentionFileSaver noExtentionFileSaver = new NoExtentionFileSaver();
-			noExtentionFileSaver.SaveTo(destination, fileName, text);
+			return new NoExtentionFileSaver();
 		}
 
-		public void SaveIndividually(string text)
+		public override string GetFileName()
 		{
-			if (text == null || text == "")
-				return;
+			return "complementary-sequence" + _format;
+		}
 
-			NoExtentionFileSaver noExtentionFileSaver = new NoExtentionFileSaver();
-			noExtentionFileSaver.Save(text);
+		public override string GetDestination()
+		{
+			return _commonFilePath.FilePath;
+		}
+
+		public override string GetContent()
+		{
+			return _complementaryDNA.Get();
+		}
+
+		public override bool CanSave()
+		{
+			if (_complementaryDNA.Get() == "")
+				return false;
+			else
+				return true;
 		}
     }
 }

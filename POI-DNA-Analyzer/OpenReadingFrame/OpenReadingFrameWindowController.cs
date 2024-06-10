@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace POI_DNA_Analyzer
 {
-	internal class OpenReadingFrameWindow
+	internal class OpenReadingFrameWindowController
 	{
-		private ComplementaryDNACreator _complementaryDNACreator;
+		private ComplementaryDNA _complementaryDNA;
 		private ComplementaryDNASaver _complementaryDNASaver;
 
 		private Codon _codon;
@@ -18,13 +18,12 @@ namespace POI_DNA_Analyzer
 		private OpenReadingFramesFileSaver _openReadingFrameFileSaver;
 
 		private int _defaultMinSizeToSave = 100;
-		private string _complementaryDNA = "";
 		private Languages _language = Languages.English;
 		private CommonFilePath _commonFilePath;
 
-		public OpenReadingFrameWindow(CommonFilePath commonFilePath, TranslatedFileSaver translatedFileSaver)
+		public OpenReadingFrameWindowController(CommonFilePath commonFilePath, TranslatedFileSaver translatedFileSaver)
 		{
-			_complementaryDNACreator = new ComplementaryDNACreator();
+			_complementaryDNA = new ComplementaryDNA();
 
 			_codon = new Codon();
 			_translatedFileSaver = translatedFileSaver;
@@ -36,7 +35,7 @@ namespace POI_DNA_Analyzer
 			_openReadingFrame = new OpenReadingFrame();
 			_openReadingFrameFileSaver = new OpenReadingFramesFileSaver();
 			_commonFilePath = commonFilePath;
-			_complementaryDNASaver = new ComplementaryDNASaver(_commonFilePath);
+			_complementaryDNASaver = new ComplementaryDNASaver(_complementaryDNA, _commonFilePath);
 		}
 
 		public void StartEverything(string standardSequence, string minSizeToSave)
@@ -52,27 +51,27 @@ namespace POI_DNA_Analyzer
 
 		public void GenerateComplementaryDNA(string standardSequence)
 		{
-			_complementaryDNA = _complementaryDNACreator.Create(standardSequence);
+			_complementaryDNA.Create(standardSequence);
 		}
 
 		public void SaveComplementaryDNA()
 		{
-			_complementaryDNASaver.Save(_complementaryDNA);
+			_complementaryDNASaver.Save();
 		}
 
 		public void SaveComplementaryDNAIndividually()
 		{
-			_complementaryDNASaver.SaveIndividually(_complementaryDNA);
+			_complementaryDNASaver.SaveIndividually();
 		}
 
 		public void ResetComplementaryDNA()
 		{
-			_complementaryDNA = "";
+			_complementaryDNA.Reset();
 		}
 
 		public void TranslateCodonsToFiles(string standardSequence)
 		{
-			if (_complementaryDNA == null || _complementaryDNA == "")
+			if (_complementaryDNA.Get() == "")
 			{
 				WarningBox1();
 				return;
@@ -80,7 +79,7 @@ namespace POI_DNA_Analyzer
 
 			_translatedFileSaver.ClearLists();
 			_codonToAminoAcidTranslator.TranslateToFiles(standardSequence, false, _language);
-			_codonToAminoAcidTranslator.TranslateToFiles(_complementaryDNA, true, _language);
+			_codonToAminoAcidTranslator.TranslateToFiles(_complementaryDNA.Get(), true, _language);
 		}
 
 		public void ChangeTranslationConfig()
@@ -96,7 +95,7 @@ namespace POI_DNA_Analyzer
 
 		public void StartOpenReadingFrame(string minSizeToSave)
 		{
-			if (_complementaryDNA == null || _complementaryDNA == "")
+			if (_complementaryDNA.Get() == "")
 			{
 				WarningBox1();
 				return; 

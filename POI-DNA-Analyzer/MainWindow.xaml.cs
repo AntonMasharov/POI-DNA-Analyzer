@@ -9,7 +9,7 @@ namespace POI_DNA_Analyzer
 	{
 		private SequencesFinderWindowController _sequencesFinderWindow;
 		private DinucleotidesAnalyzerWindowController _dinucleotidesAnalyzerWindow;
-		private OpenReadingFrameWindow _openReadingFrameWindow;
+		private OpenReadingFrameWindowController _openReadingFrameWindow;
 		private ATGCWindow _atgcWindow;
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
@@ -28,7 +28,7 @@ namespace POI_DNA_Analyzer
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindowController(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
 
 			_translatedFileSaver = new TranslatedFileSaver();
-			_openReadingFrameWindow = new OpenReadingFrameWindow(_commonFilePath, _translatedFileSaver);
+			_openReadingFrameWindow = new OpenReadingFrameWindowController(_commonFilePath, _translatedFileSaver);
 			_atgcWindow = new ATGCWindow(ATGCResult, _commonFilePath);
 
 			Localize("ru");
