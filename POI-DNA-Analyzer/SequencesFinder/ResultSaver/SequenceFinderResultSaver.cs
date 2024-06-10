@@ -1,43 +1,50 @@
 ﻿using System.IO;
 using System.Text;
+
 namespace POI_DNA_Analyzer
 {
-	internal class SequenceFinderResultSaver
+	internal class SequenceFinderResultSaver : ResultSaver
 	{
+		private SequenceFinderOutput _sequenceFinderOutput;
 		private CommonFilePath _commonFilePath;
 		private string _resultFolderName = "SequenceFinder";
 		private string _format = ".txt";
 
-		public SequenceFinderResultSaver(CommonFilePath commonFilePath) 
+		public SequenceFinderResultSaver(SequenceFinderOutput sequenceFinder, CommonFilePath commonFilePath) : base(commonFilePath)
 		{ 
+			_sequenceFinderOutput = sequenceFinder;
 			_commonFilePath = commonFilePath;
 		}
 
-		public void Save(string countInfo, LinkedList<int> indexes)
+		public override FileSaver GetFileSaver()
 		{
-			if (countInfo == "")
-				return;
-
-			string fileName = "sequence-finder-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
-			string destination = Path.Combine(_commonFilePath.FilePath, _resultFolderName);
-
-			if (_commonFilePath.IsRootFileDestinationChosen == false)
-				return;
-
-			NoExtentionFileSaver fileSaver = new NoExtentionFileSaver();
-			fileSaver.SaveTo(destination, fileName, BuildWholeString(countInfo, indexes));
+			return new NoExtentionFileSaver();
 		}
 
-		public void SaveIndividually(string countInfo, LinkedList<int> indexes)
+		public override string GetFileName()
 		{
-			if (countInfo == "")
-				return;
-
-			NoExtentionFileSaver fileSaver = new NoExtentionFileSaver();
-			fileSaver.Save(BuildWholeString(countInfo, indexes));
+			return "sequence-finder-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
 		}
 
-		private string BuildIndexes(LinkedList<int> indexes)
+		public override string GetDestination()
+		{
+			return Path.Combine(_commonFilePath.FilePath, _resultFolderName);
+		}
+
+		public override string GetContent()
+		{
+			return BuildWholeString();
+		}
+
+		public override bool CanSave()
+		{
+			if (_sequenceFinderOutput.OccurencesIndexes.Count() == 0)
+				return false;
+
+			return true;
+		}
+
+		private string BuildIndexes(IEnumerable<int> indexes)
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -55,9 +62,9 @@ namespace POI_DNA_Analyzer
 			return result;
 		}
 
-		private string BuildWholeString(string countInfo, LinkedList<int> indexes)
+		private string BuildWholeString()
 		{
-			return countInfo + "\n\n" + BuildIndexes(indexes);
+			return _sequenceFinderOutput.OccurencesIndexes.Count() + "\n\n" + BuildIndexes(_sequenceFinderOutput.OccurencesIndexes);
 		}
 	}
 }

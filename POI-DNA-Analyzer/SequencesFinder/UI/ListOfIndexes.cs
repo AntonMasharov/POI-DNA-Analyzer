@@ -11,7 +11,7 @@ namespace POI_DNA_Analyzer
 			_listBox = listBox;
 		}
 
-		public void ShowOccurrencesIndexes(LinkedList<int> indexes)
+		public void ShowOccurrencesIndexes(IEnumerable<int> indexes)
 		{
 			foreach (int index in indexes)
 			{

@@ -7,10 +7,11 @@ namespace POI_DNA_Analyzer
 {
 	public partial class MainWindow : Window
 	{
-		private SequencesFinderWindow _sequencesFinderWindow;
+		private SequencesFinderWindowController _sequencesFinderWindow;
 		private DinucleotidesAnalyzerWindow _dinucleotidesAnalyzerWindow;
 		private OpenReadingFrameWindow _openReadingFrameWindow;
 		private ATGCWindow _atgcWindow;
+		private PalindromicSequencesFinderWindow _palindromicSequencesFinderWindow;
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
 		private SaveContextMenu _saveContextMenu;
@@ -24,11 +25,12 @@ namespace POI_DNA_Analyzer
 
 			_saveContextMenu = new SaveContextMenu(SaveIndividuallyCheckbox, SaveTogetherCheckbox);
 			_commonFilePath = new CommonFilePath();
-			_sequencesFinderWindow = new SequencesFinderWindow(ResultText, List, _commonFilePath);
+			_sequencesFinderWindow = new SequencesFinderWindowController(ResultText, List, _commonFilePath);
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(DinucleotidesAnalyzerProgressBar, OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
 			_translatedFileSaver = new TranslatedFileSaver();
 			_openReadingFrameWindow = new OpenReadingFrameWindow(_commonFilePath, _translatedFileSaver);
 			_atgcWindow = new ATGCWindow(ATGCResult, _commonFilePath);
+			_palindromicSequencesFinderWindow = new PalindromicSequencesFinderWindow(_commonFilePath);
 
 			Localize("ru");
 		}
@@ -46,9 +48,9 @@ namespace POI_DNA_Analyzer
 		private void SaveFileButtonClick(object sender, RoutedEventArgs e)
 		{
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-				_sequencesFinderWindow.Save(ResultText.Text);
+				_sequencesFinderWindow.Save();
 			else
-				_sequencesFinderWindow.SaveIndividually(ResultText.Text);
+				_sequencesFinderWindow.SaveIndividually();
 		}
 
 		private void EnterPromptButtonClick(object sender, RoutedEventArgs e)
@@ -219,9 +221,15 @@ namespace POI_DNA_Analyzer
 			this.Resources.MergedDictionaries.Add(dictionary);
 
 			if (code == "ru")
+			{
 				_openReadingFrameWindow.ChangeResultLanguage(Languages.Russian);
+				_sequencesFinderWindow.ChangeResultLanguage(Languages.Russian);
+			}
 			else
+			{
 				_openReadingFrameWindow.ChangeResultLanguage(Languages.English);
+				_sequencesFinderWindow.ChangeResultLanguage(Languages.English);
+			}
 		}
 	}
 }

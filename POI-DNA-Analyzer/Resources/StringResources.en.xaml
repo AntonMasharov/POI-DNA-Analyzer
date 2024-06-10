@@ -25,4 +25,5 @@
 	<system:String x:Key="Translate">Translate codons to amino acids</system:String>
 	<system:String x:Key="FindOpenReadingFrames">Find open reading frames</system:String>
 	<system:String x:Key="ATGCPercent">AT-GC Percent</system:String>
+	<system:String x:Key="PalindromicSequencesFinderWindow">Palindromic Sequences Finder</system:String>
 </ResourceDictionary>

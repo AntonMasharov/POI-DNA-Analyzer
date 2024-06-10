@@ -25,4 +25,5 @@
 	<system:String x:Key="Translate">Трансляция</system:String>
 	<system:String x:Key="FindOpenReadingFrames">Найти открытые рамки считывания</system:String>
 	<system:String x:Key="ATGCPercent">Процент AT-GC</system:String>
+	<system:String x:Key="PalindromicSequencesFinderWindow">Поиск палиндромов</system:String>
 </ResourceDictionary>

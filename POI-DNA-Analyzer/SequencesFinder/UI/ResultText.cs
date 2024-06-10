@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace POI_DNA_Analyzer
 {
@@ -19,13 +18,12 @@ namespace POI_DNA_Analyzer
 
 		public void ShowOccurrencesCount(string text)
 		{
-			_textBlock.Text = $"Occurrences count: {text}";
+			_textBlock.Text = $"{text}";
 		}
 
 		public void ShowOccurrencesIndexes(string indexes)
 		{
 			_textBlock.Text += "\n";
-
 			_textBlock.Text += indexes;
 		}
 	}
