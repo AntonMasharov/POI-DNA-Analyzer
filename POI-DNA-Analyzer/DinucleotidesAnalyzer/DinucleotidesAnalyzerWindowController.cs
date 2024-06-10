@@ -4,13 +4,13 @@ using System.Windows.Controls.Primitives;
 
 namespace POI_DNA_Analyzer
 {
-	internal class DinucleotidesAnalyzerWindow
+	internal class DinucleotidesAnalyzerWindowController
 	{
-		private DinucleotidesAnalyzerProgressBar _dinucleotidesAnalyzerProgressBar;
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
 		private IProbabilityGraph _probabilityGraph;
 		private CheckBox _checkBox;
 		private CommonFilePath _commonFilePath;
+		private ResultSaver _resultSaver;
 
 		private string _fileText = "";
 		private string _currentDinucleotide = "A";
@@ -18,24 +18,15 @@ namespace POI_DNA_Analyzer
 		private int _chunkSize;
 		private double _similarityCoefficient;
 
-		public DinucleotidesAnalyzerWindow(ProgressBar progressBar, PlotView plotView, CheckBox checkBox, ScrollBar scrollBar, CommonFilePath commonFilePath)
+		public DinucleotidesAnalyzerWindowController(PlotView plotView, CheckBox checkBox, ScrollBar scrollBar, CommonFilePath commonFilePath)
 		{
 			_dinucleotidesAnalyzer = new DinucleotidesAnalyzer(new CosineSimilarityMatrixComparator());
 			_checkBox = checkBox;
 			_commonFilePath = commonFilePath;
+			_resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer, _commonFilePath);
 
 			ProbabilityGraphFactory probabilityGraphFactory = new ProbabilityGraphFactory(plotView, scrollBar);
 			_probabilityGraph = probabilityGraphFactory.Get();
-
-			_dinucleotidesAnalyzerProgressBar = new DinucleotidesAnalyzerProgressBar(progressBar);
-			_dinucleotidesAnalyzer.Executing += _dinucleotidesAnalyzerProgressBar.Update;
-			_dinucleotidesAnalyzer.Started += _dinucleotidesAnalyzerProgressBar.Show;
-		}
-
-		~DinucleotidesAnalyzerWindow()
-		{
-			_dinucleotidesAnalyzer.Executing -= _dinucleotidesAnalyzerProgressBar.Update;
-			_dinucleotidesAnalyzer.Started -= _dinucleotidesAnalyzerProgressBar.Show;
 		}
 
 		public void UpdateText(string text)
@@ -56,19 +47,18 @@ namespace POI_DNA_Analyzer
 			if (_chunkSize <= 0)
 				_chunkSize = _defaultChunkSize;
 
+			_dinucleotidesAnalyzer.Analyze(_fileText, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
 			ShowGraph();
 		}
 
 		public void Save()
 		{
-			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer, _commonFilePath);
-			resultSaver.Save();
+			_resultSaver.Save();
 		}
 
 		public void SaveIndividually()
 		{
-			DinucleotidesAnalyzerResultSaver resultSaver = new DinucleotidesAnalyzerResultSaver(_dinucleotidesAnalyzer, _commonFilePath);
-			resultSaver.SaveIndividually();
+			_resultSaver.SaveIndividually();
 		}
 
 		public void ShowGraph(string tag)
@@ -82,7 +72,6 @@ namespace POI_DNA_Analyzer
 			if (_fileText == null || _fileText == "")
 				return;
 
-			_dinucleotidesAnalyzer.Analyze(_fileText, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
 			_probabilityGraph.Clear();
 
 			if (_currentDinucleotide.Length == 1)

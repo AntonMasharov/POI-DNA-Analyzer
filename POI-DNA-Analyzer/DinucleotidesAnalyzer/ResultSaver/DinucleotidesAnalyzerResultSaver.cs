@@ -3,38 +3,45 @@ using System.Text;
 
 namespace POI_DNA_Analyzer
 {
-	internal class DinucleotidesAnalyzerResultSaver
+	internal class DinucleotidesAnalyzerResultSaver : ResultSaver
 	{
 		private DinucleotidesAnalyzer _dinucleotidesAnalyzer;
 		private CommonFilePath _commonFilePath;
 		private string _resultFolderName = "DinucleotidesAnalyzer";
 		private string _format = ".csv";
 
-		public DinucleotidesAnalyzerResultSaver(DinucleotidesAnalyzer dinucleotidesAnalyzer, CommonFilePath commonFilePath)
+		public DinucleotidesAnalyzerResultSaver(DinucleotidesAnalyzer dinucleotidesAnalyzer, CommonFilePath commonFilePath):base(commonFilePath)
 		{
 			_dinucleotidesAnalyzer = dinucleotidesAnalyzer;
 			_commonFilePath = commonFilePath;
 		}
 
-		public void Save()
+		public override FileSaver GetFileSaver()
 		{
-			string fileName = "dinucleotides-analyzer-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
-			string destination = Path.Combine(_commonFilePath.FilePath, _resultFolderName);
-
-			if (_commonFilePath.IsRootFileDestinationChosen == false)
-				return;
-
-			CSVFileSaver fileSaver = new CSVFileSaver();
-			fileSaver.SaveTo(destination, fileName, CreateFileText());
+			return new CSVFileSaver();
 		}
 
-		public void SaveIndividually()
+		public override string GetFileName()
+		{
+			return "dinucleotides-analyzer-" + DateTime.Now.Date.ToString("yyyy-MM-dd") + _format;
+		}
+
+		public override string GetDestination()
+		{
+			return Path.Combine(_commonFilePath.FilePath, _resultFolderName);
+		}
+
+		public override string GetContent()
+		{
+			return CreateFileText();
+		}
+
+		public override bool CanSave()
 		{
 			if (_dinucleotidesAnalyzer.DinucleotidesProbabilities == null || IsDictionaryEmpty())
-				return;
-
-			CSVFileSaver fileSaver = new CSVFileSaver();
-			fileSaver.Save(CreateFileText());
+				return false;
+			else
+				return true;
 		}
 
 		private string CreateFileText()

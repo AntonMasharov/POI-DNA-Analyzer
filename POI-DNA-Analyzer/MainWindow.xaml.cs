@@ -8,10 +8,9 @@ namespace POI_DNA_Analyzer
 	public partial class MainWindow : Window
 	{
 		private SequencesFinderWindowController _sequencesFinderWindow;
-		private DinucleotidesAnalyzerWindow _dinucleotidesAnalyzerWindow;
+		private DinucleotidesAnalyzerWindowController _dinucleotidesAnalyzerWindow;
 		private OpenReadingFrameWindow _openReadingFrameWindow;
 		private ATGCWindow _atgcWindow;
-		private PalindromicSequencesFinderWindow _palindromicSequencesFinderWindow;
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
 		private SaveContextMenu _saveContextMenu;
@@ -26,11 +25,11 @@ namespace POI_DNA_Analyzer
 			_saveContextMenu = new SaveContextMenu(SaveIndividuallyCheckbox, SaveTogetherCheckbox);
 			_commonFilePath = new CommonFilePath();
 			_sequencesFinderWindow = new SequencesFinderWindowController(ResultText, List, _commonFilePath);
-			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindow(DinucleotidesAnalyzerProgressBar, OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
+			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindowController(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
+
 			_translatedFileSaver = new TranslatedFileSaver();
 			_openReadingFrameWindow = new OpenReadingFrameWindow(_commonFilePath, _translatedFileSaver);
 			_atgcWindow = new ATGCWindow(ATGCResult, _commonFilePath);
-			_palindromicSequencesFinderWindow = new PalindromicSequencesFinderWindow(_commonFilePath);
 
 			Localize("ru");
 		}

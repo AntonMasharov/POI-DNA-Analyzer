@@ -2,9 +2,6 @@
 {
 	internal class DinucleotidesAnalyzer
     {
-		public event Action Started;
-		public event Action<int, int> Executing;
-
 		private ChunkAnalyzer _chunkAnalyzer;
 		private ChunkMatrixBuilder _chunkMatrixBuilder;
 		private IMatrixComparator _matrixComparator;
@@ -36,7 +33,6 @@
 			{
 				_chunkAnalyzer.AnalyzeChunk(part);
 				_chunkMatrixBuilder.Build();
-				Executing?.Invoke(parts.Count, actualIndex);
 
 				if (CanSkip(similarityCoefficient, canSkipCheckboxState) == false)
 				{
@@ -51,7 +47,6 @@
 
 		private void SetDefaultState()
 		{
-			Started?.Invoke();
 			ClearDictionary();
 			Indexes.Clear();
 			_lastMatrix.Clear();
