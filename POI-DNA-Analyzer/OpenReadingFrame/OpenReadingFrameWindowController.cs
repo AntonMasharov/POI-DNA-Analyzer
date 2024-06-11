@@ -199,7 +199,7 @@ namespace POI_DNA_Analyzer
 			MessageBox.Show(
 				"Create a complementary DNA first",
 				"Complete previous step",
-				MessageBoxButton.OKCancel,
+				MessageBoxButton.OK,
 				MessageBoxImage.Warning
 			);
 		}
@@ -207,9 +207,9 @@ namespace POI_DNA_Analyzer
 		private void WarningBoxStep2()
 		{
 			MessageBox.Show(
-				"Make a translation files first",
+				"Make translation files first",
 				"Complete previous step",
-				MessageBoxButton.OKCancel,
+				MessageBoxButton.OK,
 				MessageBoxImage.Warning
 			);
 		}
