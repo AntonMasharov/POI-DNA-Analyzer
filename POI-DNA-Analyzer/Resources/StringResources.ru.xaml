@@ -26,4 +26,7 @@
 	<system:String x:Key="FindOpenReadingFrames">Найти открытые рамки считывания</system:String>
 	<system:String x:Key="ATGCPercent">Процент AT-GC</system:String>
 	<system:String x:Key="PalindromicSequencesFinderWindow">Поиск палиндромов</system:String>
+	<system:String x:Key="RestrictionSitesFinderWindow">Поиск рестрикшен сайтов</system:String>
+	<system:String x:Key="RestrictionSitesDataGridColumn">Рестрикшен сайты</system:String>
+	<system:String x:Key="RestrictionSiteIndexesDataGridColumn">Индексы</system:String>
 </ResourceDictionary>

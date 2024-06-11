@@ -1,6 +1,6 @@
 ﻿namespace POI_DNA_Analyzer
 {
-	internal class StartAminoAcidFile : TranslationFile
+	internal class StartAminoAcidFile : ConfigFile
 	{
 		public StartAminoAcidFile() : base() 
 		{ 

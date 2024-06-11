@@ -458,6 +458,52 @@
 						Width="142"/>
 				</Grid>
 			</TabItem>
+			<TabItem x:Name="RestrictionSitesWindow">
+				<TabItem.Header>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Margin="3" Text="{DynamicResource RestrictionSitesFinderWindow}"></TextBlock>
+					</StackPanel>
+				</TabItem.Header>
+				<Grid>
+					<Button x:Name="StartRestrictionSitesFinderButton" 
+						Content="{DynamicResource StartButton}" 
+						Margin="0,0,8,10" 
+						Click="StartRestrictionSitesFinderButtonClick"
+						HorizontalAlignment="Right" 
+						Width="79" 
+						Height="29"
+						VerticalAlignment="Bottom"/>
+					<Button x:Name="SaveRestrictionSitesFinderResultButton" 
+						Click="SaveRestrictionSitesFinderResultButtonClick" 
+						Content="{DynamicResource SaveButton}" 
+						Margin="0,0,118,10" 
+						Height="29" 
+						VerticalAlignment="Bottom" 
+						HorizontalAlignment="Right" 
+						Width="79"/>
+					<Button Name = "SaveMenuButton8"
+						Click="SaveMenuButtonClick" 
+						Content="..." 
+						Margin="0,0,92,10" 
+						HorizontalAlignment="Right" 
+						Width="26" 
+						Height="29" 
+						VerticalAlignment="Bottom"/>
+					<DataGrid Name="RestrictionSitesDataGrid" 
+						AutoGenerateColumns="False" 
+						CanUserAddRows="False" 
+						IsReadOnly="True"
+						ScrollViewer.CanContentScroll="True"         
+                        ScrollViewer.IsDeferredScrollingEnabled="True" 
+                        ScrollViewer.HorizontalScrollBarVisibility="Visible"
+						Margin="10,10,10,44">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Restriction Sites" Binding="{Binding Name}" Width="100"/>
+							<DataGridTextColumn Header="Indexes" Binding="{Binding IndexesString}" Width="*"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
 		</TabControl>
 		<Button x:Name="OpenFileButton" 
 			Content="{DynamicResource OpenFileButton}" 

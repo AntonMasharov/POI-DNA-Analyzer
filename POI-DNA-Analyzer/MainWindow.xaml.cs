@@ -9,7 +9,8 @@ namespace POI_DNA_Analyzer
 		private SequencesFinderWindowController _sequencesFinderWindow;
 		private DinucleotidesAnalyzerWindowController _dinucleotidesAnalyzerWindow;
 		private OpenReadingFrameWindowController _openReadingFrameWindow;
-		private ATGCWindow _atgcWindow;
+		private ATGCWindowController _atgcWindow;
+		private RestrictionSiteFinderWindowController _restrictionSiteFinderWindow;
 
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
@@ -27,8 +28,9 @@ namespace POI_DNA_Analyzer
 			_sequencesFinderWindow = new SequencesFinderWindowController(ResultText, List, _commonFilePath);
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindowController(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
 			_openReadingFrameWindow = new OpenReadingFrameWindowController(_commonFilePath);
+			_restrictionSiteFinderWindow = new RestrictionSiteFinderWindowController(RestrictionSitesDataGrid, _commonFilePath);
 
-			_atgcWindow = new ATGCWindow(ATGCResult, _commonFilePath);
+			_atgcWindow = new ATGCWindowController(ATGCResult, _commonFilePath);
 
 			Localize("ru");
 		}
@@ -154,6 +156,19 @@ namespace POI_DNA_Analyzer
 				_atgcWindow.Save();
 			else
 				_atgcWindow.SaveIndividually();
+		}
+
+		private void StartRestrictionSitesFinderButtonClick(object sender, RoutedEventArgs e)
+		{
+			_restrictionSiteFinderWindow.Start(_fileText);
+		}
+
+		private void SaveRestrictionSitesFinderResultButtonClick(object sender, RoutedEventArgs e)
+		{
+			if (SaveIndividuallyCheckbox.IsChecked == false)
+				_restrictionSiteFinderWindow.Save();
+			else
+				_restrictionSiteFinderWindow.SaveIndividually();
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)

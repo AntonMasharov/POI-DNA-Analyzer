@@ -2,11 +2,11 @@
 
 namespace POI_DNA_Analyzer
 {
-	internal abstract class TranslationFile
+	internal abstract class ConfigFile
 	{
 		private string _filePath = "";
 
-		public TranslationFile()
+		public ConfigFile()
 		{
 			SetDefaultPath();
 		}

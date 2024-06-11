@@ -2,7 +2,7 @@
 
 namespace POI_DNA_Analyzer
 {
-	class ATGCWindow
+	class ATGCWindowController
     {
 		private TextBlock _textBlock;
 		private ChunkAnalyzer _chunkAnalyzer;
@@ -15,7 +15,7 @@ namespace POI_DNA_Analyzer
 		double _atPercent = 0;
 		double _gcPercent = 0;
 
-		public ATGCWindow(TextBlock textBlock, CommonFilePath commonFilePath)
+		public ATGCWindowController(TextBlock textBlock, CommonFilePath commonFilePath)
 		{
 			_chunkAnalyzer = new ChunkAnalyzer();
 			_textBlock = textBlock;

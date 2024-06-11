@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("POI-DNA-Analyzer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+877c8f551eeb9c35d043b31ce654be40d157cea4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e766230450b937283b872164312247cece74592")]
 [assembly: System.Reflection.AssemblyProductAttribute("POI-DNA-Analyzer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("POI-DNA-Analyzer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

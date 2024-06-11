@@ -26,4 +26,7 @@
 	<system:String x:Key="FindOpenReadingFrames">Find open reading frames</system:String>
 	<system:String x:Key="ATGCPercent">AT-GC Percent</system:String>
 	<system:String x:Key="PalindromicSequencesFinderWindow">Palindromic Sequences Finder</system:String>
+	<system:String x:Key="RestrictionSitesFinderWindow">Restriction Sites Finder</system:String>
+	<system:String x:Key="RestrictionSitesDataGridColumn">Restriction Sites</system:String>
+	<system:String x:Key="RestrictionSiteIndexesDataGridColumn">Indexes</system:String>
 </ResourceDictionary>
