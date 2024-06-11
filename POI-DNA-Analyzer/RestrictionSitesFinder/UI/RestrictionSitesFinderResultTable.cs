@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace POI_DNA_Analyzer
 {
@@ -17,6 +16,16 @@ namespace POI_DNA_Analyzer
 			List<RestrictionSite> list = new List<RestrictionSite>(restrictionSites);
 
 			_dataGrid.ItemsSource = list;
+			//_dataGrid.Columns[1].Width = _dataGrid.Columns[1].ActualWidth;
+
+			//foreach (DataGridColumn column in _dataGrid.Columns)
+			//{
+			//	if (column.Header.ToString() == "Indexes")
+			//	{
+			//		column.Width = new DataGridLength(300);
+			//		break;
+			//	}
+			//}
 		}
 
 		public void Clear()

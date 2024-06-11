@@ -171,6 +171,16 @@ namespace POI_DNA_Analyzer
 				_restrictionSiteFinderWindow.SaveIndividually();
 		}
 
+		private void ChangeRestrictionSiteFinderConfigButtonClick(object sender, RoutedEventArgs e)
+		{
+			_restrictionSiteFinderWindow.UpdateConfig();
+		}
+
+		private void ResetRestrictionSiteFinderConfigButtonClick(object sender, RoutedEventArgs e)
+		{
+			_restrictionSiteFinderWindow.ResetConfig();
+		}
+
 		private void ShowGraph(object sender, RoutedEventArgs e)
 		{
 			_dinucleotidesAnalyzerWindow.UpdateText(_fileText);
