@@ -35,14 +35,16 @@ namespace POI_DNA_Analyzer
 			UpdateUI();
 		}
 
-		public void Save()
+		public string Save()
 		{
 			_resultSaver.Save();
+			return _resultSaver.GetFullPath();
 		}
 
-		public void SaveIndividually()
+		public string SaveIndividually()
 		{
 			_resultSaver.SaveIndividually();
+			return _resultSaver.GetFullPath();
 		}
 
 		public void Clear()

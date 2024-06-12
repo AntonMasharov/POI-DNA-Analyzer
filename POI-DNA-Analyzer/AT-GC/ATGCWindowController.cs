@@ -6,7 +6,6 @@ namespace POI_DNA_Analyzer
 {
 	class ATGCWindowController
     {
-		private TextBox _textBox;
 		private TextBlock _resultTextBlock;
 		private ATGCCounter _counter;
 		private ChunkAnalyzer _chunkAnalyzer;
@@ -19,11 +18,10 @@ namespace POI_DNA_Analyzer
 		double _atPercent = 0;
 		double _gcPercent = 0;
 
-		public ATGCWindowController(PlotView plotView, ScrollBar scrollBar, TextBox textBox, TextBlock resultTextBlock, CommonFilePath commonFilePath)
+		public ATGCWindowController(PlotView plotView, ScrollBar scrollBar, TextBlock resultTextBlock, CommonFilePath commonFilePath)
 		{
 			_chunkAnalyzer = new ChunkAnalyzer();
 			_counter = new ATGCCounter();
-			_textBox = textBox;
 			_resultTextBlock = resultTextBlock;
 			_commonFilePath = commonFilePath;
 			_resultSaver = new ATGCResultSaver(_counter, _commonFilePath);
@@ -32,16 +30,15 @@ namespace POI_DNA_Analyzer
 			_probabilityGraph = probabilityGraphFactory.Get();
 		}
 
-		public void Start(string text)
+		public void Start(string text, int chunkSize = 100)
 		{
 			if (text == "")
 				return;
 
-			if (int.TryParse(_textBox.Text, out _chunkSize) == false)
+			if (chunkSize == 0)
 				_chunkSize = _defaultChunkSize;
-
-			if (_chunkSize <= 0)
-				_chunkSize = _defaultChunkSize;
+			else
+				_chunkSize = chunkSize;
 
 			_counter.CountByChunk(text, _chunkSize);
 			_counter.CountOverall(text);
@@ -54,14 +51,16 @@ namespace POI_DNA_Analyzer
 			ShowGraph();
 		}
 
-		public void Save()
+		public string Save()
 		{
 			_resultSaver.Save();
+			return _resultSaver.GetFullPath();
 		}
 
-		public void SaveIndividually()
+		public string SaveIndividually()
 		{
 			_resultSaver.SaveIndividually();
+			return _resultSaver.GetFullPath();
 		}
 
 		private void ShowGraph()

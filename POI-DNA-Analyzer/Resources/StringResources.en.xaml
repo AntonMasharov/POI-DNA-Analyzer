@@ -20,7 +20,7 @@
 	<system:String x:Key="OpenReadingFrameStartEverything">Start at once</system:String>
 	<system:String x:Key="ChooseSavePath">Save path</system:String>
 	<system:String x:Key="ChangeConfig">Config file</system:String>
-	<system:String x:Key="OpenReadingFrameMinSizeToSave">Min size to save:</system:String>
+	<system:String x:Key="OpenReadingFrameMinSizeToSave">Min size to save (in codons):</system:String>
 	<system:String x:Key="MakeComplementaryDNA">Make a complementary DNA</system:String>
 	<system:String x:Key="Translate">Translate codons to amino acids</system:String>
 	<system:String x:Key="FindOpenReadingFrames">Find open reading frames</system:String>

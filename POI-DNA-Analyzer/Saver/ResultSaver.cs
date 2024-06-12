@@ -1,9 +1,13 @@
-﻿namespace POI_DNA_Analyzer
+﻿using System.IO;
+
+namespace POI_DNA_Analyzer
 {
 	internal abstract class ResultSaver
 	{
 		private CommonFilePath _commonFilePath;
 		private FileSaver _fileSaver;
+
+		private string _path = "";
 
 		public ResultSaver(CommonFilePath commonFilePath)
 		{ 
@@ -21,26 +25,35 @@
 
 		public abstract bool CanSave();
 
-		public virtual void Save()
+		public string GetFullPath()
+		{
+			return _path;
+		}
+
+		public virtual bool Save()
 		{
 			if (CanSave() == false)
-				return;
+				return false;
 
 			string fileName = GetFileName();
 			string destination = GetDestination();
 
 			if (_commonFilePath.IsRootFileDestinationChosen == false)
-				return;
+				return false;
 
-			_fileSaver.SaveTo(destination, fileName, GetContent());
+			_path = _fileSaver.SaveTo(destination, fileName, GetContent());
+
+			return true;
 		}
 
-		public virtual void SaveIndividually()
+		public virtual bool SaveIndividually()
 		{
 			if (CanSave() == false)
-				return;
+				return false;
 
-			_fileSaver.Save(GetContent());
+			_path = _fileSaver.Save(GetContent());
+
+			return true;
 		}
 	}
 }

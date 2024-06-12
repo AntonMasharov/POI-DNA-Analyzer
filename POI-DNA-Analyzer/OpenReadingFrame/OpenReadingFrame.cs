@@ -49,11 +49,18 @@
 			}
 		}
 
-		public void ChangeConfig()
+		public bool ChangeConfig()
 		{
 			FilePicker filePicker = new FilePicker();
+			string path = filePicker.PickFilePath(filePicker.FilterCSV);
+
+			if (path == null || path == "")
+				return false;
+
 			_startAminoAcidFile.SetNewPath(filePicker.PickFilePath(filePicker.FilterCSV));
 			_startAminoAcidTableFileReader.Read();
+
+			return true;
 		}
 
 		public void ResetConfig()

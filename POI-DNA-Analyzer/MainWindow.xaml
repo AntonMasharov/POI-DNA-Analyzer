@@ -6,11 +6,15 @@
 		xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="POI-DNA-Analyzer" WindowStyle="ThreeDBorderWindow"
-		Height="470"
+		Height="480"
 		Width="800"
-		MinHeight="470"
+		MinHeight="480"
 		MinWidth="800">
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="12" />
+		</Grid.RowDefinitions>
 		<Menu>
 			<MenuItem Header="{DynamicResource Language}">
 				<MenuItem Header="Русский" Click="SetRULang"></MenuItem>
@@ -395,10 +399,13 @@
 						Width="120"/>
 					<TextBlock Grid.Column="2" 
 						HorizontalAlignment="Center" 
-						Margin="0,125,0,0" 
+						Margin="0,102,0,0" 
 						TextWrapping="Wrap" 
 						Text="{DynamicResource OpenReadingFrameMinSizeToSave}" 
-						VerticalAlignment="Top"/>
+						VerticalAlignment="Top"
+						Height="39" 
+						MaxWidth="200"
+						TextAlignment="Center"/>
 					<Button
 						Content="{DynamicResource ChangeConfig}"  
 						Click="ChangeOpenReadingFramesConfig" 
@@ -564,5 +571,9 @@
 			Width="79" 
 			Height="29" 
 			VerticalAlignment="Bottom"/>
+		<TextBlock x:Name="Feedback"
+			Text="Hello"
+			Height="12"
+			FontSize="10" Margin="10,0,-10,1" Grid.RowSpan="2" VerticalAlignment="Bottom"/>
 	</Grid>
 </Window>

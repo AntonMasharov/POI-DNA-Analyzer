@@ -37,28 +37,29 @@ namespace POI_DNA_Analyzer
 			_fileText = text;
 		}
 
-		public void Analyze(TextBox textBox, double similarityCoefficient)
+		public void Analyze(double similarityCoefficient, int chunkSize = 100)
 		{
 			_similarityCoefficient = similarityCoefficient;
 
-			if (int.TryParse(textBox.Text, out _chunkSize) == false)
+			if (chunkSize == 0)
 				_chunkSize = _defaultChunkSize;
-
-			if (_chunkSize <= 0)
-				_chunkSize = _defaultChunkSize;
+			else
+				_chunkSize = chunkSize;
 
 			_dinucleotidesAnalyzer.Analyze(_fileText, _chunkSize, _similarityCoefficient, RetrieveCheckBoxInfo());
 			ShowGraph();
 		}
 
-		public void Save()
+		public string Save()
 		{
 			_resultSaver.Save();
+			return _resultSaver.GetFullPath();
 		}
 
-		public void SaveIndividually()
+		public string SaveIndividually()
 		{
 			_resultSaver.SaveIndividually();
+			return _resultSaver.GetFullPath();
 		}
 
 		public void ShowGraph(string tag)

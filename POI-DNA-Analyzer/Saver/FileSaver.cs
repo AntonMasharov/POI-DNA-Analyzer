@@ -9,7 +9,7 @@ namespace POI_DNA_Analyzer
 
 		public virtual string DefaultExtenion { get; protected set; } = "";
 
-		public void Save(string text)
+		public string Save(string text)
 		{
 			SaveFileDialog saveFileDialog = new SaveFileDialog();
 			saveFileDialog.Filter = Filter;
@@ -18,10 +18,13 @@ namespace POI_DNA_Analyzer
 			if (saveFileDialog.ShowDialog() == true)
 			{
 				File.WriteAllText(saveFileDialog.FileName, text);
+				return saveFileDialog.FileName;
 			}
+
+			return "";
 		}
 
-		public void SaveTo(string destination, string fileName, string text)
+		public string SaveTo(string destination, string fileName, string text)
 		{
 			FileCopyMaker fileCopyMaker = new FileCopyMaker();
 			string path = fileCopyMaker.HandlePathWithWarning(destination, fileName);
@@ -30,6 +33,8 @@ namespace POI_DNA_Analyzer
 				Directory.CreateDirectory(destination);
 
 			File.WriteAllText(path, text);
+
+			return path;
 		}
 	}
 }

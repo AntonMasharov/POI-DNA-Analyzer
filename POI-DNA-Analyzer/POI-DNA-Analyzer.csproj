@@ -11,12 +11,16 @@
 
   <ItemGroup>
     <None Remove="codons.csv" />
+    <None Remove="feedback.csv" />
     <None Remove="restriction-sites.csv" />
     <None Remove="start-amino-acid.csv" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="codons.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="feedback.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="restriction-sites.csv">

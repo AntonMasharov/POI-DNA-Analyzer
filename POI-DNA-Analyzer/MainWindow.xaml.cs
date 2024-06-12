@@ -12,6 +12,8 @@ namespace POI_DNA_Analyzer
 		private ATGCWindowController _atgcWindow;
 		private RestrictionSiteFinderWindowController _restrictionSiteFinderWindow;
 
+		private FeedbackText _feedbackText;
+
 		private StreamReader _fileStream;
 		private CommonFilePath _commonFilePath;
 		private SaveContextMenu _saveContextMenu;
@@ -29,8 +31,8 @@ namespace POI_DNA_Analyzer
 			_dinucleotidesAnalyzerWindow = new DinucleotidesAnalyzerWindowController(OxyPlot, EnableSliderCheckBox, HorizontalScrollBar, _commonFilePath);
 			_openReadingFrameWindow = new OpenReadingFrameWindowController(_commonFilePath);
 			_restrictionSiteFinderWindow = new RestrictionSiteFinderWindowController(RestrictionSitesDataGrid, _commonFilePath);
-
-			_atgcWindow = new ATGCWindowController(OxyPlotATCGPercent, OxyPlotATCGPercentHorizontalScrollBar, ATCGChunkSizeTextBox, ATGCResult, _commonFilePath);
+			_atgcWindow = new ATGCWindowController(OxyPlotATCGPercent, OxyPlotATCGPercentHorizontalScrollBar, ATGCResult, _commonFilePath);
+			_feedbackText = new FeedbackText(Feedback);
 
 			Localize("ru");
 		}
@@ -41,20 +43,30 @@ namespace POI_DNA_Analyzer
 
 			_filePath = filePicker.PickFilePath(filePicker.FilterTXTandFASTA);
 
+			if (_filePath == null)
+				return;
+
+			_feedbackText.DisplayFileUploaded(_filePath);
+
 			OpenFile();
 			ReadTextFromFile(_fileStream);
 		}
 
 		private void SaveFileButtonClick(object sender, RoutedEventArgs e)
 		{
+			string path;
+
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-				_sequencesFinderWindow.Save();
+				path = _sequencesFinderWindow.Save();
 			else
-				_sequencesFinderWindow.SaveIndividually();
+				path = _sequencesFinderWindow.SaveIndividually();
+
+			CheckSaved(path);
 		}
 
 		private void EnterPromptButtonClick(object sender, RoutedEventArgs e)
 		{
+			CheckPath();
 			_sequencesFinderWindow.Find(PromptField.Text, _fileText);
 		}
 
@@ -65,34 +77,52 @@ namespace POI_DNA_Analyzer
 
 		private void SaveDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
 		{
+			string path;
+
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-				_dinucleotidesAnalyzerWindow.Save();
+				path = _dinucleotidesAnalyzerWindow.Save();
 			else
-				_dinucleotidesAnalyzerWindow.SaveIndividually();
+				path = _dinucleotidesAnalyzerWindow.SaveIndividually();
+
+			CheckSaved(path);
 		}
 
 		private void StartDinucleotidesAnalyzerButtonClick(object sender, RoutedEventArgs e)
 		{
+			CheckPath();
 			_dinucleotidesAnalyzerWindow.UpdateText(_fileText);
-			_dinucleotidesAnalyzerWindow.Analyze(ChunkSizeTextBox, SimilaritySlider.Value);
+			_dinucleotidesAnalyzerWindow.Analyze( SimilaritySlider.Value, CheckInputToTextBlock(ChunkSizeTextBox));
 		}
 
 		private void CreateComplementaryDNAButtonClick(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.GenerateComplementaryDNA(_fileText);
+			CheckPath();
+
+			string result = _openReadingFrameWindow.GenerateComplementaryDNA(_fileText);
+
+			if (result != "")
+				_feedbackText.DisplayComplementaryDNACreated();
 		}
 
 		private void SaveComplementaryDNAFileButtonClick(object sender, RoutedEventArgs e)
 		{
+			string path;
+
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-				_openReadingFrameWindow.SaveComplementaryDNA();
+				path = _openReadingFrameWindow.SaveComplementaryDNA();
 			else
-				_openReadingFrameWindow.SaveComplementaryDNAIndividually();
+				path = _openReadingFrameWindow.SaveComplementaryDNAIndividually();
+
+			CheckSaved(path);
 		}
 
 		private void StartTranslation(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.TranslateCodonsToFiles(_fileText);
+			CheckPath();
+			bool result = _openReadingFrameWindow.TranslateCodonsToFiles(_fileText);
+
+			if (result == true)
+				_feedbackText.DisplayTranslationCompleted();
 		}
 
 		private void ChangeTranslationResultPath(object sender, RoutedEventArgs e)
@@ -102,17 +132,23 @@ namespace POI_DNA_Analyzer
 
 		private void ChangeTranslationConfig(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.ChangeTranslationConfig();
+			if (_openReadingFrameWindow.ChangeTranslationConfig())
+				_feedbackText.DisplayConfigUpdated();
 		}
 
 		private void ResetTranslationConfigButtonClick(object sender, RoutedEventArgs e)
 		{
 			_openReadingFrameWindow.ResetTranslationConfig();
+			_feedbackText.DisplayConfigReset();
 		}
 
 		private void OpenReadingFrameStartButtonClick(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.StartOpenReadingFrame(MinSizeToSaveTextBox.Text);
+			CheckPath();
+			bool result = _openReadingFrameWindow.StartOpenReadingFrame(CheckInputToTextBlock(MinSizeToSaveTextBox));
+
+			if (result == true)
+				_feedbackText.DisplayOpenReadingFramesCreated();
 		}
 
 		private void ChangeOpenReadingFramesResultPath(object sender, RoutedEventArgs e)
@@ -122,17 +158,23 @@ namespace POI_DNA_Analyzer
 
 		private void ChangeOpenReadingFramesConfig(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.ChangeOpenReadingFramesConfig();
+			if (_openReadingFrameWindow.ChangeOpenReadingFramesConfig())
+				_feedbackText.DisplayConfigUpdated();
 		}
 
 		private void ResetOpenReadingFramesConfigButtonClick(object sender, RoutedEventArgs e)
 		{
 			_openReadingFrameWindow.ResetOpenReadingFramesConfig();
+			_feedbackText.DisplayConfigReset();
 		}
 
 		private void CreateEverythingButtonClick(object sender, RoutedEventArgs e)
 		{
-			_openReadingFrameWindow.StartEverything(_fileText, MinSizeToSaveTextBox.Text);
+			CheckPath();
+			bool result = _openReadingFrameWindow.StartEverything(_fileText, CheckInputToTextBlock(MinSizeToSaveTextBox));
+
+			if (result == true)
+				_feedbackText.DisplayOpenReadingFramesCreated();
 		}
 
 		private void ChooseOpenReadingFramesSavePathButtonClick(object sender, RoutedEventArgs e)
@@ -142,28 +184,38 @@ namespace POI_DNA_Analyzer
 
 		private void StartATGCPercentButtonClick(object sender, RoutedEventArgs e)
 		{
-			_atgcWindow.Start(_fileText);
+			CheckPath();
+			_atgcWindow.Start(_fileText, CheckInputToTextBlock(ATCGChunkSizeTextBox));
 		}
 
 		private void SaveATGCPercentButtonClick(object sender, RoutedEventArgs e)
 		{
+			string path;
+
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-				_atgcWindow.Save();
+				path = _atgcWindow.Save();
 			else
-				_atgcWindow.SaveIndividually();
+				path = _atgcWindow.SaveIndividually();
+
+			CheckSaved(path);
 		}
 
 		private void StartRestrictionSitesFinderButtonClick(object sender, RoutedEventArgs e)
 		{
+			CheckPath();
 			_restrictionSiteFinderWindow.Start(_fileText);
 		}
 
 		private void SaveRestrictionSitesFinderResultButtonClick(object sender, RoutedEventArgs e)
 		{
+			string path;
+
 			if (SaveIndividuallyCheckbox.IsChecked == false)
-				_restrictionSiteFinderWindow.Save();
+				path = _restrictionSiteFinderWindow.Save();
 			else
-				_restrictionSiteFinderWindow.SaveIndividually();
+				path = _restrictionSiteFinderWindow.SaveIndividually();
+
+			CheckSaved(path);
 		}
 
 		private void ChangeRestrictionSiteFinderConfigButtonClick(object sender, RoutedEventArgs e)
@@ -204,6 +256,9 @@ namespace POI_DNA_Analyzer
 
 		private void ReadTextFromFile(StreamReader streamReader)
 		{
+			if (streamReader == null)
+				return;
+
 			FilePreparator filePreparator = new FilePreparator();
 			_fileText = filePreparator.GetString(streamReader);
 
@@ -233,12 +288,53 @@ namespace POI_DNA_Analyzer
 			{
 				_openReadingFrameWindow.ChangeResultLanguage(Languages.Russian);
 				_sequencesFinderWindow.ChangeResultLanguage(Languages.Russian);
+				_feedbackText.ChangeLanguage(Languages.Russian);
 			}
 			else
 			{
 				_openReadingFrameWindow.ChangeResultLanguage(Languages.English);
 				_sequencesFinderWindow.ChangeResultLanguage(Languages.English);
+				_feedbackText.ChangeLanguage(Languages.English);
 			}
+		}
+
+		private bool IsPathChoosen()
+		{
+			if (_fileText == null || _fileText == "")
+				return false;
+			else
+				return true;
+		}
+
+		private void CheckSaved(string path)
+		{
+			if (path == "")
+			{
+				_feedbackText.DisplayNothingToSave();
+				return;
+			}
+
+			_feedbackText.DisplayFileSaved(path);
+		}
+
+		private void CheckPath()
+		{
+			if (IsPathChoosen() == false)
+				_feedbackText.DisplayChooseFileFirst();
+		}
+
+		private int CheckInputToTextBlock(TextBox textBox)
+		{
+			int value = 0;
+
+			if (int.TryParse(textBox.Text, out value) == false || value <= 0)
+			{
+				value = 100;
+				textBox.Text = value.ToString();
+				_feedbackText.DisplayIncorrectInput();
+			}
+
+			return value;
 		}
 	}
 }

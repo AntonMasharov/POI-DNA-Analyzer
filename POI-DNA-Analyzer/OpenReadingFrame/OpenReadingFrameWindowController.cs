@@ -41,10 +41,10 @@ namespace POI_DNA_Analyzer
 			_complementaryDNASaver = new ComplementaryDNASaver(_complementaryDNA, _commonFilePath);
 		}
 
-		public void StartEverything(string standardSequence, string minSizeToSave)
+		public bool StartEverything(string standardSequence, int minSizeToSave = 100)
 		{
 			if (standardSequence == null || standardSequence == "")
-				return;
+				return false;
 
 			_translatedFileSaver.ClearPath();
 			_translatedFileSaver.ChangePath(_commonFilePath.FilePath);
@@ -53,24 +53,28 @@ namespace POI_DNA_Analyzer
 			GenerateComplementaryDNA(standardSequence);
 			TranslateCodonsToFiles(standardSequence);
 			StartOpenReadingFrame(minSizeToSave);
+
+			return true;
 		}
 
-		public void GenerateComplementaryDNA(string standardSequence)
+		public string GenerateComplementaryDNA(string standardSequence)
 		{
 			if (standardSequence == null || standardSequence == "")
-				return;
+				return "";
 
-			_complementaryDNA.Create(standardSequence);
+			return _complementaryDNA.Create(standardSequence);
 		}
 
-		public void SaveComplementaryDNA()
+		public string SaveComplementaryDNA()
 		{
 			_complementaryDNASaver.Save();
+			return _complementaryDNASaver.GetFullPath();
 		}
 
-		public void SaveComplementaryDNAIndividually()
+		public string SaveComplementaryDNAIndividually()
 		{
 			_complementaryDNASaver.SaveIndividually();
+			return _complementaryDNASaver.GetFullPath();
 		}
 
 		public void ResetComplementaryDNA()
@@ -78,12 +82,12 @@ namespace POI_DNA_Analyzer
 			_complementaryDNA.Reset();
 		}
 
-		public void TranslateCodonsToFiles(string standardSequence)
+		public bool TranslateCodonsToFiles(string standardSequence)
 		{
 			if (_complementaryDNA.Get() == "")
 			{
 				WarningBoxStep1();
-				return;
+				return false;
 			}
 
 			_translatedFileSaver.ClearLists();
@@ -93,6 +97,8 @@ namespace POI_DNA_Analyzer
 
 			_codonToAminoAcidTranslator.Translate(_complementaryDNA.Get(), _language);
 			_translatedFileSaver.Save(true);
+
+			return true;
 		}
 
 		public void ChangeTranslationResultPath()
@@ -109,11 +115,18 @@ namespace POI_DNA_Analyzer
 			}
 		}
 
-		public void ChangeTranslationConfig()
+		public bool ChangeTranslationConfig()
 		{
 			FilePicker filePicker = new FilePicker();
-			_codonTableFile.SetNewPath(filePicker.PickFilePath(filePicker.FilterCSV));
+			string path = filePicker.PickFilePath(filePicker.FilterCSV);
+
+			if (path == null || path == "")
+				return false;
+
+			_codonTableFile.SetNewPath(path);
 			_codonTableFileReader.Read();
+
+			return true;
 		}
 
 		public void ResetTranslationConfig()
@@ -122,18 +135,21 @@ namespace POI_DNA_Analyzer
 			_codonTableFileReader.Read();
 		}
 
-		public void StartOpenReadingFrame(string minSizeToSave)
+		public bool StartOpenReadingFrame(int minSizeToSave = 100)
 		{
+			if (minSizeToSave == 0)
+				minSizeToSave = _defaultMinSizeToSave;
+
 			if (_complementaryDNA.Get() == "")
 			{
 				WarningBoxStep1();
-				return; 
+				return false; 
 			}
 			
 			if (_translatedFilesPathsList.ResultFilesPaths == null || _translatedFilesPathsList.ResultFilesPaths.Count == 0)
 			{
 				WarningBoxStep2();
-				return;
+				return false;
 			}
 
 			FileOpener fileOpener = new FileOpener();
@@ -146,6 +162,8 @@ namespace POI_DNA_Analyzer
 				_openReadingFrame.FindOpenReadingFrames(file.ReadToEnd());
 				SaveOpenReadingFramesResult(i, minSizeToSave);
 			}
+
+			return true;
 		}
 
 		public void ChangeOpenReadingFramesResultPath()
@@ -153,9 +171,9 @@ namespace POI_DNA_Analyzer
 			_openReadingFrameFileSaver.ChoosePath();
 		}
 
-		public void ChangeOpenReadingFramesConfig()
+		public bool ChangeOpenReadingFramesConfig()
 		{
-			_openReadingFrame.ChangeConfig();
+			return _openReadingFrame.ChangeConfig();
 		}
 
 		public void ResetOpenReadingFramesConfig()
@@ -173,12 +191,12 @@ namespace POI_DNA_Analyzer
 			_translatedFileSaver.ClearLists();
 		}
 
-		private void SaveOpenReadingFramesResult(int indent, string minSizeToSave)
+		private void SaveOpenReadingFramesResult(int indent, int minSizeToSave)
 		{
 			IReadOnlyDictionary<int, string> result = _openReadingFrame.OpenReadingFrameSequences;
 			string name = _translatedFilesPathsList.ResultFilesNames[indent];
 
-			_openReadingFrameFileSaver.Save(name, result, HandleMinSizeToSave(minSizeToSave));
+			_openReadingFrameFileSaver.Save(name, result, minSizeToSave);
 		}
 
 		private int HandleMinSizeToSave(string value)

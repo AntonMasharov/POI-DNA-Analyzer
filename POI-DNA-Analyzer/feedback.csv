@@ -1,0 +1,11 @@
+NAME,RU,EN
+FileUploaded,Файл {0} загружен,File {0} uploaded
+FileSaved,Файл сохранён в {0} ,File saved to {0}
+ChooseFileFirst,Выберите файл для начала,Choose a file to start
+NothingToSave,Нечего сохранять,There is nothing to save
+ConfigUpdated,Конфиг-файл загружен,Config file uploaded
+ConfigReset,Конфиг-файл сброшен,Config file has been reset
+IncorrectInput,Введённые данные некорректы. Используются стандартные,Input is incorrect. Default data is used
+ComplementaryDNACreated,Комплементарная ДНК создана,Complementary DNA created
+OpenReadingFramesCompleted,Открытые рамки считывния найдены,Open reading frames found
+TranslationCompleted,Трансляция завершена,Translation completed

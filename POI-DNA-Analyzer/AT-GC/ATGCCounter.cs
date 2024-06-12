@@ -48,8 +48,8 @@
 
 		private void AddPercentValuesToDictionary(double atPercent, double gcPercent)
 		{
-			_percents["AT"].Add(atPercent);
-			_percents["GC"].Add(gcPercent);
+			_percents["A-T"].Add(atPercent);
+			_percents["G-C"].Add(gcPercent);
 		}
 
 		private double CountATPercent()
@@ -114,8 +114,8 @@
 
 		private void InitializeDictionary()
 		{
-			_percents.Add("AT", new List<double>());
-			_percents.Add("GC", new List<double>());
+			_percents.Add("A-T", new List<double>());
+			_percents.Add("G-C", new List<double>());
 		}
 
 		private void ClearDictionary()
