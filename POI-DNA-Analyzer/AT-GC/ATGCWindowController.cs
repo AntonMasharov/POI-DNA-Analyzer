@@ -1,26 +1,35 @@
-﻿using System.Windows.Controls;
+﻿using OxyPlot.Wpf;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace POI_DNA_Analyzer
 {
 	class ATGCWindowController
     {
-		private TextBlock _textBlock;
+		private TextBox _textBox;
+		private TextBlock _resultTextBlock;
+		private ATGCCounter _counter;
 		private ChunkAnalyzer _chunkAnalyzer;
 		private CommonFilePath _commonFilePath;
-		private ATGCResultSaver _resultSaver;
+		private ResultSaver _resultSaver;
+		private IProbabilityGraph _probabilityGraph;
 
-		double _atCount = 0;
-		double _gcCount = 0;
-		double _wholeCount = 0;
+		private int _defaultChunkSize = 100;
+		private int _chunkSize;
 		double _atPercent = 0;
 		double _gcPercent = 0;
 
-		public ATGCWindowController(TextBlock textBlock, CommonFilePath commonFilePath)
+		public ATGCWindowController(PlotView plotView, ScrollBar scrollBar, TextBox textBox, TextBlock resultTextBlock, CommonFilePath commonFilePath)
 		{
 			_chunkAnalyzer = new ChunkAnalyzer();
-			_textBlock = textBlock;
+			_counter = new ATGCCounter();
+			_textBox = textBox;
+			_resultTextBlock = resultTextBlock;
 			_commonFilePath = commonFilePath;
-			_resultSaver = new ATGCResultSaver(_commonFilePath);
+			_resultSaver = new ATGCResultSaver(_counter, _commonFilePath);
+
+			ProbabilityGraphFactory probabilityGraphFactory = new ProbabilityGraphFactory(plotView, scrollBar);
+			_probabilityGraph = probabilityGraphFactory.Get();
 		}
 
 		public void Start(string text)
@@ -28,39 +37,57 @@ namespace POI_DNA_Analyzer
 			if (text == "")
 				return;
 
-			_chunkAnalyzer.AnalyzeChunk(text);
+			if (int.TryParse(_textBox.Text, out _chunkSize) == false)
+				_chunkSize = _defaultChunkSize;
 
-			_atCount = GetNucleotideCount('A') + GetNucleotideCount('T');
-			_gcCount = GetNucleotideCount('G') + GetNucleotideCount('C');
-			_wholeCount = _atCount + _gcCount;
+			if (_chunkSize <= 0)
+				_chunkSize = _defaultChunkSize;
 
-			_atPercent = new PercentCalculator().GetPercent(_atCount, _wholeCount) * 100;
-			_gcPercent = new PercentCalculator().GetPercent(_gcCount, _wholeCount) * 100;
+			_counter.CountByChunk(text, _chunkSize);
+			_counter.CountOverall(text);
 
+			_atPercent = _counter.ATPercent;
+			_gcPercent = _counter.GCPercent;
+
+			_probabilityGraph.Clear();
 			UpdateText();
+			ShowGraph();
 		}
 
 		public void Save()
 		{
-			_resultSaver.Save(_textBlock.Text);
+			_resultSaver.Save();
 		}
 
 		public void SaveIndividually()
 		{
-			_resultSaver.SaveIndividually(_textBlock.Text);
+			_resultSaver.SaveIndividually();
 		}
 
-		private int GetNucleotideCount(char nucleotide)
+		private void ShowGraph()
 		{
-			if (_chunkAnalyzer.NucleotidesCount.ContainsKey(nucleotide) == false)
-				return 0;
+			List<System.Drawing.Color> listOfColors = new List<System.Drawing.Color>()
+			{
+				System.Drawing.Color.Red,
+				System.Drawing.Color.Green,
+				System.Drawing.Color.Blue,
+				System.Drawing.Color.Orange,
+			};
 
-			return _chunkAnalyzer.NucleotidesCount[nucleotide];
+			int i = 0;
+
+			foreach (string key in _counter.Percents.Keys.ToList())
+			{
+				_probabilityGraph.ProvideData(_counter.Indexes, _counter.Percents[key], listOfColors[i], key);
+				i++;
+			}
+
+			_probabilityGraph.Show();
 		}
 
 		private void UpdateText()
 		{
-			_textBlock.Text = $"A-T: {_atPercent.ToString("0.00")}%\nG-C: {_gcPercent.ToString("0.00")}%";
+			_resultTextBlock.Text = $"A-T: {_atPercent.ToString("0.00")}%\nG-C: {_gcPercent.ToString("0.00")}%";
 		}
     }
 }

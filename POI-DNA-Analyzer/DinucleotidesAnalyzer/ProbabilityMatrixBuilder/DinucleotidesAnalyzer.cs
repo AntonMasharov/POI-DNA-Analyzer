@@ -6,6 +6,8 @@
 		private ChunkMatrixBuilder _chunkMatrixBuilder;
 		private IMatrixComparator _matrixComparator;
 
+		private Dictionary<string, List<double>> _dinucleotidesProbabilities;
+		private List<int> _indexes;
 		private Dictionary<string, float> _lastMatrix = new Dictionary<string, float>();
 		private int _lastIndex;
 
@@ -15,12 +17,14 @@
 			_chunkMatrixBuilder = new ChunkMatrixBuilder(_chunkAnalyzer);
 			_matrixComparator = matrixComparator;
 
+			_dinucleotidesProbabilities = new Dictionary<string, List<double>>();
+			_indexes = new List<int>();
 			InitializeDictionary();
 		}
 
-		public Dictionary<string, List<double>> DinucleotidesProbabilities { get; private set; } = new Dictionary<string, List<double>>();
+		public IReadOnlyDictionary<string, List<double>> DinucleotidesProbabilities => _dinucleotidesProbabilities;
 
-		public List<int> Indexes { get; private set; } = new List<int>();
+		public IEnumerable<int> Indexes => _indexes;
 
 		public void Analyze(string text, int chunkSize, double similarityCoefficient, bool canSkipCheckboxState)
 		{
@@ -37,7 +41,7 @@
 				if (CanSkip(similarityCoefficient, canSkipCheckboxState) == false)
 				{
 					GetDataFromMatrix(_chunkMatrixBuilder.DinucleotidesProbabilities);
-					Indexes.Add(_lastIndex);
+					_indexes.Add(_lastIndex);
 				}
 
 				_lastIndex++;
@@ -48,7 +52,7 @@
 		private void SetDefaultState()
 		{
 			ClearDictionary();
-			Indexes.Clear();
+			_indexes.Clear();
 			_lastMatrix.Clear();
 			_lastIndex = 1;
 		}
@@ -75,28 +79,28 @@
 
 		private void GetDataFromMatrix(Dictionary<string, float> matrix)
 		{
-			foreach (string key in DinucleotidesProbabilities.Keys.ToList())
+			foreach (string key in _dinucleotidesProbabilities.Keys.ToList())
 			{
 				if (matrix.ContainsKey(key) == false)
 				{
-					DinucleotidesProbabilities[key].Add(0);
+					_dinucleotidesProbabilities[key].Add(0);
 					return;
 				}
 
-				DinucleotidesProbabilities[key].Add(matrix[key] * 100);
+				_dinucleotidesProbabilities[key].Add(matrix[key] * 100);
 			}
 		}
 		
 		private void InitializeDictionary()
 		{
 			foreach (string key in new DinucleotidesList().Get)
-				DinucleotidesProbabilities.Add(key, new List<double>());
+				_dinucleotidesProbabilities.Add(key, new List<double>());
 		}
 
 		private void ClearDictionary()
 		{
-			foreach (string key in DinucleotidesProbabilities.Keys.ToList())
-				DinucleotidesProbabilities[key] = new List<double>();
+			foreach (string key in _dinucleotidesProbabilities.Keys.ToList())
+				_dinucleotidesProbabilities[key] = new List<double>();
 		}
 
 		private bool CanSkip(double similarityCoefficient, bool canSkipCheckboxState)

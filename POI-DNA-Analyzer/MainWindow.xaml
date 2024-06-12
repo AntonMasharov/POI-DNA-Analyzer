@@ -258,7 +258,6 @@
 								Margin="0,3,0,17"/>
 							<ScrollBar x:Name="HorizontalScrollBar" 
 								Orientation="Horizontal"
-								ValueChanged="HorizontalScrollBar_ValueChanged" 
 								Margin="10,0,10,0" 
 								Height="17" 
 								VerticalAlignment="Bottom"/>
@@ -425,6 +424,10 @@
 					</StackPanel>
 				</TabItem.Header>
 				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
 					<Button x:Name="StartATGCPercentButton" 
 						Content="{DynamicResource StartButton}" 
 						Margin="0,0,8,10" 
@@ -432,7 +435,8 @@
 						HorizontalAlignment="Right" 
 						Width="79" 
 						Height="29"
-						VerticalAlignment="Bottom"/>
+						VerticalAlignment="Bottom"
+						Grid.Column="1"/>
 					<Button x:Name="SaveATGCPercent" 
 						Click="SaveATGCPercentButtonClick" 
 						Content="{DynamicResource SaveButton}" 
@@ -440,7 +444,8 @@
 						Height="29" 
 						VerticalAlignment="Bottom" 
 						HorizontalAlignment="Right" 
-						Width="79"/>
+						Width="79"
+						Grid.Column="1"/>
 					<Button Name = "SaveMenuButton5"
 						Click="SaveMenuButtonClick" 
 						Content="..." 
@@ -448,7 +453,8 @@
 						HorizontalAlignment="Right" 
 						Width="26" 
 						Height="29" 
-						VerticalAlignment="Bottom"/>
+						VerticalAlignment="Bottom"
+						Grid.Column="1"/>
 					<TextBlock Name = "ATGCResult"
 						HorizontalAlignment="Center" 
 						TextWrapping="Wrap" 
@@ -456,6 +462,33 @@
 						VerticalAlignment="Center" 
 						Height="72" 
 						Width="142"/>
+					<TextBlock x:Name="ATCGChunkSize" 
+						Margin="10,10,0,0" 
+						TextWrapping="Wrap" 
+						Text="{DynamicResource ChunkSize}"
+						VerticalAlignment="Top" 
+						Height="21" 
+						FontSize="14" 
+						HorizontalAlignment="Left" 
+						Width="94"/>
+					<TextBox x:Name="ATCGChunkSizeTextBox" 
+						Text="100" 
+						Margin="10,36,0,0" 
+						TextWrapping="Wrap" 
+						VerticalAlignment="Top" 
+						Height="21" 
+						HorizontalAlignment="Left" 
+						Width="174"/>
+					<Grid Grid.Column="1" Margin="0,0,0,44">
+						<oxy:PlotView x:Name="OxyPlotATCGPercent" 
+							Model="{Binding SomeName}" 
+							Margin="0,3,0,17"/>
+						<ScrollBar x:Name="OxyPlotATCGPercentHorizontalScrollBar" 
+							Orientation="Horizontal"
+							Margin="10,0,10,0" 
+							Height="17" 
+							VerticalAlignment="Bottom"/>
+					</Grid>
 				</Grid>
 			</TabItem>
 			<TabItem x:Name="RestrictionSitesWindow">

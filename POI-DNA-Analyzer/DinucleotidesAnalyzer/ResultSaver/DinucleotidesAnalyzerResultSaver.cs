@@ -46,13 +46,14 @@ namespace POI_DNA_Analyzer
 
 		private string CreateFileText()
 		{
+			List<int> indexes = new List<int>(_dinucleotidesAnalyzer.Indexes);
 			StringBuilder sb = new StringBuilder();
 
 			sb.AppendLine(CreateHeader());
 
-			for (int i = 0; i < _dinucleotidesAnalyzer.Indexes.Count; i++)
+			for (int i = 0; i < indexes.Count; i++)
 			{
-				string row = _dinucleotidesAnalyzer.Indexes[i].ToString();
+				string row = indexes[i].ToString();
 
 				foreach (string key in _dinucleotidesAnalyzer.DinucleotidesProbabilities.Keys)
 				{

@@ -42,8 +42,11 @@ namespace POI_DNA_Analyzer
 			get { return _lineSeries == null ? 0 : _lineSeries.Points.Count; }
 		}
 
-		public void ProvideData(List<int> indexes, List<double> probabilities, Color color, string name)
+		public void ProvideData(IEnumerable<int> dataIndexes, IEnumerable<double> dataProbabilities, Color color, string name)
 		{
+			List<int> indexes = new List<int>(dataIndexes);
+			List<double> probabilities = new List<double>(dataProbabilities);
+
 			_lineSeries = new LineSeries
 			{
 				MarkerType = MarkerType.Circle,

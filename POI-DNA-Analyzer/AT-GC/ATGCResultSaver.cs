@@ -1,37 +1,96 @@
-﻿namespace POI_DNA_Analyzer
-{
-	class ATGCResultSaver
-    {
-		private CommonFilePath _commonFilePath;
-		private string _format = ".txt";
+﻿using System.Text;
 
-		public ATGCResultSaver(CommonFilePath commonFilePath)
+namespace POI_DNA_Analyzer
+{
+	class ATGCResultSaver : ResultSaver
+    {
+		private IATGCCounterResult _result;
+		private CommonFilePath _commonFilePath;
+		private string _format = ".csv";
+
+		public ATGCResultSaver(IATGCCounterResult result, CommonFilePath commonFilePath) : base(commonFilePath)
 		{
+			_result = result;
 			_commonFilePath = commonFilePath;
 		}
 
-		public void Save(string text)
+		public override FileSaver GetFileSaver()
 		{
-			if (text == "")
-				return;
-
-			string fileName = "at-gc-percent" + _format;
-			string destination = _commonFilePath.FilePath;
-
-			if (_commonFilePath.IsRootFileDestinationChosen == false)
-				return;
-
-			NoExtentionFileSaver fileSaver = new NoExtentionFileSaver();
-			fileSaver.SaveTo(destination, fileName, text);
+			return new CSVFileSaver();
 		}
 
-		public void SaveIndividually(string text)
+		public override string GetFileName()
 		{
-			if (text == "")
-				return;
+			return "at-gc-percents" + _format;
+		}
 
-			NoExtentionFileSaver fileSaver = new NoExtentionFileSaver();
-			fileSaver.Save(text);
+		public override string GetDestination()
+		{
+			return _commonFilePath.FilePath;
+		}
+
+		public override string GetContent()
+		{
+			return CreateFileText();
+		}
+
+		public override bool CanSave()
+		{
+			if (_result.Percents == null || IsDictionaryEmpty())
+				return false;
+			else
+				return true;
+		}
+
+		private string CreateFileText()
+		{
+			List<int> indexes = new List<int>(_result.Indexes);
+			StringBuilder sb = new StringBuilder();
+
+			sb.AppendLine(CreateHeader());
+
+			for (int i = 0; i < indexes.Count; i++)
+			{
+				string row = indexes[i].ToString();
+
+				foreach (string key in _result.Percents.Keys)
+				{
+					row += "," + _result.Percents[key][i].ToString("0.00");
+				}
+
+				sb.AppendLine(row);
+			}
+
+			string result = sb.ToString();
+
+			return result;
+		}
+
+		private string CreateHeader()
+		{
+			string header = "Chunk";
+
+			foreach (string key in _result.Percents.Keys.ToList())
+			{
+				header += "," + key;
+			}
+
+			return header;
+		}
+
+		private bool IsDictionaryEmpty()
+		{
+			bool isEmpty = true;
+
+			foreach (string key in _result.Percents.Keys.ToList())
+			{
+				isEmpty = _result.Percents[key].Count == 0;
+
+				if (isEmpty == false)
+					return isEmpty;
+			}
+
+			return isEmpty;
 		}
 	}
 }

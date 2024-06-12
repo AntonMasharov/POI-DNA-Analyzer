@@ -4,7 +4,7 @@ namespace POI_DNA_Analyzer
 {
 	internal interface IProbabilityGraph
 	{
-		void ProvideData(List<int> indexes, List<double> probabilities, Color color, string name);
+		void ProvideData(IEnumerable<int> indexes, IEnumerable<double> probabilities, Color color, string name);
 
 		void Show();
 

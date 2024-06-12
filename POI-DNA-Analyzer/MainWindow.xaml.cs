@@ -30,7 +30,7 @@ namespace POI_DNA_Analyzer
 			_openReadingFrameWindow = new OpenReadingFrameWindowController(_commonFilePath);
 			_restrictionSiteFinderWindow = new RestrictionSiteFinderWindowController(RestrictionSitesDataGrid, _commonFilePath);
 
-			_atgcWindow = new ATGCWindowController(ATGCResult, _commonFilePath);
+			_atgcWindow = new ATGCWindowController(OxyPlotATCGPercent, OxyPlotATCGPercentHorizontalScrollBar, ATCGChunkSizeTextBox, ATGCResult, _commonFilePath);
 
 			Localize("ru");
 		}
@@ -75,11 +75,6 @@ namespace POI_DNA_Analyzer
 		{
 			_dinucleotidesAnalyzerWindow.UpdateText(_fileText);
 			_dinucleotidesAnalyzerWindow.Analyze(ChunkSizeTextBox, SimilaritySlider.Value);
-		}
-
-		private void HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-
 		}
 
 		private void CreateComplementaryDNAButtonClick(object sender, RoutedEventArgs e)
