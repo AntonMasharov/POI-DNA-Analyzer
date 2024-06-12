@@ -1,4 +1,6 @@
-﻿namespace POI_DNA_Analyzer
+﻿using System.Diagnostics;
+
+namespace POI_DNA_Analyzer
 {
 	internal class CodonToAminoAcidTranslator
 	{
@@ -35,7 +37,10 @@
 			while (leftBorder + _codonSize < text.Length)
 			{
 				string codon = text.Substring(leftBorder, _codonSize);
-				outputText += _codon.GetCorrespondingAminoAcid(codon, language) + ",";
+
+                if (_codon.IsInDictionary(codon))
+					outputText += _codon.GetCorrespondingAminoAcid(codon, language) + ",";
+
 				leftBorder += _codonSize;
 			}
 

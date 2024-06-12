@@ -11,6 +11,17 @@
 			_codonsEN = new Dictionary<string, string>();
 		}
 
+		public bool IsInDictionary(string nucleotides)
+		{
+			if (_codonsEN.ContainsKey(nucleotides) == true)
+				return true;
+
+			if (_codonsRU.ContainsKey(nucleotides) == true)
+				return true;
+
+			return false;
+		}
+
 		public string GetCorrespondingAminoAcid(string nucleotides, Languages language)
 		{
 			if (language == Languages.Russian)
