@@ -45,11 +45,18 @@ namespace POI_DNA_Analyzer
 			return _resultSaver.GetFullPath();
 		}
 
-		public void UpdateConfig()
+		public bool UpdateConfig()
 		{
 			FilePicker filePicker = new FilePicker();
-			_tableFile.SetNewPath(filePicker.PickFilePath(filePicker.FilterCSV));
+			string path = filePicker.PickFilePath(filePicker.FilterCSV);
+
+			if (path == null || path == "")
+				return false;
+
+			_tableFile.SetNewPath(path);
 			_tableFileReader.Read();
+
+			return true;
 		}
 
 		public void ResetConfig()

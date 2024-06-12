@@ -220,12 +220,14 @@ namespace POI_DNA_Analyzer
 
 		private void ChangeRestrictionSiteFinderConfigButtonClick(object sender, RoutedEventArgs e)
 		{
-			_restrictionSiteFinderWindow.UpdateConfig();
+			if (_restrictionSiteFinderWindow.UpdateConfig())
+				_feedbackText.DisplayConfigUpdated();
 		}
 
 		private void ResetRestrictionSiteFinderConfigButtonClick(object sender, RoutedEventArgs e)
 		{
 			_restrictionSiteFinderWindow.ResetConfig();
+			_feedbackText.DisplayConfigReset();
 		}
 
 		private void ShowGraph(object sender, RoutedEventArgs e)
