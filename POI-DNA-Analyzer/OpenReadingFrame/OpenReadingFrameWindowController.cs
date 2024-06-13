@@ -199,19 +199,6 @@ namespace POI_DNA_Analyzer
 			_openReadingFrameFileSaver.Save(name, result, minSizeToSave);
 		}
 
-		private int HandleMinSizeToSave(string value)
-		{
-			int output = 0;
-
-			if (int.TryParse(value, out output) == false)
-				output = _defaultMinSizeToSave;
-
-			if (output <= 0)
-				output = _defaultMinSizeToSave;
-
-			return output;
-		}
-
 		private void WarningBoxStep1()
 		{
 			MessageBox.Show(

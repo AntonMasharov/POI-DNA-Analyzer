@@ -571,9 +571,16 @@
 			Width="79" 
 			Height="29" 
 			VerticalAlignment="Bottom"/>
+		<!--<ProgressBar
+			Height="13"
+			Margin="0,0,-10,0" 
+			VerticalAlignment="Center" Grid.Row="1"/>-->
 		<TextBlock x:Name="Feedback"
 			Text="Hello"
 			Height="12"
-			FontSize="10" Margin="10,0,-10,1" Grid.RowSpan="2" VerticalAlignment="Bottom"/>
+			FontSize="10" 
+			Margin="10,0,0,1" 
+			Grid.RowSpan="2" 
+			VerticalAlignment="Bottom"/>
 	</Grid>
 </Window>

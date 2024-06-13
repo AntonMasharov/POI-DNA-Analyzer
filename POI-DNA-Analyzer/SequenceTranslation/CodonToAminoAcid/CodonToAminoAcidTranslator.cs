@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Text;
 
 namespace POI_DNA_Analyzer
 {
@@ -31,20 +31,20 @@ namespace POI_DNA_Analyzer
 			if (indent < 0 || indent > 2)
 				return "";
 
-			string outputText = "";
+			StringBuilder outputText = new StringBuilder();
 			int leftBorder = indent;
 
 			while (leftBorder + _codonSize < text.Length)
 			{
 				string codon = text.Substring(leftBorder, _codonSize);
 
-                if (_codon.IsInDictionary(codon))
-					outputText += _codon.GetCorrespondingAminoAcid(codon, language) + ",";
+				if (_codon.IsInDictionary(codon))
+					outputText.Append(_codon.GetCorrespondingAminoAcid(codon, language)).Append(",");
 
 				leftBorder += _codonSize;
 			}
 
-			return outputText;
+			return outputText.ToString().TrimEnd(',');
 		}
 	}
 }
