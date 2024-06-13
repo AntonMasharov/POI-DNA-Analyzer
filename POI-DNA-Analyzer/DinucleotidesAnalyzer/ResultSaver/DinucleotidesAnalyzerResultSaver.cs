@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 using System.Text;
 
 namespace POI_DNA_Analyzer
@@ -57,7 +58,7 @@ namespace POI_DNA_Analyzer
 
 				foreach (string key in _dinucleotidesAnalyzer.DinucleotidesProbabilities.Keys)
 				{
-					row += "," + _dinucleotidesAnalyzer.DinucleotidesProbabilities[key][i].ToString("0.00");
+					row += "," + _dinucleotidesAnalyzer.DinucleotidesProbabilities[key][i].ToString("F2", CultureInfo.InvariantCulture);
 				}
 
 				sb.AppendLine(row);

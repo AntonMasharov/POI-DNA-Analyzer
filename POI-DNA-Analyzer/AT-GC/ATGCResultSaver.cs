@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 
 namespace POI_DNA_Analyzer
 {
@@ -55,7 +56,7 @@ namespace POI_DNA_Analyzer
 
 				foreach (string key in _result.Percents.Keys)
 				{
-					row += "," + _result.Percents[key][i].ToString("0.00");
+					row += "," + _result.Percents[key][i].ToString("F2", CultureInfo.InvariantCulture);
 				}
 
 				sb.AppendLine(row);
