@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="POI-DNA-Analyzer" WindowStyle="ThreeDBorderWindow"
+        Title="POI-DNA-Analyzer" 
+		WindowStyle="ThreeDBorderWindow"
 		Height="480"
 		Width="800"
 		MinHeight="480"
@@ -168,7 +169,8 @@
 								VerticalAlignment="Top" 
 								HorizontalAlignment="Left"
 								Width="174"
-								IsEnabled="{Binding IsChecked, ElementName=EnableSliderCheckBox}" Height="24">
+								IsEnabled="{Binding IsChecked, ElementName=EnableSliderCheckBox}"
+								Height="24">
 								<Slider.Style>
 									<Style TargetType="Slider">
 										<Style.Triggers>
