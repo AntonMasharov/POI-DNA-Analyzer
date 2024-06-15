@@ -15,7 +15,7 @@
 				return "";
 
 			_complementaryDNA = ReplaceLetters(text);
-			_complementaryDNA = InvertText(text);
+			_complementaryDNA = InvertText(_complementaryDNA);
 
 			return _complementaryDNA;
 		}
