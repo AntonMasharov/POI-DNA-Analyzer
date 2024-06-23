@@ -5,13 +5,27 @@ namespace POI_DNA_Analyzer
 {
 	internal class OpenReadingFramesFileSaver
 	{
+		private CommonFilePath _commonFilePath;
+		private FileSaver _fileSaver;
+
 		private string _resultFolderName = "OpenReadingFrames";
-		private string _savePathWithoutName = AppDomain.CurrentDomain.BaseDirectory;
+		private string _saveDestination = "";
 		private string _format = ".csv";
+
+		public OpenReadingFramesFileSaver(CommonFilePath commonFilePath)
+		{
+			_commonFilePath = commonFilePath;
+			_fileSaver = GetFileSaver();
+		}
+
+		private FileSaver GetFileSaver()
+		{
+			return new CSVFileSaver();
+		}
 
 		public void Save(string fileName, IReadOnlyDictionary<int, string> openReadingFrames, int minSizeToSave = 100)
 		{
-			string destination = Path.Combine(_savePathWithoutName, _resultFolderName);
+			string destination = GetDestination();
 			fileName = "open-reading-frame-" + RemoveFileExtension(fileName) + _format;
 			string text = MakeHeader();
 
@@ -23,8 +37,7 @@ namespace POI_DNA_Analyzer
 				text += "\n" + key.ToString() + "," + openReadingFrames[key].Length + "," + openReadingFrames[key];
 			}
 
-			CSVFileSaver noExtentionFileSaver = new CSVFileSaver();
-			noExtentionFileSaver.SaveTo(destination, fileName, text);
+			_fileSaver.SaveTo(destination, fileName, text);
 		}
 
 		public void ChoosePath()
@@ -33,7 +46,7 @@ namespace POI_DNA_Analyzer
 
 			if (openFolderDialog.ShowDialog() == true)
 			{
-				_savePathWithoutName = openFolderDialog.FolderName;
+				_saveDestination = openFolderDialog.FolderName;
 			}
 			else
 			{
@@ -41,12 +54,24 @@ namespace POI_DNA_Analyzer
 			}
 		}
 
-		public void ChangePath(string path)
+		public void ChangePath(string filePathWithoutName)
 		{
-			if (path == "")
+			if (filePathWithoutName == "" || filePathWithoutName == null)
 				return;
 
-			_savePathWithoutName = path;
+			_saveDestination = filePathWithoutName;
+		}
+
+		private string GetDestination()
+		{
+			string destination;
+
+			if (_saveDestination == "")
+				destination = Path.Combine(_commonFilePath.FilePath, _resultFolderName);
+			else
+				destination = Path.Combine(_saveDestination, _resultFolderName);
+
+			return destination;
 		}
 
 		private string MakeHeader()

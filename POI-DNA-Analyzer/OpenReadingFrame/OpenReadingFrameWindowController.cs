@@ -36,7 +36,7 @@ namespace POI_DNA_Analyzer
 			_translatedFileSaver = new TranslatedFileSaver(_codonToAminoAcidTranslator, _translatedFilesPathsList, commonFilePath);
 
 			_openReadingFrame = new OpenReadingFrame();
-			_openReadingFrameFileSaver = new OpenReadingFramesFileSaver();
+			_openReadingFrameFileSaver = new OpenReadingFramesFileSaver(commonFilePath);
 			_commonFilePath = commonFilePath;
 			_complementaryDNASaver = new ComplementaryDNASaver(_complementaryDNA, _commonFilePath);
 		}
