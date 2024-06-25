@@ -291,12 +291,16 @@ namespace POI_DNA_Analyzer
 				_openReadingFrameWindow.ChangeResultLanguage(Languages.Russian);
 				_sequencesFinderWindow.ChangeResultLanguage(Languages.Russian);
 				_feedbackText.ChangeLanguage(Languages.Russian);
+				RestrictionSitesDataGrid.Columns[0].Header = this.Resources["RestrictionSitesDataGridColumn"];
+				RestrictionSitesDataGrid.Columns[1].Header = this.Resources["RestrictionSiteIndexesDataGridColumn"];
 			}
 			else
 			{
 				_openReadingFrameWindow.ChangeResultLanguage(Languages.English);
 				_sequencesFinderWindow.ChangeResultLanguage(Languages.English);
 				_feedbackText.ChangeLanguage(Languages.English);
+				RestrictionSitesDataGrid.Columns[0].Header = this.Resources["RestrictionSitesDataGridColumn"];
+				RestrictionSitesDataGrid.Columns[1].Header = this.Resources["RestrictionSiteIndexesDataGridColumn"];
 			}
 		}
 

@@ -4,95 +4,123 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:oxy="http://oxyplot.org/wpf"
-		mc:Ignorable="d"
-		Title="POI-DNA-Analyzer" 
-		WindowStyle="ThreeDBorderWindow"
-		Height="480"
+		Title="POI-DNA-Analyzer"
 		Width="800"
+		Height="480"
+		MinWidth="800"
 		MinHeight="480"
-		MinWidth="800">
+		Icon="/icon2.png"
+		WindowStyle="ThreeDBorderWindow"
+		mc:Ignorable="d">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition Height="0" />
+			<RowDefinition/>
+			<RowDefinition Height="0"/>
 		</Grid.RowDefinitions>
 		<Menu>
 			<MenuItem Header="{DynamicResource Language}">
-				<MenuItem Header="Русский" Click="SetRULang"></MenuItem>
-				<MenuItem Header="English" Click="SetENLang"></MenuItem>
+				<MenuItem Click="SetRULang"
+						  Header="Русский"/>
+				<MenuItem Click="SetENLang"
+						  Header="English"/>
 			</MenuItem>
 		</Menu>
 		<TabControl Margin="0,22,0,0">
 			<TabItem x:Name="SequenceFinderTab">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Margin="3" Text="{DynamicResource SequenceFinderTab}"></TextBlock>
+						<TextBlock Margin="3"
+								   Text="{DynamicResource SequenceFinderTab}"/>
 					</StackPanel>
 				</TabItem.Header>
 				<Grid Margin="0,0,0,0">
-					<Grid.RowDefinitions>
-					</Grid.RowDefinitions>
+					<Grid.RowDefinitions/>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="29*" />
-						<ColumnDefinition Width="24*" />
+						<ColumnDefinition Width="29*"/>
+						<ColumnDefinition Width="24*"/>
 					</Grid.ColumnDefinitions>
-					<TextBlock 
-						HorizontalAlignment="Left" 
-						Margin="25,45,0,0" 
-						TextWrapping="Wrap" 
-						Width="47" IsEnabled="False" Background="White" Height="21" VerticalAlignment="Top" FontSize="14"><Run Language="ru-ru" Text="Запрос:"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
-					<TextBox x:Name="PromptField" 
-						Margin="77,45,0,0" 
-						TextWrapping="Wrap" 
-						Text="" 
-						VerticalAlignment="Top" 
-						Height="21" HorizontalAlignment="Left" Width="216"/>
-					<Button x:Name="EnterPrompt" 
-						Content="{DynamicResource FindButton}" 
-						Click="EnterPromptButtonClick" 
-						Margin="295,45,0,0" 
-						VerticalAlignment="Top" 
-						Height="21" RenderTransformOrigin="-0.024,0.528" FontWeight="Bold" HorizontalAlignment="Left" Width="42"/>
-					<TextBlock x:Name="ResultText" 
-						TextWrapping="Wrap" 
-						Text="{DynamicResource ResultText}" 
-						FontSize="14" 
-						FontFamily="Arial" 
-						TextTrimming="WordEllipsis" 
-						Margin="24,48,44,0" 
-						Height="21" 
-						VerticalAlignment="Top" Grid.Column="1"/>
-					<Button x:Name="SaveFileButton" 
-						Content="{DynamicResource SaveButton}" 
-						Margin="0,0,40,6" 
-						Click="SaveFileButtonClick" 
-						HorizontalAlignment="Right" 
-						Width="100" 
-						Grid.Column="1" Height="30" VerticalAlignment="Bottom"/>
-					<Button x:Name="ClearButton" 
-						Content="{DynamicResource ClearButton}" 
-						Click="ClearResultButtonClick" 
-						Margin="342,45,0,0" 
-						HorizontalAlignment="Left" 
-						Width="70" Height="21" VerticalAlignment="Top"/>
-					<ListBox x:Name="List" 
-						d:ItemsSource="{d:SampleData ItemCount=0}" 
-						Margin="24,74,44,60" Grid.Column="1"/>
-					<Button x:Name = "SaveMenuButton"
-						Click="SaveMenuButtonClick"
-						Grid.Column="1" 
-						Content="..." 
-						Margin="0,0,10,6" HorizontalAlignment="Right" Width="30" Height="30" VerticalAlignment="Bottom">
+					<TextBlock Width="47"
+							   Height="21"
+							   Margin="25,45,0,0"
+							   HorizontalAlignment="Left"
+							   VerticalAlignment="Top"
+							   Background="White"
+							   FontSize="14"
+							   IsEnabled="False"
+							   TextWrapping="Wrap"><Run Language="ru-ru"
+							 Text="Запрос:"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+					<TextBox x:Name="PromptField"
+							 Width="216"
+							 Height="21"
+							 Margin="77,45,0,0"
+							 HorizontalAlignment="Left"
+							 VerticalAlignment="Top"
+							 Text=""
+							 TextWrapping="Wrap"/>
+					<Button x:Name="EnterPrompt"
+							Width="42"
+							Height="21"
+							Margin="295,45,0,0"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Click="EnterPromptButtonClick"
+							Content="{DynamicResource FindButton}"
+							FontWeight="Bold"
+							RenderTransformOrigin="-0.024,0.528"/>
+					<TextBlock x:Name="ResultText"
+							   Grid.Column="1"
+							   Height="21"
+							   Margin="24,48,44,0"
+							   VerticalAlignment="Top"
+							   FontFamily="Arial"
+							   FontSize="14"
+							   Text="{DynamicResource ResultText}"
+							   TextTrimming="WordEllipsis"
+							   TextWrapping="Wrap"/>
+					<Button x:Name="SaveFileButton"
+							Grid.Column="1"
+							Width="100"
+							Height="30"
+							Margin="0,0,40,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="SaveFileButtonClick"
+							Content="{DynamicResource SaveButton}"/>
+					<Button x:Name="ClearButton"
+							Width="70"
+							Height="21"
+							Margin="342,45,0,0"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Click="ClearResultButtonClick"
+							Content="{DynamicResource ClearButton}"/>
+					<ListBox x:Name="List"
+							 Grid.Column="1"
+							 Margin="24,74,44,60"
+							 d:ItemsSource="{d:SampleData ItemCount=0}"/>
+					<Button x:Name="SaveMenuButton"
+							Grid.Column="1"
+							Width="30"
+							Height="30"
+							Margin="0,0,10,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="SaveMenuButtonClick"
+							Content="...">
 						<Button.ContextMenu>
 							<ContextMenu x:Name="SaveButtonContextMenu">
 								<MenuItem Header="{DynamicResource SaveIndividuallyCheckbox}">
 									<MenuItem.Icon>
-										<CheckBox x:Name="SaveIndividuallyCheckbox" IsChecked="False" IsEnabled="True"/>
+										<CheckBox x:Name="SaveIndividuallyCheckbox"
+												  IsChecked="False"
+												  IsEnabled="True"/>
 									</MenuItem.Icon>
 								</MenuItem>
 								<MenuItem Header="{DynamicResource SaveTogetherCheckbox}">
 									<MenuItem.Icon>
-										<CheckBox x:Name="SaveTogetherCheckbox" IsChecked="True" IsEnabled="True"/>
+										<CheckBox x:Name="SaveTogetherCheckbox"
+												  IsChecked="True"
+												  IsEnabled="True"/>
 									</MenuItem.Icon>
 								</MenuItem>
 							</ContextMenu>
@@ -103,86 +131,87 @@
 			<TabItem x:Name="DinucleotidesAnalyzerTab">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Margin="3" Text="{DynamicResource DinucleotidesAnalyzerTab}"></TextBlock>
+						<TextBlock Margin="3"
+								   Text="{DynamicResource DinucleotidesAnalyzerTab}"/>
 					</StackPanel>
 				</TabItem.Header>
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="400" />
-						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="400"/>
+						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
 					<Grid Grid.Column="0">
 						<Grid.RowDefinitions>
-							<RowDefinition />
+							<RowDefinition/>
 						</Grid.RowDefinitions>
 						<Grid Grid.Row="0">
-							<TextBlock x:Name="ChunkSize" 
-								Margin="25,45,0,0" 
-								TextWrapping="Wrap" 
-								Text="{DynamicResource ChunkSize}"
-								VerticalAlignment="Top" 
-								Height="21" 
-								FontSize="14" 
-								HorizontalAlignment="Left" 
-								Width="87"/>
-							<TextBox x:Name="ChunkSizeTextBox" 
-								Text="100" 
-								Margin="77,45,0,0" 
-								TextWrapping="Wrap" 
-								VerticalAlignment="Top" 
-								Height="21" 
-								HorizontalAlignment="Left" 
-								Width="112"/>
-							<CheckBox x:Name="EnableSliderCheckBox" 
-								Content="{DynamicResource EnableSliderCheckBox}" 
-								IsChecked="True"
-								Height="24" 
-								FontSize="14" 
-								Margin="25,113,0,0" 
-								VerticalAlignment="Top"
-								HorizontalAlignment="Left"
-								VerticalContentAlignment="Center" Width="314"/>
-							<Slider x:Name="SimilaritySlider" 
-								Maximum="100" 
-								Value="80" 
-								TickPlacement="BottomRight" 
-								TickFrequency="1" 
-								IsSnapToTickEnabled="True" 
-								Margin="165,78,0,0" 
-								VerticalAlignment="Top" 
-								HorizontalAlignment="Left"
-								Width="174"
-								IsEnabled="{Binding IsChecked, ElementName=EnableSliderCheckBox}"
-								Height="23">
+							<TextBlock x:Name="ChunkSize"
+									   Width="87"
+									   Height="21"
+									   Margin="25,45,0,0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"
+									   FontSize="14"
+									   Text="{DynamicResource ChunkSize}"
+									   TextWrapping="Wrap"/>
+							<TextBox x:Name="ChunkSizeTextBox"
+									 Width="112"
+									 Height="21"
+									 Margin="77,45,0,0"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Top"
+									 Text="100"
+									 TextWrapping="Wrap"/>
+							<CheckBox x:Name="EnableSliderCheckBox"
+									  Width="314"
+									  Height="24"
+									  Margin="25,113,0,0"
+									  HorizontalAlignment="Left"
+									  VerticalAlignment="Top"
+									  VerticalContentAlignment="Center"
+									  Content="{DynamicResource EnableSliderCheckBox}"
+									  FontSize="14"
+									  IsChecked="True"/>
+							<Slider x:Name="SimilaritySlider"
+									Width="174"
+									Height="23"
+									Margin="165,78,0,0"
+									HorizontalAlignment="Left"
+									VerticalAlignment="Top"
+									IsEnabled="{Binding IsChecked, ElementName=EnableSliderCheckBox}"
+									IsSnapToTickEnabled="True"
+									Maximum="100"
+									TickFrequency="1"
+									TickPlacement="BottomRight"
+									Value="80">
 								<Slider.Style>
 									<Style TargetType="Slider">
 										<Style.Triggers>
-											<Trigger 
-												Property="IsEnabled" 
-												Value="False">
-											</Trigger>
+											<Trigger Property="IsEnabled" Value="False"/>
 										</Style.Triggers>
 									</Style>
 								</Slider.Style>
 							</Slider>
-							<TextBox 
-								HorizontalAlignment="Left" 
-								Margin="344,81,0,0" 
-								TextWrapping="Wrap" 
-								Text="{Binding ElementName=SimilaritySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
-								VerticalAlignment="Top" 
-								Width="43" 
-								Height="18"/>
-							<TextBlock 
-								Margin="25,78,0,0" 
-								TextWrapping="Wrap" 
-								Text="{DynamicResource SimilarityCoefficient}" 
-								VerticalAlignment="Top" 
-								Height="22" 
-								FontSize="14" 
-								HorizontalAlignment="Left" 
-								Width="140"/>
-							<Grid Margin="25,142,0,0" Height="170" VerticalAlignment="Top" HorizontalAlignment="Left" Width="138">
+							<TextBox Width="43"
+									 Height="18"
+									 Margin="344,81,0,0"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Top"
+									 Text="{Binding ElementName=SimilaritySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+									 TextWrapping="Wrap"/>
+							<TextBlock Width="140"
+									   Height="22"
+									   Margin="25,78,0,0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"
+									   FontSize="14"
+									   Text="{DynamicResource SimilarityCoefficient}"
+									   TextWrapping="Wrap"/>
+							<Grid Width="138"
+								  Height="170"
+								  Margin="25,142,0,0"
+								  HorizontalAlignment="Left"
+								  VerticalAlignment="Top">
 								<Grid.RowDefinitions>
 									<RowDefinition Height="27*"/>
 									<RowDefinition Height="58*"/>
@@ -191,69 +220,250 @@
 									<ColumnDefinition Width="31*"/>
 									<ColumnDefinition Width="38*"/>
 								</Grid.ColumnDefinitions>
-								<Button Content="An" Click="ShowGraph" Tag="A" HorizontalAlignment="Left" Height="30" Width="30" VerticalAlignment="Top" Background="#FFB9B9B9"/>
-								<Button Content="Cn" Click="ShowGraph" Tag="C" HorizontalAlignment="Left" Height="30" Width="30" Margin="35,0,0,0" VerticalAlignment="Top" Background="#FFB9B9B9" Grid.ColumnSpan="2"/>
-								<Button Content="Tn" Click="ShowGraph" Tag="T" HorizontalAlignment="Left" Height="30" Width="30" Margin="8,0,0,0" VerticalAlignment="Top" Background="#FFB9B9B9" Grid.Column="1"/>
-								<Button Content="Gn" Click="ShowGraph" Tag="G" HorizontalAlignment="Left" Height="30" Width="30" Margin="43,0,0,0" VerticalAlignment="Top" Background="#FFB9B9B9" Grid.Column="1"/>
-								<Button Content="AA" Click="ShowGraph" Tag="AA" HorizontalAlignment="Left" Height="30" Width="30" Margin="0,35,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-								<Button Content="CA" Click="ShowGraph" Tag="CA" HorizontalAlignment="Left" Height="30" Width="30" Margin="35,35,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-								<Button Content="TA" Click="ShowGraph" Tag="TA" HorizontalAlignment="Left" Height="30" Width="30" Margin="8,35,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"/>
-								<Button Content="GA" Click="ShowGraph" Tag="GA" HorizontalAlignment="Left" Height="30" Width="30" Margin="43,35,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"/>
-								<Button Content="AC" Click="ShowGraph" Tag="AC" HorizontalAlignment="Left" Height="30" Width="30" VerticalAlignment="Top" Margin="0,16,0,0" Grid.Row="1"/>
-								<Button Content="CC" Click="ShowGraph" Tag="CC" HorizontalAlignment="Left" Height="30" Width="30" Margin="35,16,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Row="1"/>
-								<Button Content="TC" Click="ShowGraph" Tag="TC" HorizontalAlignment="Left" Height="30" Width="30" Margin="8,16,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
-								<Button Content="GC" Click="ShowGraph" Tag="GC" HorizontalAlignment="Left" Height="30" Width="30" Margin="43,16,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
-								<Button Content="AT" Click="ShowGraph" Tag="AT" HorizontalAlignment="Left" Height="30" Width="30" Margin="0,51,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-								<Button Content="CT" Click="ShowGraph" Tag="CT" HorizontalAlignment="Left" Height="30" Width="30" Margin="35,51,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Row="1"/>
-								<Button Content="TT" Click="ShowGraph" Tag="TT" HorizontalAlignment="Left" Height="30" Width="30" Margin="8,51,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
-								<Button Content="GT" Click="ShowGraph" Tag="GT" HorizontalAlignment="Left" Height="30" Width="30" Margin="43,51,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
-								<Button Content="AG" Click="ShowGraph" Tag="AG" HorizontalAlignment="Left" Height="30" Width="30" Margin="0,86,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-								<Button Content="CG" Click="ShowGraph" Tag="CG" HorizontalAlignment="Left" Height="30" Width="30" Margin="35,86,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Row="1"/>
-								<Button Content="TG" Click="ShowGraph" Tag="TG" HorizontalAlignment="Left" Height="30" Width="30" Margin="8,86,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
-								<Button Content="GG" Click="ShowGraph" Tag="GG" HorizontalAlignment="Left" Height="30" Width="30" Margin="43,86,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
+								<Button Width="30"
+										Height="30"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Background="#FFB9B9B9"
+										Click="ShowGraph"
+										Content="An"
+										Tag="A"/>
+								<Button Grid.ColumnSpan="2"
+										Width="30"
+										Height="30"
+										Margin="35,0,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Background="#FFB9B9B9"
+										Click="ShowGraph"
+										Content="Cn"
+										Tag="C"/>
+								<Button Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="8,0,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Background="#FFB9B9B9"
+										Click="ShowGraph"
+										Content="Tn"
+										Tag="T"/>
+								<Button Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="43,0,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Background="#FFB9B9B9"
+										Click="ShowGraph"
+										Content="Gn"
+										Tag="G"/>
+								<Button Grid.RowSpan="2"
+										Width="30"
+										Height="30"
+										Margin="0,35,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="AA"
+										Tag="AA"/>
+								<Button Grid.RowSpan="2"
+										Grid.ColumnSpan="2"
+										Width="30"
+										Height="30"
+										Margin="35,35,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="CA"
+										Tag="CA"/>
+								<Button Grid.RowSpan="2"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="8,35,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="TA"
+										Tag="TA"/>
+								<Button Grid.RowSpan="2"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="43,35,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="GA"
+										Tag="GA"/>
+								<Button Grid.Row="1"
+										Width="30"
+										Height="30"
+										Margin="0,16,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="AC"
+										Tag="AC"/>
+								<Button Grid.Row="1"
+										Grid.ColumnSpan="2"
+										Width="30"
+										Height="30"
+										Margin="35,16,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="CC"
+										Tag="CC"/>
+								<Button Grid.Row="1"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="8,16,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="TC"
+										Tag="TC"/>
+								<Button Grid.Row="1"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="43,16,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="GC"
+										Tag="GC"/>
+								<Button Grid.Row="1"
+										Width="30"
+										Height="30"
+										Margin="0,51,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="AT"
+										Tag="AT"/>
+								<Button Grid.Row="1"
+										Grid.ColumnSpan="2"
+										Width="30"
+										Height="30"
+										Margin="35,51,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="CT"
+										Tag="CT"/>
+								<Button Grid.Row="1"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="8,51,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="TT"
+										Tag="TT"/>
+								<Button Grid.Row="1"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="43,51,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="GT"
+										Tag="GT"/>
+								<Button Grid.Row="1"
+										Width="30"
+										Height="30"
+										Margin="0,86,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="AG"
+										Tag="AG"/>
+								<Button Grid.Row="1"
+										Grid.ColumnSpan="2"
+										Width="30"
+										Height="30"
+										Margin="35,86,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="CG"
+										Tag="CG"/>
+								<Button Grid.Row="1"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="8,86,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="TG"
+										Tag="TG"/>
+								<Button Grid.Row="1"
+										Grid.Column="1"
+										Width="30"
+										Height="30"
+										Margin="43,86,0,0"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top"
+										Click="ShowGraph"
+										Content="GG"
+										Tag="GG"/>
 							</Grid>
 						</Grid>
 					</Grid>
 					<Grid Grid.Column="1">
 						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
-						<Grid Margin="0,204,0,0" Grid.RowSpan="2">
-							<Button x:Name="SaveDinucleotidesAnalyzer" 
-								Click="SaveDinucleotidesAnalyzerButtonClick" 
-								Content="{DynamicResource SaveButton}" 
-								Margin="0,0,40,6"
-								Height="30" 
-								VerticalAlignment="Bottom" 
-								HorizontalAlignment="Right" 
-								Width="100"/>
-							<Button Name = "SaveMenuButton2"
-								Click="SaveMenuButtonClick" 
-								Content="..." 
-								Margin="0,0,10,6"
-								HorizontalAlignment="Right" 
-								Width="30" 
-								Height="30" 
-								VerticalAlignment="Bottom"/>
-							<Button x:Name="StartButton" 
-								Content="{DynamicResource StartButton}" 
-								Margin="0,0,145,6" 
-								Click="StartDinucleotidesAnalyzerButtonClick" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" Width="110" Height="30" VerticalAlignment="Bottom"/>
-							<ScrollBar x:Name="HorizontalScrollBar" 
-								Orientation="Horizontal"
-								Margin="7,0,13,0" 
-								Height="17" 
-								VerticalAlignment="Center"/>
+						<Grid Grid.RowSpan="2"
+							  Margin="0,204,0,0">
+							<Button x:Name="SaveDinucleotidesAnalyzer"
+									Width="100"
+									Height="30"
+									Margin="0,0,40,6"
+									HorizontalAlignment="Right"
+									VerticalAlignment="Bottom"
+									Click="SaveDinucleotidesAnalyzerButtonClick"
+									Content="{DynamicResource SaveButton}"/>
+							<Button Name="SaveMenuButton2"
+									Width="30"
+									Height="30"
+									Margin="0,0,10,6"
+									HorizontalAlignment="Right"
+									VerticalAlignment="Bottom"
+									Click="SaveMenuButtonClick"
+									Content="..."/>
+							<Button x:Name="StartButton"
+									Width="110"
+									Height="30"
+									Margin="0,0,145,6"
+									HorizontalAlignment="Right"
+									VerticalAlignment="Bottom"
+									Click="StartDinucleotidesAnalyzerButtonClick"
+									Content="{DynamicResource StartButton}"
+									FontSize="14"
+									FontWeight="Bold"/>
+							<ScrollBar x:Name="HorizontalScrollBar"
+									   Height="17"
+									   Margin="7,0,13,0"
+									   VerticalAlignment="Center"
+									   Orientation="Horizontal"/>
 							<!--<ProgressBar x:Name="DinucleotidesAnalyzerProgressBar"
-								Margin="10,0,202,10" 
-								Height="29" 
+								Margin="10,0,202,10"
+								Height="29"
 								VerticalAlignment="Bottom"/>-->
 						</Grid>
 						<Grid Grid.Row="0">
-							<oxy:PlotView x:Name="OxyPlot" 
-								Model="{Binding SomeName}" 
-								Margin="0,66,0,-94"/>
+							<oxy:PlotView x:Name="OxyPlot"
+										  Margin="0,66,0,-94"
+										  Model="{Binding SomeName}"/>
 						</Grid>
 					</Grid>
 				</Grid>
@@ -261,33 +471,42 @@
 			<TabItem x:Name="OpenReadingFrameTab">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Margin="3" Text="{DynamicResource OpenReadingFrameTab}"></TextBlock>
+						<TextBlock Margin="3"
+								   Text="{DynamicResource OpenReadingFrameTab}"/>
 					</StackPanel>
 				</TabItem.Header>
 				<Grid>
-					<Grid Height="385" Margin="-1,0,0,0">
+					<Grid Height="385"
+						  Margin="-1,0,0,0">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
-						<Button Name = "CreateComplementaryDNA"
-						Content="{DynamicResource StartButton}" 
-						Click="CreateComplementaryDNAButtonClick"
-						HorizontalAlignment="Left"
-						Width="130" Margin="68,77,0,0" FontWeight="Bold" Height="35" VerticalAlignment="Top" FontSize="13"/>
-						<Button
-						Content="{DynamicResource SaveButton}" 
-						Click="SaveComplementaryDNAFileButtonClick"
-						Height="35" 
-						HorizontalAlignment="Left" 
-						Width="94" 
-						Margin="68,120,0,0" VerticalAlignment="Top"/>
-						<Button Name = "SaveMenuButton6"
-						Click="SaveMenuButtonClick" 
-						Content="..." 
-						Margin="162,120,0,230"
-						Grid.Column="0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="36">
+						<Button Name="CreateComplementaryDNA"
+								Width="130"
+								Height="35"
+								Margin="68,77,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="CreateComplementaryDNAButtonClick"
+								Content="{DynamicResource StartButton}"
+								FontSize="13"/>
+						<Button Width="94"
+								Height="35"
+								Margin="68,120,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="SaveComplementaryDNAFileButtonClick"
+								Content="{DynamicResource SaveButton}"/>
+						<Button Name="SaveMenuButton6"
+								Grid.Column="0"
+								Width="36"
+								Margin="162,120,0,230"
+								HorizontalAlignment="Left"
+								Click="SaveMenuButtonClick"
+								Content="..."
+								RenderTransformOrigin="0.5,0.5">
 							<Button.RenderTransform>
 								<TransformGroup>
 									<ScaleTransform ScaleX="-1"/>
@@ -297,256 +516,319 @@
 								</TransformGroup>
 							</Button.RenderTransform>
 						</Button>
-						<TextBlock 
-						HorizontalAlignment="Left" 
-						TextWrapping="Wrap" 
-						Text="{DynamicResource MakeComplementaryDNA}" 
-						VerticalAlignment="Top" FontWeight="Bold" Width="230" FontSize="14" TextAlignment="Center" Height="28" Margin="18,40,0,0"/>
-						<Button 
-						Content="{DynamicResource StartButton}" 
-						Click="StartTranslation" 
-						HorizontalAlignment="Left"
-						Width="130" Margin="67,100,0,0" Height="35" VerticalAlignment="Top" Grid.Column="1"/>
-						<Button
-						Content="{DynamicResource ChooseSavePath}" 
-						Click="ChangeTranslationResultPath" 
-						HorizontalAlignment="Left" 
-						Width="130" Height="34" VerticalAlignment="Top" Margin="67,143,0,0" Grid.Column="1"/>
-						<Button
-						Content="{DynamicResource ChangeConfig}" 
-						Click="ChangeTranslationConfig" 
-						HorizontalAlignment="Left" 
-						Width="96" 
-						Margin="67,186,0,0"
-						Grid.Column="1" Height="35" VerticalAlignment="Top"/>
-						<Button
-						Click="ResetTranslationConfigButtonClick" 
-						Content="R" 
-						Margin="163,186,0,0" 
-						HorizontalAlignment="Left" 
-						Width="35"
-						Grid.Column="1" Height="35" VerticalAlignment="Top"/>
-						<TextBlock 
-						HorizontalAlignment="Left" 
-						Margin="47,63,0,0" 
-						TextWrapping="Wrap" 
-						Text="{DynamicResource Translate}" 
-						VerticalAlignment="Top"
-						Grid.Column="1" Width="170" FontWeight="Bold" TextAlignment="Center" FontSize="14" Height="35"/>
-						<Button 
-						Click="OpenReadingFrameStartButtonClick"
-						Content="{DynamicResource StartButton}" 
-						HorizontalAlignment="Left"
-						Width="130"
-						Grid.Column="2" Margin="68,120,0,0" Height="35" VerticalAlignment="Top"/>
-						<Button
-						Content="{DynamicResource ChooseSavePath}"  
-						Click="ChangeOpenReadingFramesResultPath" 
-						Height="35" 
-						HorizontalAlignment="Left" 
-						Width="130" 
-						Margin="68,163,0,0"
-						Grid.Column="2" VerticalAlignment="Top"/>
-						<TextBlock 
-						HorizontalAlignment="Left" 
-						Margin="10,75,0,0" 
-						TextWrapping="Wrap" 
-						Text="{DynamicResource FindOpenReadingFrames}" 
-						VerticalAlignment="Top"
-						Grid.Column="2" Width="245" Height="35" FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+						<TextBlock Width="230"
+								   Height="28"
+								   Margin="18,40,0,0"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Top"
+								   FontSize="14"
+								   FontWeight="Bold"
+								   Text="{DynamicResource MakeComplementaryDNA}"
+								   TextAlignment="Center"
+								   TextWrapping="Wrap"/>
+						<Button Grid.Column="1"
+								Width="130"
+								Height="35"
+								Margin="67,100,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="StartTranslation"
+								Content="{DynamicResource StartButton}"
+								FontSize="13"/>
+						<Button Grid.Column="1"
+								Width="130"
+								Height="34"
+								Margin="67,143,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="ChangeTranslationResultPath"
+								Content="{DynamicResource ChooseSavePath}"/>
+						<Button Grid.Column="1"
+								Width="96"
+								Height="35"
+								Margin="67,186,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="ChangeTranslationConfig"
+								Content="{DynamicResource ChangeConfig}"/>
+						<Button Grid.Column="1"
+								Width="35"
+								Height="35"
+								Margin="163,186,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="ResetTranslationConfigButtonClick"
+								Content="R"/>
+						<TextBlock Grid.Column="1"
+								   Width="170"
+								   Height="35"
+								   Margin="47,63,0,0"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Top"
+								   FontSize="14"
+								   FontWeight="Bold"
+								   Text="{DynamicResource Translate}"
+								   TextAlignment="Center"
+								   TextWrapping="Wrap"/>
+						<Button Grid.Column="2"
+								Width="130"
+								Height="35"
+								Margin="68,120,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="OpenReadingFrameStartButtonClick"
+								Content="{DynamicResource StartButton}"
+								FontSize="13"/>
+						<Button Grid.Column="2"
+								Width="130"
+								Height="35"
+								Margin="68,163,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="ChangeOpenReadingFramesResultPath"
+								Content="{DynamicResource ChooseSavePath}"/>
+						<TextBlock Grid.Column="2"
+								   Width="245"
+								   Height="35"
+								   Margin="10,75,0,0"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Top"
+								   FontSize="14"
+								   FontWeight="Bold"
+								   Text="{DynamicResource FindOpenReadingFrames}"
+								   TextAlignment="Center"
+								   TextWrapping="Wrap"/>
 						<TextBox Name="MinSizeToSaveTextBox"
-						Grid.Column="2" 
-						HorizontalAlignment="Left" 
-						Margin="72,285,0,0" 
-						TextWrapping="Wrap"
-						Text="100" 
-						VerticalAlignment="Top" 
-						Width="120"/>
-						<TextBlock Grid.Column="2" 
-						HorizontalAlignment="Left" 
-						Margin="33,250,0,0" 
-						TextWrapping="Wrap" 
-						Text="{DynamicResource OpenReadingFrameMinSizeToSave}" 
-						VerticalAlignment="Top"
-						Height="31" 
-						MaxWidth="200"
-						TextAlignment="Center" Width="199"/>
-						<Button
-						Content="{DynamicResource ChangeConfig}"  
-						Click="ChangeOpenReadingFramesConfig" 
-						HorizontalAlignment="Left" 
-						Width="94" 
-						Margin="68,206,0,0" Grid.Column="2" Height="35" VerticalAlignment="Top"/>
-						<Button
-						Click="ResetOpenReadingFramesConfigButtonClick" 
-						Content="R" 
-						Margin="162,206,0,0" 
-						HorizontalAlignment="Left" 
-						Width="36"
-						Grid.Column="2" Height="35" VerticalAlignment="Top"/>
+								 Grid.Column="2"
+								 Width="120"
+								 Margin="72,285,0,0"
+								 HorizontalAlignment="Left"
+								 VerticalAlignment="Top"
+								 Text="100"
+								 TextWrapping="Wrap"/>
+						<TextBlock Grid.Column="2"
+								   Width="199"
+								   Height="31"
+								   MaxWidth="200"
+								   Margin="33,250,0,0"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Top"
+								   Text="{DynamicResource OpenReadingFrameMinSizeToSave}"
+								   TextAlignment="Center"
+								   TextWrapping="Wrap"/>
+						<Button Grid.Column="2"
+								Width="94"
+								Height="35"
+								Margin="68,206,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="ChangeOpenReadingFramesConfig"
+								Content="{DynamicResource ChangeConfig}"/>
+						<Button Grid.Column="2"
+								Width="36"
+								Height="35"
+								Margin="162,206,0,0"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top"
+								Click="ResetOpenReadingFramesConfigButtonClick"
+								Content="R"/>
 					</Grid>
-					<Button x:Name="CreateEverything" 
-						Content="{DynamicResource OpenReadingFrameStartEverything}" 
-						Margin="0,0,10,6" 
-						Click="CreateEverythingButtonClick" 
-						Height="30"
-						VerticalAlignment="Bottom"
-						HorizontalAlignment="Right" Width="79" />
-					<Button x:Name="ChooseSavePath" 
-						Click="ChooseOpenReadingFramesSavePathButtonClick" 
-						Content="{DynamicResource ChooseSavePath}" 
-						Margin="0,0,94,6" 
-						HorizontalAlignment="Right" Width="100" Height="30" VerticalAlignment="Bottom"/>
+					<Button x:Name="CreateEverything"
+							Width="79"
+							Height="30"
+							Margin="0,0,10,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="CreateEverythingButtonClick"
+							Content="{DynamicResource OpenReadingFrameStartEverything}"/>
+					<Button x:Name="ChooseSavePath"
+							Width="100"
+							Height="30"
+							Margin="0,0,94,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="ChooseOpenReadingFramesSavePathButtonClick"
+							Content="{DynamicResource ChooseSavePath}"/>
 				</Grid>
 			</TabItem>
 			<TabItem x:Name="ATGCWindow">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Margin="3" Text="{DynamicResource ATGCPercent}"></TextBlock>
+						<TextBlock Margin="3"
+								   Text="{DynamicResource ATGCPercent}"/>
 					</StackPanel>
 				</TabItem.Header>
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="200" />
-						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="200"/>
+						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="StartATGCPercentButton" 
-						Content="{DynamicResource StartButton}" 
-						Margin="25,45,0,0" 
-						Click="StartATGCPercentButtonClick" FontWeight="Bold" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110"/>
-					<Button x:Name="SaveATGCPercent" 
-						Click="SaveATGCPercentButtonClick" 
-						Content="{DynamicResource SaveButton}" 
-						Margin="0,0,40,6" 
-						Height="30" 
-						VerticalAlignment="Bottom" 
-						HorizontalAlignment="Right" 
-						Width="100"
-						Grid.Column="1"/>
-					<Button Name = "SaveMenuButton5"
-						Click="SaveMenuButtonClick" 
-						Content="..." 
-						Margin="0,0,10,6" RenderTransformOrigin="0.519,0.577" Grid.Column="1" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="30"/>
-					<TextBlock Name = "ATGCResult"
-						HorizontalAlignment="Left" 
-						TextWrapping="Wrap" 
-						Text="Результат:" 
-						VerticalAlignment="Top" 
-						Height="72" 
-						Width="142" Margin="25,117,0,0" TextAlignment="Center" FontSize="14"/>
-					<TextBlock x:Name="ATCGChunkSize" 
-						Margin="25,85,0,0" 
-						TextWrapping="Wrap" 
-						Text="{DynamicResource ChunkSize}"
-						VerticalAlignment="Top" 
-						Height="21" 
-						FontSize="14" 
-						HorizontalAlignment="Left" 
-						Width="94"/>
-					<TextBox x:Name="ATCGChunkSizeTextBox" 
-						Text="100" 
-						Margin="124,85,0,0" 
-						TextWrapping="Wrap" 
-						VerticalAlignment="Top" 
-						Height="21" 
-						HorizontalAlignment="Left" 
-						Width="63"/>
-					<Grid Grid.Column="1" Margin="0,30,0,50">
+					<Button x:Name="StartATGCPercentButton"
+							Width="110"
+							Height="30"
+							Margin="25,45,0,0"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Click="StartATGCPercentButtonClick"
+							Content="{DynamicResource StartButton}"
+							FontWeight="Bold"/>
+					<Button x:Name="SaveATGCPercent"
+							Grid.Column="1"
+							Width="100"
+							Height="30"
+							Margin="0,0,40,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="SaveATGCPercentButtonClick"
+							Content="{DynamicResource SaveButton}"/>
+					<Button Name="SaveMenuButton5"
+							Grid.Column="1"
+							Width="30"
+							Height="30"
+							Margin="0,0,10,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="SaveMenuButtonClick"
+							Content="..."
+							RenderTransformOrigin="0.519,0.577"/>
+					<TextBlock Name="ATGCResult"
+							   Width="142"
+							   Height="72"
+							   Margin="25,117,0,0"
+							   HorizontalAlignment="Left"
+							   VerticalAlignment="Top"
+							   FontSize="14"
+							   Text="Результат:"
+							   TextAlignment="Center"
+							   TextWrapping="Wrap"/>
+					<TextBlock x:Name="ATCGChunkSize"
+							   Width="94"
+							   Height="21"
+							   Margin="25,85,0,0"
+							   HorizontalAlignment="Left"
+							   VerticalAlignment="Top"
+							   FontSize="14"
+							   Text="{DynamicResource ChunkSize}"
+							   TextWrapping="Wrap"/>
+					<TextBox x:Name="ATCGChunkSizeTextBox"
+							 Width="63"
+							 Height="21"
+							 Margin="124,85,0,0"
+							 HorizontalAlignment="Left"
+							 VerticalAlignment="Top"
+							 Text="100"
+							 TextWrapping="Wrap"/>
+					<Grid Grid.Column="1"
+						  Margin="0,30,0,50">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="0*"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
-						<oxy:PlotView x:Name="OxyPlotATCGPercent" 
-							Model="{Binding SomeName}" 
-							Margin="10,1,10,22" Grid.Row="1"/>
-						<ScrollBar x:Name="OxyPlotATCGPercentHorizontalScrollBar" 
-							Orientation="Horizontal"
-							Margin="10,0,10,2" 
-							Height="17" 
-							VerticalAlignment="Bottom" Grid.Row="1"/>
+						<oxy:PlotView x:Name="OxyPlotATCGPercent"
+									  Grid.Row="1"
+									  Margin="10,1,10,22"
+									  Model="{Binding SomeName}"/>
+						<ScrollBar x:Name="OxyPlotATCGPercentHorizontalScrollBar"
+								   Grid.Row="1"
+								   Height="17"
+								   Margin="10,0,10,2"
+								   VerticalAlignment="Bottom"
+								   Orientation="Horizontal"/>
 					</Grid>
 				</Grid>
 			</TabItem>
 			<TabItem x:Name="RestrictionSitesWindow">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Margin="3" Text="{DynamicResource RestrictionSitesFinderWindow}"></TextBlock>
+						<TextBlock Margin="3"
+								   Text="{DynamicResource RestrictionSitesFinderWindow}"/>
 					</StackPanel>
 				</TabItem.Header>
 				<Grid>
 					<Grid Margin="0,0,0,44">
-						<DataGrid x:Name="RestrictionSitesDataGrid" 
-							AutoGenerateColumns="False" 
-							CanUserAddRows="False" 
-							IsReadOnly="True"
-							ScrollViewer.CanContentScroll="True"		 
-							ScrollViewer.IsDeferredScrollingEnabled="True" 
-							ScrollViewer.HorizontalScrollBarVisibility="Visible"
-							Margin="159,45,10,10">
+						<DataGrid x:Name="RestrictionSitesDataGrid"
+								  Margin="159,45,10,10"
+								  AutoGenerateColumns="False"
+								  CanUserAddRows="False"
+								  IsReadOnly="True"
+								  ScrollViewer.CanContentScroll="True"
+								  ScrollViewer.HorizontalScrollBarVisibility="Visible"
+								  ScrollViewer.IsDeferredScrollingEnabled="True">
 							<DataGrid.Columns>
-								<DataGridTextColumn Header="Restriction Sites" Binding="{Binding Name}" Width="100"/>
-								<DataGridTextColumn Header="Indexes" Binding="{Binding IndexesString}" MinWidth="100" Width="SizeToCells"/>
+								<DataGridTextColumn Width="120"
+													Binding="{Binding Name}"
+													Header="Restriction Sites"/>
+								<DataGridTextColumn Width="SizeToCells"
+													MinWidth="100"
+													Binding="{Binding IndexesString}"
+													Header="Indexes"/>
 							</DataGrid.Columns>
 						</DataGrid>
 					</Grid>
-					<Button x:Name="StartRestrictionSitesFinderButton" 
-						Content="{DynamicResource StartButton}" 
-						Margin="25,45,0,0" 
-						Click="StartRestrictionSitesFinderButtonClick"
-						HorizontalAlignment="Left" 
-						Width="110" 
-						Height="30"
-						VerticalAlignment="Top" FontWeight="Bold"/>
-					<Button x:Name="SaveRestrictionSitesFinderResultButton" 
-						Click="SaveRestrictionSitesFinderResultButtonClick" 
-						Content="{DynamicResource SaveButton}" 
-						Margin="0,0,40,6" 
-						Height="30" 
-						VerticalAlignment="Bottom" 
-						HorizontalAlignment="Right" 
-						Width="100"/>
-					<Button x:Name = "SaveMenuButton8"
-						Click="SaveMenuButtonClick" 
-						Content="..." 
-						Margin="0,0,10,6" 
-						HorizontalAlignment="Right" 
-						Width="30" 
-						Height="30" 
-						VerticalAlignment="Bottom"/>
-					<Button x:Name="ChangeRestrictionSiteFinderConfigButton" 
-						Click="ChangeRestrictionSiteFinderConfigButtonClick" 
-						Content="{DynamicResource ChangeConfig}" 
-						Margin="25,80,0,0" 
-						Height="30" 
-						VerticalAlignment="Top" 
-						HorizontalAlignment="Left" 
-						Width="80"/>
-					<Button x:Name = "ResetRestrictionSiteFinderConfigButton"
-						Click="ResetRestrictionSiteFinderConfigButtonClick" 
-						Content="R" 
-						Margin="105,80,0,0" 
-						HorizontalAlignment="Left" 
-						Width="30" 
-						Height="30" 
-						VerticalAlignment="Top"/>
+					<Button x:Name="StartRestrictionSitesFinderButton"
+							Width="110"
+							Height="30"
+							Margin="25,45,0,0"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Click="StartRestrictionSitesFinderButtonClick"
+							Content="{DynamicResource StartButton}"
+							FontWeight="Bold"/>
+					<Button x:Name="SaveRestrictionSitesFinderResultButton"
+							Width="100"
+							Height="30"
+							Margin="0,0,40,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="SaveRestrictionSitesFinderResultButtonClick"
+							Content="{DynamicResource SaveButton}"/>
+					<Button x:Name="SaveMenuButton8"
+							Width="30"
+							Height="30"
+							Margin="0,0,10,6"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Click="SaveMenuButtonClick"
+							Content="..."/>
+					<Button x:Name="ChangeRestrictionSiteFinderConfigButton"
+							Width="80"
+							Height="30"
+							Margin="25,80,0,0"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Click="ChangeRestrictionSiteFinderConfigButtonClick"
+							Content="{DynamicResource ChangeConfig}"/>
+					<Button x:Name="ResetRestrictionSiteFinderConfigButton"
+							Width="30"
+							Height="30"
+							Margin="105,80,0,0"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Click="ResetRestrictionSiteFinderConfigButtonClick"
+							Content="R"/>
 				</Grid>
 			</TabItem>
 		</TabControl>
-		<Button x:Name="OpenFileButton" 
-			Content="{DynamicResource OpenFileButton}" 
-			Click="OpenFileButtonClick" 
-			Margin="10,0,0,10" 
-			HorizontalAlignment="Left" 
-			Width="100" FontWeight="Bold" FontSize="14" Height="30" VerticalAlignment="Bottom"/>
+		<Button x:Name="OpenFileButton"
+				Width="100"
+				Height="30"
+				Margin="10,0,0,10"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Bottom"
+				Click="OpenFileButtonClick"
+				Content="{DynamicResource OpenFileButton}"
+				FontSize="14"
+				FontWeight="Bold"/>
 		<!--<ProgressBar
 			Height="13"
-			Margin="0,0,-10,0" 
+			Margin="0,0,-10,0"
 			VerticalAlignment="Center" Grid.Row="1"/>-->
 		<TextBlock x:Name="Feedback"
-			Text="Выберите файл"
-			Height="17"
-			FontSize="10" 
-			Margin="13,65,21,0" 
-			VerticalAlignment="Top" Background="#FFE6E4E4"/>
+				   Height="17"
+				   Margin="13,65,21,0"
+				   VerticalAlignment="Top"
+				   Background="#FFE6E4E4"
+				   FontSize="10"
+				   Text="Выберите файл"/>
 	</Grid>
 </Window>
